@@ -5,7 +5,8 @@ if [ $1 = "init" ]; then
         exit 1
     fi
     echo "Putting a database to /tmp/minitwit.db..."
-    python -c"from minitwit import init_db;init_db()"
+    #python -c"from minitwit import init_db;init_db()"
+    cp ./minitwit.db /tmp/
 elif [ $1 = "start" ]; then
     echo "Starting minitwit..."
     nohup `which python` minitwit.py > /tmp/out.log 2>&1 &
