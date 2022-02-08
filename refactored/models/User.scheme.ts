@@ -11,15 +11,19 @@ export interface TUser {
 
 const UserSchema = new Schema<TUser>({
   user_id: {
+    type: String,
     required: true,
   },
   username: {
+    type: String,
     required: true,
   },
   email: {
+    type: String,
     required: true,
   },
   pw_hash: {
+    type: String,
     required: true,
   },
 });
