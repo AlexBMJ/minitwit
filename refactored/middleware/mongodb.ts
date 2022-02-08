@@ -8,11 +8,7 @@ const connectDB = (handler: NextApiHandler) => async (req: NextApiRequest, res: 
     return handler(req, res);
   }
   // Use new db connection
-  await mongoose.connect(
-    `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME!}:${
-      process.env.MONGO_INITDB_ROOT_PASSWORD
-    }@database:27017/minitwit`
-  );
+  await mongoose.connect(process.env.CONNECTION_STRING!);
   return handler(req, res);
 };
 
