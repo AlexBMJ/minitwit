@@ -3,7 +3,7 @@ import mongoose, { Model } from 'mongoose';
 const { Schema } = mongoose;
 
 export interface TUser {
-  user_id: number;
+  user_id: string;
   username: string;
   email: string;
   pw_hash: string;
