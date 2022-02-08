@@ -28,5 +28,5 @@ const UserSchema = new Schema<TUser>({
   },
 });
 
-var User = <Model<TUser>>mongoose.models.Child || mongoose.model<TUser, Model<TUser>>('User', UserSchema);
+var User = <Model<TUser>>mongoose.models.User || mongoose.model<TUser, Model<TUser>>('User', UserSchema);
 export default User;
