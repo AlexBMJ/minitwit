@@ -1,8 +1,9 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, Types} from 'mongoose';
 
 const { Schema } = mongoose;
 
 export interface TUser {
+  _id?: Types.ObjectId;
   username: string;
   email: string;
   pw_hash: string;

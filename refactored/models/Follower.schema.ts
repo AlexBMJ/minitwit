@@ -1,19 +1,19 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, Types } from 'mongoose';
 
 const { Schema } = mongoose;
 
 export interface TFollower {
-  follower_id: string;
-  followee_id: string;
+  follower_id: Types.ObjectId;
+  other_id: Types.ObjectId;
 }
 
 const FollowSchema = new Schema<TFollower>({
   follower_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  followee_id: {
-    type: String,
+  other_id: {
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
 });
