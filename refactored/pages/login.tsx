@@ -1,6 +1,8 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useState } from 'react';
+import Footer from '../components/FooterComponent';
+import Layout from '../components/Layout.component';
 import styles from '../styles/login.module.scss';
 
 const Login: NextPage = () => {
@@ -16,50 +18,52 @@ const Login: NextPage = () => {
       <Head>
         <title>Sign In</title>
       </Head>
+      <Layout>
+        <h2>Sign In</h2>
 
-      <h2>Sign In</h2>
+        {errorMessage && (
+          <div className="error">
+            <strong>Error:</strong> {errorMessage}
+          </div>
+        )}
 
-      {errorMessage && (
-        <div className="error">
-          <strong>Error:</strong> {errorMessage}
-        </div>
-      )}
-
-      <form onSubmit={submit} method="post">
-        <dl>
-          <dt>Username:</dt>
-          <dd>
-            <input
-              onChange={(e) =>
-                setFormBody({
-                  ...formBody,
-                  userName: e.target.value,
-                })
-              }
-              type="text"
-              name="username"
-              size={30}
-            />
-          </dd>
-          <dt>Password:</dt>
-          <dd>
-            <input
-              onChange={(e) =>
-                setFormBody({
-                  ...formBody,
-                  password: e.target.value,
-                })
-              }
-              type="password"
-              name="password"
-              size={30}
-            />
-          </dd>
-        </dl>
-        <div className="actions">
-          <input type="submit" value="Sign In" />
-        </div>
-      </form>
+        <form onSubmit={submit} method="post">
+          <dl>
+            <dt>Username:</dt>
+            <dd>
+              <input
+                onChange={(e) =>
+                  setFormBody({
+                    ...formBody,
+                    userName: e.target.value,
+                  })
+                }
+                type="text"
+                name="username"
+                size={30}
+              />
+            </dd>
+            <dt>Password:</dt>
+            <dd>
+              <input
+                onChange={(e) =>
+                  setFormBody({
+                    ...formBody,
+                    password: e.target.value,
+                  })
+                }
+                type="password"
+                name="password"
+                size={30}
+              />
+            </dd>
+          </dl>
+          <div className="actions">
+            <input type="submit" value="Sign In" />
+          </div>
+        </form>
+      </Layout>
+      <Footer />
     </div>
   );
 };

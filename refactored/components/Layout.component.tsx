@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import styles from '../styles/layout.module.scss';
 
-const Layout: React.FunctionComponent = () => {
+const Layout: React.FunctionComponent = ({ children }) => {
   const g = {
     user: {
       username: '123',
@@ -31,6 +31,8 @@ const Layout: React.FunctionComponent = () => {
             })}
           </ul>
         )}
+
+        {children}
       </div>
     </div>
   );

@@ -77,12 +77,16 @@ export const Messages: React.FunctionComponent<{
         {messages.map((v, i) => {
           return (
             <li key={i}>
-              <div className="image">
-                <Image alt="Good image" src={'123'} layout="fill" />
+              <div className="messageImage">
+                <Image
+                  alt="Good image"
+                  src="https://secure.gravatar.com/avatar/22bd03ace6f176bfe0c593650bcf45d8"
+                  layout="fill"
+                />
               </div>
               <a href="timeline">{v.poster.username}</a>
               <p>{v.message.text}</p>
-              <small>&mdash; {v.message.pub_date}</small>
+              <small>&mdash; {v.message.pub_date.toString()}</small>
             </li>
           );
         })}
