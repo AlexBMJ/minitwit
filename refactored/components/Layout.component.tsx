@@ -27,8 +27,8 @@ const Layout: React.FunctionComponent = () => {
 
         {errorMessages.length > 0 && (
           <ul className={styles.flashes}>
-            {errorMessages.map((v) => {
-              return <li>{v}</li>;
+            {errorMessages.map((v, k) => {
+              return <li key={k}>{v}</li>;
             })}
           </ul>
         )}
