@@ -28,6 +28,6 @@ const MessageSchema = new Schema<TMessage>({
   },
 });
 
-var User =
+var Message =
   <Model<TMessage>>mongoose.models.Message || mongoose.model<TMessage, Model<TMessage>>('Message', MessageSchema);
-export default User;
+export default Message;

@@ -18,6 +18,6 @@ const FollowSchema = new Schema<TFollower>({
   },
 });
 
-var User =
+var Follow =
   <Model<TFollower>>mongoose.models.Follow || mongoose.model<TFollower, Model<TFollower>>('Follow', FollowSchema);
-export default User;
+export default Follow;

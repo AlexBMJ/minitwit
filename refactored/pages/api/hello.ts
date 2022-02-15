@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { userInfo } from 'os';
 import connectDB from '../../middleware/mongodb';
+import Message from '../../models/Message.schema';
 import User from '../../models/User.scheme';
 
 type Data = {
