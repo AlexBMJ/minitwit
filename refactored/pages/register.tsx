@@ -1,10 +1,10 @@
-import { NextPage } from "next";
-import Head from "next/head";
-import { ReactComponentElement, useState } from "react";
-import styles from "../styles/register.module.scss";
+import { NextPage } from 'next';
+import Head from 'next/head';
+import { ReactComponentElement, useState } from 'react';
+import styles from '../styles/register.module.scss';
 
 const Register: NextPage = () => {
-  const [errorMessage, setErrorMessage] = useState<string>("error");
+  const [errorMessage, setErrorMessage] = useState<string>('error');
 
   return (
     <>
@@ -14,7 +14,7 @@ const Register: NextPage = () => {
       <h2>Sign Up</h2>
 
       {errorMessage && (
-        <div className={styles.error}>
+        <div className="error">
           <strong>Error:</strong> {errorMessage}
         </div>
       )}
@@ -26,12 +26,7 @@ const Register: NextPage = () => {
         </dd>
         <dt>E-Mail:</dt>
         <dd>
-          <input
-            type="text"
-            name="email"
-            size={30}
-            value=""
-          />
+          <input type="text" name="email" size={30} value="" />
         </dd>
         <dt>Password:</dt>
         <dd>
@@ -44,7 +39,7 @@ const Register: NextPage = () => {
           <input type="password" name="password2" size={30} />
         </dd>
 
-        <div className={styles.actions}>
+        <div className="actions">
           <input type="submit" value="Sign Up" />
         </div>
       </form>

@@ -20,7 +20,7 @@ const Login: NextPage = () => {
       <h2>Sign In</h2>
 
       {errorMessage && (
-        <div className={styles.error}>
+        <div className="error">
           <strong>Error:</strong> {errorMessage}
         </div>
       )}
@@ -56,7 +56,7 @@ const Login: NextPage = () => {
             />
           </dd>
         </dl>
-        <div className={styles.actions}>
+        <div className="actions">
           <input type="submit" value="Sign In" />
         </div>
       </form>
