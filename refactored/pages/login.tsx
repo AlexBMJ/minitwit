@@ -1,8 +1,9 @@
+import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useState } from 'react';
 import styles from '../styles/login.module.scss';
 
-const Login: React.FunctionComponent = () => {
+const Login: NextPage = () => {
   const [errorMessage, setErrorMessage] = useState<string>('error');
   const [formBody, setFormBody] = useState<{ userName?: string; password?: string }>({});
 
