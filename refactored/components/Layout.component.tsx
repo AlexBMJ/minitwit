@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
-import styles from './styles/layout.module.scss';
+import styles from '../styles/layout.module.scss';
 
 const Layout: React.FunctionComponent = () => {
   const g = {
