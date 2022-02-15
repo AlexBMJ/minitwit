@@ -14,13 +14,10 @@ const Layout: React.FunctionComponent = ({ children }) => {
 
   return (
     <div>
-      <Head>
-        <title>Welcome | MiniTwit</title>
-      </Head>
       <div className="page">
         <h1>MiniTwit</h1>
         <div className="navigiation">
-          <Link href="/timeline"> timeline</Link> |<Link href="/register">{g.user ? 'sign up' : 'sign in'}</Link> |
+          <Link href="/"> timeline</Link> |<Link href="/register">{g.user ? 'sign up' : 'sign in'}</Link> |
           <Link href="/login">{g.user ? 'sign out' : 'sign in'}</Link> |
         </div>
 

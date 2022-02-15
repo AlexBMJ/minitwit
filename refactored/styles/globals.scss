@@ -34,13 +34,17 @@ input[type='submit'] {
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   color: white;
+  display: block;
 }
 
 div.page {
   background: white;
   border: 1px solid #6eccc4;
-  width: 700px;
+  width: 850px;
   margin: 30px auto;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 div.page h1 {
@@ -138,6 +142,7 @@ div.page div.twitbox h3 {
   margin: 0;
   font-size: 1em;
   color: #2c7e76;
+  margin-bottom: 10px;
 }
 
 div.page div.twitbox p {
@@ -145,12 +150,16 @@ div.page div.twitbox p {
 }
 
 div.page div.twitbox input[type='text'] {
-  width: 585px;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  margin-bottom: 10px;
 }
 
 div.page div.twitbox input[type='submit'] {
   width: 70px;
   margin-left: 5px;
+  display: block;
 }
 
 ul.flashes {

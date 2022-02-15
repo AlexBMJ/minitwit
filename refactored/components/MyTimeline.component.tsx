@@ -61,7 +61,7 @@ export const TwitBox: React.FunctionComponent<{ loggedInUser: TUser }> = ({ logg
     <div className="twitbox">
       <h3>What is on your mind {loggedInUser.username}?</h3>
       <form method="post">
-        <textarea name="text" id="text" cols={30} rows={10}></textarea>
+        <input type="text" name="text" id="text" required placeholder="What is on your mind?" />
         <button type="submit">Share!</button>
       </form>
     </div>
@@ -73,7 +73,7 @@ export const Messages: React.FunctionComponent<{
 }> = ({ messages }) => {
   if (messages.length > 0) {
     return (
-      <ul>
+      <ul className="messages">
         {messages.map((v, i) => {
           return (
             <li key={i}>
