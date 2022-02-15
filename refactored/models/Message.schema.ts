@@ -1,9 +1,9 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, Types } from 'mongoose';
 
 const { Schema } = mongoose;
 
 export interface TMessage {
-  author_id: string;
+  author_id: Types.ObjectId;
   text: string;
   pub_date: Date;
   flagged: boolean;
@@ -11,7 +11,7 @@ export interface TMessage {
 
 const MessageSchema = new Schema<TMessage>({
   author_id: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
   text: {

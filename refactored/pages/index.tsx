@@ -13,7 +13,6 @@ const Home: NextPage = () => {
   return (
     <div>
       <Layout user={user?.user}>{user?.user && <Timeline endpoint="123" loggedInUser={user.user} />}</Layout>
-
       <Footer />
     </div>
   );
