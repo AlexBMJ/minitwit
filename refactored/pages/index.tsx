@@ -10,7 +10,7 @@ const Home: NextPage = () => {
   return (
     <div>
       <Layout />
-      <Timeline />
+
       <Footer />
     </div>
   );
