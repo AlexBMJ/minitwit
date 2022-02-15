@@ -3,17 +3,12 @@ import mongoose, { Model } from 'mongoose';
 const { Schema } = mongoose;
 
 export interface TUser {
-  user_id: string;
   username: string;
   email: string;
   pw_hash: string;
 }
 
 const UserSchema = new Schema<TUser>({
-  user_id: {
-    type: String,
-    required: true,
-  },
   username: {
     type: String,
     required: true,
