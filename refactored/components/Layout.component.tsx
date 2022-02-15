@@ -1,9 +1,11 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
+import { logout } from '../lib/useUser';
+import { TUser } from '../models/User.scheme';
 import styles from '../styles/layout.module.scss';
 
-const Layout: React.FunctionComponent = ({ children }) => {
+const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) => {
   const g = {
     user: {
       username: '123',
@@ -17,8 +19,19 @@ const Layout: React.FunctionComponent = ({ children }) => {
       <div className="page">
         <h1>MiniTwit</h1>
         <div className="navigiation">
-          <Link href="/"> timeline</Link> |<Link href="/register">{g.user ? 'sign up' : 'sign in'}</Link> |
-          <Link href="/login">{g.user ? 'sign out' : 'sign in'}</Link> |
+          {user ? (
+            <div>
+              <Link href="/" passHref>
+                {`${user.username} timeline`}
+              </Link>
+              | <span onClick={() => logout({ redirectTo: '/login' })}>Sign out</span> |
+            </div>
+          ) : (
+            <div>
+              |<Link href="/">Timeline</Link> | |<Link href="/register">Register</Link> | |
+              <Link href="/login">Login</Link> |
+            </div>
+          )}
         </div>
 
         {errorMessages.length > 0 && (

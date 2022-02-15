@@ -4,21 +4,15 @@ import Image from 'next/image';
 import Footer from '../components/FooterComponent';
 import Layout from '../components/Layout.component';
 import Timeline from '../components/MyTimeline.component';
+import useUser from '../lib/useUser';
 import { TUser } from '../models/User.scheme';
 import styles from '../styles/Index.module.scss';
 
 const Home: NextPage = () => {
-  const testUser: TUser = {
-    email: 'mikkel@gmail.com',
-    username: 'BECH',
-    pw_hash: '123',
-  };
-
+  const { user, mutateUser, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
   return (
     <div>
-      <Layout>
-        <Timeline endpoint="123" loggedInUser={testUser} />
-      </Layout>
+      <Layout user={user?.user}>{user?.user && <Timeline endpoint="123" loggedInUser={user.user} />}</Layout>
 
       <Footer />
     </div>
