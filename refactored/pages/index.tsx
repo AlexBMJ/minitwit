@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const { user, mutateUser, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
   return (
     <div>
-      <Layout user={user?.user}>{user?.user && <Timeline endpoint="123" loggedInUser={user.user} />}</Layout>
+      <Layout user={user?.user}>{user?.user && <Timeline endpoint="123" user={user.user} />}</Layout>
       <Footer />
     </div>
   );

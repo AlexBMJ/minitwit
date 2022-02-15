@@ -3,8 +3,10 @@ import { TUser } from '../models/User.scheme';
 import styles from './styles/timeline.module.scss';
 import Image from 'next/image';
 import { TMessage } from '../models/Message.schema';
+import mongoose from 'mongoose';
+import Link from 'next/link';
 
-const MyTimeline: React.FunctionComponent<{ endpoint: string; loggedInUser: TUser }> = ({ endpoint, loggedInUser }) => {
+const MyTimeline: React.FunctionComponent<{ endpoint: string; user: TUser }> = ({ endpoint, user }) => {
   const testMessages: { poster: TUser; message: TMessage }[] = [
     {
       poster: {
@@ -13,7 +15,7 @@ const MyTimeline: React.FunctionComponent<{ endpoint: string; loggedInUser: TUse
         pw_hash: '1234',
       },
       message: {
-        author_id: '1234',
+        author_id: new mongoose.Types.ObjectId('620c1efc60b10e85373e99fa'),
         flagged: false,
         pub_date: new Date(),
         text: 'This is the message',
@@ -26,7 +28,7 @@ const MyTimeline: React.FunctionComponent<{ endpoint: string; loggedInUser: TUse
         pw_hash: '1234',
       },
       message: {
-        author_id: '54321',
+        author_id: new mongoose.Types.ObjectId('620c1efc60b10e85373e99fa'),
         flagged: false,
         pub_date: new Date(),
         text: 'This is message 2',
@@ -34,18 +36,19 @@ const MyTimeline: React.FunctionComponent<{ endpoint: string; loggedInUser: TUse
     },
   ];
 
-  if (loggedInUser) {
+  console.log(user);
+  if (user) {
     return (
       <>
         <Head>
-          <title>{loggedInUser.username} Timeline</title>
+          <title>{user.username} Timeline</title>
         </Head>
 
-        <h2>{loggedInUser.username} timeline</h2>
+        <h2>{user.username} timeline</h2>
         <div className="followstatus">
           <p>This is you</p>
         </div>
-        <TwitBox loggedInUser={loggedInUser} />
+        <TwitBox user={user} />
         <Messages messages={testMessages} />
       </>
     );
@@ -56,10 +59,10 @@ const MyTimeline: React.FunctionComponent<{ endpoint: string; loggedInUser: TUse
 
 export default MyTimeline;
 
-export const TwitBox: React.FunctionComponent<{ loggedInUser: TUser }> = ({ loggedInUser }) => {
+export const TwitBox: React.FunctionComponent<{ user: TUser }> = ({ user }) => {
   return (
     <div className="twitbox">
-      <h3>What is on your mind {loggedInUser.username}?</h3>
+      <h3>What is on your mind {user.username}?</h3>
       <form method="post">
         <input type="text" name="text" id="text" required placeholder="What is on your mind?" />
         <button type="submit">Share!</button>
@@ -84,7 +87,7 @@ export const Messages: React.FunctionComponent<{
                   layout="fill"
                 />
               </div>
-              <a href="timeline">{v.poster.username}</a>
+              <Link href={`/timeline/${v.poster.username}`}>{v.poster.username}</Link>
               <p>{v.message.text}</p>
               <small>&mdash; {v.message.pub_date.toString()}</small>
             </li>
