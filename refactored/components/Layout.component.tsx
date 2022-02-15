@@ -1,19 +1,16 @@
-import Head from "next/head";
-import Link from "next/link";
-import { useState } from "react";
-import styles from "../styles/layout.module.scss";
+import Head from 'next/head';
+import Link from 'next/link';
+import { useState } from 'react';
+import styles from '../styles/layout.module.scss';
 
 const Layout: React.FunctionComponent = () => {
   const g = {
     user: {
-      username: "123",
+      username: '123',
     },
   };
 
-  const [errorMessages, setErrorMessages] = useState<string[]>([
-    "error 1",
-    "error 2",
-  ]);
+  const [errorMessages, setErrorMessages] = useState<string[]>(['error 1', 'error 2']);
 
   return (
     <div>
@@ -23,18 +20,9 @@ const Layout: React.FunctionComponent = () => {
       <div className={styles.page}>
         <h1>MiniTwit</h1>
         <div className={styles.navigation}>
-          <Link href={g.user ? "timeline" : "public timeline"}>
-            {g.user ? "my" : "public"} timeline
-          </Link>{" "}
-          |
-          <Link href={g.user ? "timeline" : "register"}>
-            {g.user ? "sign up" : "sign in"}
-          </Link>{" "}
-          |
-          <Link href={g.user ? "logout" : "login"}>
-            {g.user ? "sign out" : "sign in"}
-          </Link>{" "}
-          |
+          <Link href={g.user ? 'timeline' : 'public timeline'}>{g.user ? 'my' : 'public'} timeline</Link> |
+          <Link href={g.user ? 'timeline' : 'register'}>{g.user ? 'sign up' : 'sign in'}</Link> |
+          <Link href={g.user ? 'logout' : 'login'}>{g.user ? 'sign out' : 'sign in'}</Link> |
         </div>
 
         {errorMessages.length > 0 && (
