@@ -14,7 +14,7 @@ import { UserInfo } from '../../types/userInfo';
 import styles from '../styles/Index.module.scss';
 
 const UsernameTimeline: NextPage = () => {
-  const { user, mutateUser, error } = useUser({ redirectIfFound: false, redirectTo: '/' });
+  const { user, mutateUser, error } = useUser({ redirectIfFound: false });
   const router = useRouter();
   const { username } = router.query;
   const [userViewing, setUserViewing] = useState<UserInfo>();
