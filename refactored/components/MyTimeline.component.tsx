@@ -6,7 +6,7 @@ import { TMessage } from '../models/Message.schema';
 import mongoose from 'mongoose';
 import Link from 'next/link';
 import { UserInfo } from '../types/userInfo';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { KeyedMutator } from 'swr';
 
@@ -14,12 +14,16 @@ type messageMutatorType = KeyedMutator<{
   messages: TMessage[];
 }>;
 
+type mutateFollowerType = KeyedMutator<any>;
+
 const MyTimeline: React.FunctionComponent<{
   user?: UserInfo;
   loggedInUser?: TUser;
   messages?: TMessage[];
   messagesMutator?: messageMutatorType;
-}> = ({ user, loggedInUser, messages, messagesMutator }) => {
+  isFollowing?: boolean;
+  mutateFollower?: mutateFollowerType;
+}> = ({ user, loggedInUser, messages, messagesMutator, isFollowing, mutateFollower }) => {
   if (user) {
     return (
       <>
@@ -29,7 +33,15 @@ const MyTimeline: React.FunctionComponent<{
 
         <h2>{user.username} timeline</h2>
         <div className="followstatus">
-          {loggedInUser && loggedInUser.username === user.username ? <p>This is you</p> : <p>Follow {user.username}</p>}
+          {loggedInUser && loggedInUser.username === user.username ? (
+            <p>This is you</p>
+          ) : (
+            <FollowButtons
+              mutateFollower={mutateFollower}
+              username={user.username}
+              isFollowing={isFollowing ? isFollowing : false}
+            />
+          )}
         </div>
         {loggedInUser && loggedInUser.username === user.username && (
           <TwitBox messageMutator={messagesMutator} user={loggedInUser} />
@@ -53,6 +65,42 @@ const MyTimeline: React.FunctionComponent<{
 };
 
 export default MyTimeline;
+
+export const FollowButtons: React.FunctionComponent<{
+  isFollowing: boolean;
+  username: string;
+  mutateFollower: mutateFollowerType | undefined;
+}> = ({ isFollowing, username, mutateFollower }) => {
+  async function doTheFollow(task: 'follow' | 'unfollow') {
+    try {
+      if (username) {
+        const r = await axios.post(
+          `/api/${username}/${task}`,
+          {},
+          {
+            headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` },
+          }
+        );
+
+        if (mutateFollower) {
+          mutateFollower();
+        }
+
+        console.log(r.data);
+      } else {
+        alert('No username!');
+      }
+    } catch (e: any) {
+      console.log(e.response.data);
+    }
+  }
+
+  if (isFollowing) {
+    return <button onClick={() => doTheFollow('unfollow')}>Unfollow {username}</button>;
+  } else {
+    return <button onClick={() => doTheFollow('follow')}>Follow {username}</button>;
+  }
+};
 
 export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: messageMutatorType | undefined }> = ({
   user,

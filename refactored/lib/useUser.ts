@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { TUser } from '../models/User.scheme';
 import axios from 'axios';
 
-const fetcher = (url: string, token: string) =>
+export const fetcher = (url: string, token: string) =>
   axios.get(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) => res.data);
 
 export const fetcherGet = (url: string) => axios.get(url).then((res) => res.data);

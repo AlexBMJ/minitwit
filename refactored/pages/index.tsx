@@ -15,6 +15,7 @@ import { UserInfo } from '../types/userInfo';
 
 const Home: NextPage = () => {
   const { user, mutateUser, error } = useUser({ redirectIfFound: false, redirectTo: '/' });
+
   const {
     data,
     mutate: mutateMessages,
