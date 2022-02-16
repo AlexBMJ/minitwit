@@ -24,3 +24,10 @@ export async function follow(userid1: Types.ObjectId, userid2: Types.ObjectId) {
 export async function unfollow(userid1: Types.ObjectId, userid2: Types.ObjectId) {
   await Follow.findOneAndDelete({ follower_id: userid1, other_id: userid2 });
 }
+
+export async function isfollowing(userid1: Types.ObjectId, userid2: Types.ObjectId) {
+    if (await Follow.findOne({ follower_id: userid1, other_id: userid2 })) {
+        return true
+    }
+    return false
+}
