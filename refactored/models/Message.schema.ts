@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 export interface TMessage {
   author_id: Types.ObjectId;
+  author_name: string;
   text: string;
   pub_date: Date;
   flagged: boolean;
@@ -12,6 +13,10 @@ export interface TMessage {
 const MessageSchema = new Schema<TMessage>({
   author_id: {
     type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
+  author_name: {
+    type: String,
     required: true,
   },
   text: {
