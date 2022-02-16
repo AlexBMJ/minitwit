@@ -41,7 +41,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       let user = await User.findById(decoded.userid);
 
       if (user) {
-        return res.json({ user: user });
+        return res.status(200).json({ user: user });
       }
       return res.status(500).json({ message: 'User not found!' });
     }
