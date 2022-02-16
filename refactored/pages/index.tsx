@@ -32,7 +32,11 @@ const Home: NextPage = () => {
   return (
     <div>
       <Layout user={user?.user}>
-        {user?.user && <Timeline messagesMutator={mutateMessages} messages={pMessages} loggedInUser={user.user} />}
+        {user?.user ? (
+          <Timeline messagesMutator={mutateMessages} messages={pMessages} loggedInUser={user.user} />
+        ) : (
+          <Timeline messagesMutator={mutateMessages} messages={pMessages} />
+        )}
       </Layout>
       <Footer />
     </div>
