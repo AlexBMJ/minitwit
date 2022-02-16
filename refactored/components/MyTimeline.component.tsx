@@ -5,38 +5,21 @@ import Image from 'next/image';
 import { TMessage } from '../models/Message.schema';
 import mongoose from 'mongoose';
 import Link from 'next/link';
+import { UserInfo } from '../types/userInfo';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { KeyedMutator } from 'swr';
 
-const MyTimeline: React.FunctionComponent<{ endpoint: string; user: TUser }> = ({ endpoint, user }) => {
-  const testMessages: { poster: TUser; message: TMessage }[] = [
-    {
-      poster: {
-        email: 'mikkel@gmail.com',
-        username: 'BECH',
-        pw_hash: '1234',
-      },
-      message: {
-        author_id: new mongoose.Types.ObjectId('620c1efc60b10e85373e99fa'),
-        flagged: false,
-        pub_date: new Date(),
-        text: 'This is the message',
-      },
-    },
-    {
-      poster: {
-        email: 'bech@gmail.com',
-        username: 'LETSGOO',
-        pw_hash: '1234',
-      },
-      message: {
-        author_id: new mongoose.Types.ObjectId('620c1efc60b10e85373e99fa'),
-        flagged: false,
-        pub_date: new Date(),
-        text: 'This is message 2',
-      },
-    },
-  ];
+type messageMutatorType = KeyedMutator<{
+  messages: TMessage[];
+}>;
 
-  console.log(user);
+const MyTimeline: React.FunctionComponent<{
+  user?: UserInfo;
+  loggedInUser?: TUser;
+  messages?: TMessage[];
+  messagesMutator?: messageMutatorType;
+}> = ({ user, loggedInUser, messages, messagesMutator }) => {
   if (user) {
     return (
       <>
@@ -46,25 +29,71 @@ const MyTimeline: React.FunctionComponent<{ endpoint: string; user: TUser }> = (
 
         <h2>{user.username} timeline</h2>
         <div className="followstatus">
-          <p>This is you</p>
+          {loggedInUser && loggedInUser.username === user.username ? <p>This is you</p> : <p>Follow {user.username}</p>}
         </div>
-        <TwitBox user={user} />
-        <Messages messages={testMessages} />
+        {loggedInUser && loggedInUser.username === user.username && (
+          <TwitBox messageMutator={messagesMutator} user={loggedInUser} />
+        )}
+        <Messages messages={user.messages} />
       </>
     );
   } else {
-    return <p>User not logged in!</p>;
+    return (
+      <>
+        <Head>
+          <title>Public timeline</title>
+        </Head>
+
+        <h2>Public timeline</h2>
+        {loggedInUser && <TwitBox messageMutator={messagesMutator} user={loggedInUser} />}
+        {messages && messages.length > 0 ? <Messages messages={messages} /> : <p>No messages</p>}
+      </>
+    );
   }
 };
 
 export default MyTimeline;
 
-export const TwitBox: React.FunctionComponent<{ user: TUser }> = ({ user }) => {
+export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: messageMutatorType | undefined }> = ({
+  user,
+  messageMutator,
+}) => {
+  const [newMessage, setNewMessage] = useState<string>('');
+
+  async function postMessage(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (newMessage) {
+      try {
+        const r = await axios.post(
+          '/api/add_message',
+          { message: newMessage },
+          { headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` } }
+        );
+
+        if (messageMutator) {
+          messageMutator();
+        }
+      } catch (e: any) {
+        console.log(e.response.data);
+      }
+    } else {
+      alert('You must do somehting');
+    }
+  }
+
   return (
     <div className="twitbox">
       <h3>What is on your mind {user.username}?</h3>
-      <form method="post">
-        <input type="text" name="text" id="text" required placeholder="What is on your mind?" />
+      <form onSubmit={postMessage} method="post">
+        <input
+          type="text"
+          name="text"
+          id="text"
+          onChange={(e) => setNewMessage(e.target.value)}
+          required
+          placeholder="What is on your mind?"
+        />
         <button type="submit">Share!</button>
       </form>
     </div>
@@ -72,9 +101,9 @@ export const TwitBox: React.FunctionComponent<{ user: TUser }> = ({ user }) => {
 };
 
 export const Messages: React.FunctionComponent<{
-  messages: { poster: TUser; message: TMessage }[];
+  messages: TMessage[];
 }> = ({ messages }) => {
-  if (messages.length > 0) {
+  if (messages && messages.length > 0) {
     return (
       <ul className="messages">
         {messages.map((v, i) => {
@@ -87,9 +116,9 @@ export const Messages: React.FunctionComponent<{
                   layout="fill"
                 />
               </div>
-              <Link href={`/timeline/${v.poster.username}`}>{v.poster.username}</Link>
-              <p>{v.message.text}</p>
-              <small>&mdash; {v.message.pub_date.toString()}</small>
+              <Link href={`/timeline/${v.author_name}`}>{v.author_name}</Link>
+              <p>{v.text}</p>
+              <small>&mdash; {v.pub_date.toString()}</small>
             </li>
           );
         })}
