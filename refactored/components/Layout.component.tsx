@@ -12,7 +12,7 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
     },
   };
 
-  const [errorMessages, setErrorMessages] = useState<string[]>(['error 1', 'error 2']);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   return (
     <div>
