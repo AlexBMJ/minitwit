@@ -13,7 +13,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
   } else if (req.method === 'POST') {
     if (req.authenticated && req.user) {
       try {
-        const result = await bcrypt.compare(req.body.password, req.user.pw_hash);
+        
         if (result) {
           let token = jwt.sign({ userid: req.user?._id?.toString() }, process.env.TOKEN_SECRET!);
           return res.status(200).json({ token: token, message: `Logged in as ${req.user?.username}.` });
