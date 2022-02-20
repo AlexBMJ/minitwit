@@ -1,7 +1,18 @@
 version: '3.9'
 
 services:
-  database:
+  app:
+    build: .
+    command: sh -c './wait-for db:27017 -- yarn run dev'
+    restart: always
+    ports:
+      - 3000:3000
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+
+  db:
     container_name: 'mongodb'
     restart: always
     image: mongo:5.0
