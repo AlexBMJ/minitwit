@@ -2,7 +2,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import User, { TUser } from '../models/User.scheme';
 import { Token } from '../types/jwt';
 import * as jwt from 'jsonwebtoken';
-import connectDB from './mongodb';
+import mongoose from 'mongoose';
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;
@@ -10,7 +10,9 @@ export interface AuthRequest extends NextApiRequest {
 }
 
 const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: NextApiResponse) => {
-  await connectDB(handler);
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.CONNECTION_STRING!);
+  }
   let user;
   req.authenticated = false;
   if (req.body.content && req.headers.authorization) {

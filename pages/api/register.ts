@@ -1,7 +1,5 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../middleware/mongodb';
+import { NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import { Token } from '../../types/jwt';
 import * as jwt from 'jsonwebtoken';
 import User from '../../models/User.scheme';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
