@@ -1,12 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Message from '../../models/Message.schema';
-import { Token } from '../../types/jwt';
+import Message from '../../../models/Message.schema';
+import User from '../../../models/User.scheme';
+import { Token } from '../../../types/jwt';
 import * as jwt from 'jsonwebtoken';
-import User from '../../models/User.scheme';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method === 'POST') {
-    if (req.body.message && req.headers.authorization) {
+  if (req.method === 'GET') {
+    const amount = <string>req.query.no;
+    const numberAmount = Number(amount);
+
+    if (numberAmount !== NaN) {
+      const recentMessages = await Message.find({}).limit(numberAmount).sort({ pub_date: -1 }).exec();
+
+      return res.status(200).json({ messages: recentMessages });
+    } else {
+      return res.status(400).json({ message: 'Not a number...' });
+    }
+  } else if (req.method === 'POST') {
+    if (req.body.content && req.headers.authorization) {
       const splittedAuth = req.headers.authorization?.split(' ');
 
       if (splittedAuth.length === 2) {
@@ -17,7 +28,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             author_id: user._id,
             flagged: false,
             pub_date: new Date(),
-            text: req.body.message,
+            text: req.body.content,
             author_name: user.username,
           }).save();
 
@@ -32,7 +43,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).json({ message: 'Missing data' });
     }
   } else {
-    res.status(400).json({ message: 'Method not supported!' });
+    return res.status(400).json({ message: 'Method not supported!' });
   }
 };
 

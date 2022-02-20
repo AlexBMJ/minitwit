@@ -20,7 +20,7 @@ const Home: NextPage = () => {
     data,
     mutate: mutateMessages,
     error: errortwo,
-  } = useSWR<{ messages: TMessage[] }>('/api/messages/20/recent', fetcherGet);
+  } = useSWR<{ messages: TMessage[] }>('/api/msgs/recent?amount=20', fetcherGet);
   const [pMessages, setPMessages] = useState<TMessage[]>([]);
 
   useEffect(() => {

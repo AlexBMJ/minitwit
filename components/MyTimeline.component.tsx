@@ -114,8 +114,8 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
     if (newMessage) {
       try {
         const r = await axios.post(
-          '/api/add_message',
-          { message: newMessage },
+          '/api/msgs/' + user.username,
+          { content: newMessage },
           { headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` } }
         );
 
