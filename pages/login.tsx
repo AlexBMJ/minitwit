@@ -16,11 +16,12 @@ const Login: NextPage = () => {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (formBody.username && formBody.password) {
+      console.log(formBody);
       try {
         setErrorMessage('');
         const r = await axios.post('/api/login', formBody, {
           headers: {
-            authentication: `Basic ${Buffer.from(`${formBody.username}:${formBody.password}`).toString('base64')}`,
+            authorization: `Basic ${Buffer.from(`${formBody.username}:${formBody.password}`).toString('base64')}`,
           },
         });
 
