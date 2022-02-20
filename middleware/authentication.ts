@@ -23,7 +23,7 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
         var decoded = <Token>jwt.verify(splittedAuth[1], process.env.TOKEN_SECRET!);
         user = await User.findById(decoded.userid);
       } else if (splittedAuth[0] == 'Basic') {
-        let creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 1);
+        let creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 2);
         user = await User.findOne({ username: creds[0].toLowerCase() });
         if (user) {
           const result = await compare(creds[1], user.pw_hash);
