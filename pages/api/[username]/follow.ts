@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { follow, get_user } from '../../../db_helpers/user_helper';
+import { follow, get_user } from '../../../helpers/user_helper';
 import { verify } from 'jsonwebtoken';
 import { Token } from '../../../types/jwt';
 import { Types } from 'mongoose';
