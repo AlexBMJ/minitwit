@@ -27,15 +27,8 @@ const Register: NextPage = () => {
           setErrorMessage('');
           const r = await axios.post('/api/register', formBody);
 
-          if (r.data.token) {
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('access_token', r.data.token);
-              alert('Successfully registered!');
-              Router.push('/');
-            }
-          } else {
-            setErrorMessage('We could not get your token!');
-          }
+          alert('Successfully registered!');
+          Router.push('/');
         } catch (err: any) {
           console.log(err.response.data);
           if (err.response.data) {
