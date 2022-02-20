@@ -12,20 +12,10 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
     return res.status(401).json('Unauthorized');
   } else if (req.method === 'POST') {
     if (req.authenticated && req.user) {
-      try {
-        
-        if (result) {
-          let token = jwt.sign({ userid: req.user?._id?.toString() }, process.env.TOKEN_SECRET!);
-          return res.status(200).json({ token: token, message: `Logged in as ${req.user?.username}.` });
-        } else {
-          return res.status(400).json({ message: 'Incorrect password!' });
-        }
-      } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: 'Error comparing!' });
-      }
+      let token = jwt.sign({ userid: req.user?._id?.toString() }, process.env.TOKEN_SECRET!);
+      return res.status(200).json({ token: token, message: `Logged in as ${req.user?.username}.` });
     } else {
-      return res.status(400).json({ message: 'Username is required!' });
+      return res.status(400).json({ message: 'Incorrect username or password!' });
     }
   } else {
     return res.status(400).json({ message: 'Bad request!' });
