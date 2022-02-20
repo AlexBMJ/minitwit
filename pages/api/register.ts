@@ -16,7 +16,11 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
             if (!err) {
               bcrypt.hash(password, salt, async function (err, hash) {
                 if (!err) {
-                  const newUser = await new User({ email: email, pw_hash: hash, username: username }).save();
+                  const newUser = await new User({
+                    email: email,
+                    pw_hash: hash,
+                    username: username.toLowerCase(),
+                  }).save();
                   let token = jwt.sign({ userid: newUser.id }, process.env.TOKEN_SECRET!);
                   return res.status(200).json({ token: token, message: `Logged in as ${newUser.username}.` });
                 } else {
