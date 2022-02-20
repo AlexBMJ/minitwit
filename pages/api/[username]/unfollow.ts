@@ -1,33 +1,21 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { unfollow, get_user } from '../../../helpers/user_helper';
-import { verify } from 'jsonwebtoken';
-import { Token } from '../../../types/jwt';
-import { Types } from 'mongoose';
+import type { NextApiResponse } from 'next';
+import { get_user, unfollow } from '../../../helpers/user_helper';
+import authenticate, { AuthRequest } from '../../../middleware/authentication';
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    if (req.headers.authorization) {
-      const splittedAuth = req.headers.authorization.split(' ');
-
-      if (splittedAuth.length === 2) {
-        let token = <Token>verify(req.headers.authorization.split(' ')[1], process.env.TOKEN_SECRET!);
-
-        if (token.userid) {
-          const user_obj = await get_user({ username: <string>req.query.username });
-          if (user_obj && user_obj._id) {
-            await unfollow(new Types.ObjectId(token.userid), user_obj._id);
-            return res.status(200).json({});
-          }
-          return res.status(404).json({});
-        }
-        return res.status(400).json({});
+    if (req.authenticated && req.user) {
+      const user_obj = await get_user({ username: <string>req.query.username });
+      if (user_obj && user_obj._id && req.user._id) {
+        await unfollow(req.user._id, user_obj._id);
+        return res.status(200).json({});
+      } else {
+        return res.status(500).json('Internal Server Error');
       }
-
-      return res.status(401).json({});
     }
-    return res.status(401).json({});
+  } else {
+    return res.status(400).json('Bad Request');
   }
-  return res.status(400).json({});
 };
 
-export default handler;
+export default authenticate(handler);

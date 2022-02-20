@@ -4,8 +4,9 @@ import bcrypt from 'bcryptjs';
 import { Token } from '../../types/jwt';
 import * as jwt from 'jsonwebtoken';
 import User from '../../models/User.scheme';
+import authenticate, { AuthRequest } from '../../middleware/authentication';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: AuthRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { username, email, password } = req.body;
 
@@ -36,19 +37,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       return res.status(400).json({ message: 'Username, email and password must be set!' });
     }
   } else if (req.method === 'GET') {
-    if (req.headers.authorization) {
-      var decoded = <Token>jwt.verify(req.headers.authorization?.split(' ')[1], process.env.TOKEN_SECRET!);
-      let user = await User.findById(decoded.userid);
-
-      if (user) {
-        return res.status(200).json({ user: user });
-      }
-      return res.status(500).json({ message: 'User not found!' });
+    if (req.authenticated) {
+      return res.status(200).json({ user: req.user });
     }
-    return res.status(400).json({ message: 'No headers' });
+    return res.status(401).json('Unauthorized');
   } else {
     return res.status(400).json({ message: 'Method not accepted!' });
   }
 }
 
-export default connectDB(handler);
+export default authenticate(handler);

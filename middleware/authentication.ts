@@ -4,26 +4,32 @@ import { Token } from '../types/jwt';
 import * as jwt from 'jsonwebtoken';
 import connectDB from './mongodb';
 
-interface Request extends NextApiRequest {
-  user: TUser;
+export interface AuthRequest extends NextApiRequest {
+  user?: TUser;
+  authenticated?: boolean;
 }
 
-const authenticate = (handler: NextApiHandler) => async (req: Request, res: NextApiResponse) => {
+const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: NextApiResponse) => {
   await connectDB(handler);
+  let user;
+  req.authenticated = false;
   if (req.body.content && req.headers.authorization) {
     const splittedAuth = req.headers.authorization?.split(' ');
     if (splittedAuth.length === 2) {
       if (splittedAuth[0] == 'Bearer') {
         var decoded = <Token>jwt.verify(splittedAuth[1], process.env.TOKEN_SECRET!);
-        let user = await User.findById(decoded.userid);
-        if (user) {
-          req.user = user;
-        }
-        return handler(req, res);
+        user = await User.findById(decoded.userid);
       } else if (splittedAuth[0] == 'Basic') {
+        let creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 1);
+        user = await User.findOne({ username: creds[0].toLowerCase(), password: creds[1] });
       }
     }
   }
+  if (user) {
+    req.user = user;
+    req.authenticated = true;
+  }
+  return handler(req, res);
 };
 
 export default authenticate;
