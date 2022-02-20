@@ -19,7 +19,9 @@ const Login: NextPage = () => {
       try {
         setErrorMessage('');
         const r = await axios.post('/api/login', formBody, {
-          headers: { authentication: Buffer.from(`${formBody.username}:${formBody.password}`).toString('base64') },
+          headers: {
+            authentication: `Basic ${Buffer.from(`${formBody.username}:${formBody.password}`).toString('base64')}`,
+          },
         });
 
         if (r.data.token) {
