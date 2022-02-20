@@ -1,10 +1,14 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import User from '../models/User.scheme';
+import User, { TUser } from '../models/User.scheme';
 import { Token } from '../types/jwt';
 import * as jwt from 'jsonwebtoken';
 import connectDB from './mongodb';
 
-const authenticate = (handler: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
+interface Request extends NextApiRequest {
+  user: TUser;
+}
+
+const authenticate = (handler: NextApiHandler) => async (req: Request, res: NextApiResponse) => {
   await connectDB(handler);
   if (req.body.content && req.headers.authorization) {
     const splittedAuth = req.headers.authorization?.split(' ');
