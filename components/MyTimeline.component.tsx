@@ -85,8 +85,6 @@ export const FollowButtons: React.FunctionComponent<{
         if (mutateFollower) {
           mutateFollower();
         }
-
-        console.log(r.data);
       } else {
         alert('No username!');
       }

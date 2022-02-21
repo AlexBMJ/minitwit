@@ -27,7 +27,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
 
         return res.status(200).json({ message: 'Created!', data: newMessage });
       } else {
-        return res.status(401).json({ message: 'No USER' });
+        return res.status(404).json({ message: 'No USER' });
       }
     } else {
       res.status(400).json({ message: 'Missing data' });

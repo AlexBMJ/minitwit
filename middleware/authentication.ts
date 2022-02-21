@@ -27,6 +27,7 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
         user = await User.findOne({ username: creds[0].toLowerCase() });
         if (user) {
           const result = await compare(creds[1], user.pw_hash);
+          console.log(result);
         }
       }
     }

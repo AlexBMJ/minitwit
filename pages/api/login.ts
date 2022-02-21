@@ -9,7 +9,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
     if (req.authenticated) {
       return res.status(200).json({ user: req.user });
     }
-    return res.status(401).json('Unauthorized');
+    return res.status(403).json('Unauthorized');
   } else if (req.method === 'POST') {
     if (req.authenticated && req.user) {
       let token = jwt.sign({ userid: req.user._id?.toString() }, process.env.TOKEN_SECRET!);

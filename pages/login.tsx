@@ -16,7 +16,6 @@ const Login: NextPage = () => {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (formBody.username && formBody.password) {
-      console.log(formBody);
       try {
         setErrorMessage('');
         const r = await axios.post('/api/login', formBody, {
