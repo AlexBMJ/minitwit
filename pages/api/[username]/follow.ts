@@ -4,18 +4,20 @@ import authenticate, { AuthRequest } from '../../../middleware/authentication';
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    if (req.authenticated && req.user) {
-      const user_obj = await get_user({ username: <string>req.query.username });
-      if (user_obj && user_obj._id && req.user._id) {
-        await follow(req.user._id, user_obj._id);
-        return res.status(200).json({});
-      } else {
-        return res.status(500).json('Internal Server Error');
+    const user = await get_user({ username: <string>req.query.username });
+    if (req.body.follow) {
+      const to_follow = await get_user({ username: <string>req.body.follow });
+      if (user && to_follow) {
+        if (req.authenticated && req.user && (req.user.username == user.username || req.user.admin)) {
+          if (user._id && to_follow._id) {
+            await follow(user._id, to_follow._id);
+            return res.status(204).send('');
+          }
+        }
       }
     }
-  } else {
-    return res.status(400).json('Bad Request');
   }
+  return res.status(404).json('Bad Request');
 };
 
 export default authenticate(handler);

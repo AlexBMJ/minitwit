@@ -1,17 +1,16 @@
 import { NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
 import User from '../../models/User.scheme';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
+import { get_user } from '../../helpers/user_helper';
 
 async function handler(req: AuthRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { username, email, pwd }: { username: string; email: string; pwd: string } = req.body;
-    console.log(req.body);
     if (!username.includes(':')) {
       if (username && email && pwd) {
         try {
-          const user = await User.findOne({ email: email });
+          const user = await get_user({ username: username });
           if (!user) {
             const salt = await bcrypt.genSalt(10);
             const hash = await bcrypt.hash(pwd, salt);
@@ -21,7 +20,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
               pw_hash: hash,
               username: username.toLowerCase(),
             }).save();
-            return res.status(204).end();
+            return res.status(204).send('');
           } else {
             return res.status(400).json({ message: 'User with that email was already found!' });
           }

@@ -4,6 +4,7 @@ import { Token } from '../types/jwt';
 import * as jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { compare } from 'bcryptjs';
+import { get_user } from '../helpers/user_helper';
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;
@@ -24,10 +25,12 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
         user = await User.findById(decoded.userid);
       } else if (splittedAuth[0] == 'Basic') {
         let creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 2);
-        user = await User.findOne({ username: creds[0].toLowerCase() });
-        if (user) {
-          const result = await compare(creds[1], user.pw_hash);
-          console.log(result);
+        let check_user = await get_user({ username: creds[0] });
+        if (check_user) {
+          const result = await compare(creds[1], check_user.pw_hash);
+          if (result) {
+            user = check_user;
+          }
         }
       }
     }
