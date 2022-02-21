@@ -12,33 +12,21 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
       if (username && email && pwd) {
         try {
           const user = await User.findOne({ email: email });
-          console.log(user);
           if (!user) {
-            bcrypt.genSalt(10, async function (err, salt) {
-              if (!err) {
-                bcrypt.hash(pwd, salt, async function (err, hash) {
-                  if (!err) {
-                    const newUser = await new User({
-                      email: email,
-                      pw_hash: hash,
-                      username: username.toLowerCase(),
-                    }).save();
-                    return res.status(204).end();
-                  } else {
-                    console.log(err);
-                    return res.status(500).json({ message: 'We could not generate a hash!' });
-                  }
-                });
-              } else {
-                console.log(err);
-                return res.status(500).json({ message: 'We could not generate a salt!' });
-              }
-            });
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(pwd, salt);
+
+            await new User({
+              email: email,
+              pw_hash: hash,
+              username: username.toLowerCase(),
+            }).save();
+            return res.status(204).end();
           } else {
             return res.status(400).json({ message: 'User with that email was already found!' });
           }
         } catch (e) {
-          console.log(e);
+          console.log('ERROR', e);
           return res.status(500).json({});
         }
       } else {
