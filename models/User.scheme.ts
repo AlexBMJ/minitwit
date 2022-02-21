@@ -1,4 +1,4 @@
-import mongoose, { Model, Types} from 'mongoose';
+import mongoose, { Model, Types } from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -7,6 +7,7 @@ export interface TUser {
   username: string;
   email: string;
   pw_hash: string;
+  admin: boolean;
 }
 
 const UserSchema = new Schema<TUser>({
@@ -21,6 +22,11 @@ const UserSchema = new Schema<TUser>({
   pw_hash: {
     type: String,
     required: true,
+  },
+  admin: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
 });
 

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { get_user } from '../../db_helpers/user_helper';
+import { get_user } from '../../helpers/user_helper';
 import Message from '../../models/Message.schema';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {

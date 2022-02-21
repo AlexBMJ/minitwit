@@ -14,28 +14,21 @@ const Register: NextPage = () => {
   const [formBody, setFormBody] = useState<{
     username?: string;
     email?: string;
-    password?: string;
+    pwd?: string;
     passwordAgain?: string;
-  }>({ username: '', email: '', password: '', passwordAgain: '' });
+  }>({ username: '', email: '', pwd: '', passwordAgain: '' });
 
   async function registerUser(e: React.FormEvent) {
     e.preventDefault();
 
-    if (formBody.username && formBody.email && formBody.password && formBody.passwordAgain) {
-      if (formBody.password === formBody.passwordAgain) {
+    if (formBody.username && formBody.email && formBody.pwd && formBody.passwordAgain) {
+      if (formBody.pwd === formBody.passwordAgain) {
         try {
           setErrorMessage('');
           const r = await axios.post('/api/register', formBody);
 
-          if (r.data.token) {
-            if (typeof window !== 'undefined') {
-              localStorage.setItem('access_token', r.data.token);
-              alert('Successfully registered!');
-              Router.push('/');
-            }
-          } else {
-            setErrorMessage('We could not get your token!');
-          }
+          alert('Successfully registered!');
+          Router.push('/');
         } catch (err: any) {
           console.log(err.response.data);
           if (err.response.data) {
@@ -90,11 +83,11 @@ const Register: NextPage = () => {
             <dt>Password:</dt>
             <dd>
               <input
-                onChange={(e) => setFormBody({ ...formBody, password: e.target.value })}
+                onChange={(e) => setFormBody({ ...formBody, pwd: e.target.value })}
                 type="password"
                 name="password"
                 size={30}
-                value={formBody.password}
+                value={formBody.pwd}
               />
             </dd>
             <dt>

@@ -85,8 +85,6 @@ export const FollowButtons: React.FunctionComponent<{
         if (mutateFollower) {
           mutateFollower();
         }
-
-        console.log(r.data);
       } else {
         alert('No username!');
       }
@@ -114,8 +112,8 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
     if (newMessage) {
       try {
         const r = await axios.post(
-          '/api/add_message',
-          { message: newMessage },
+          '/api/msgs/' + user.username,
+          { content: newMessage },
           { headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` } }
         );
 

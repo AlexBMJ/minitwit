@@ -1,57 +1,25 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from 'next';
-import connectDB from '../../middleware/mongodb';
-import User, { TUser } from '../../models/User.scheme';
+import type { NextApiResponse } from 'next';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { Token } from '../../types/jwt';
+import authenticate, { AuthRequest } from '../../middleware/authentication';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: AuthRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
-    if (req.headers.authorization) {
-      const splittedAuth = req.headers.authorization?.split(' ');
-
-      if (splittedAuth.length === 2) {
-        var decoded = <Token>jwt.verify(splittedAuth[1], process.env.TOKEN_SECRET!);
-        let user = await User.findById(decoded.userid);
-        if (user) {
-          return res.status(200).json({ user: user });
-        } else {
-          return res.status(401).json({ message: 'No USER' });
-        }
-      } else {
-        return res.status(401).json({ message: 'No JWT' });
-      }
-    } else {
-      return res.status(500).json({ message: 'User not found!' });
+    if (req.authenticated) {
+      return res.status(200).json({ user: req.user });
     }
+    return res.status(403).json('Unauthorized');
   } else if (req.method === 'POST') {
-    if (req.body.username && req.body.password) {
-      const user = await User.findOne({ username: req.body.username });
-
-      if (user) {
-        try {
-          const result = await bcrypt.compare(req.body.password, user.pw_hash);
-
-          if (result) {
-            let token = jwt.sign({ userid: user?.id }, process.env.TOKEN_SECRET!);
-            return res.status(200).json({ token: token, message: `Logged in as ${user?.username}.` });
-          } else {
-            return res.status(400).json({ message: 'Incorrect password!' });
-          }
-        } catch (err) {
-          console.error(err);
-          return res.status(500).json({ message: 'Error comparing!' });
-        }
-      } else {
-        return res.status(500).json({ message: 'User not found!' });
-      }
+    if (req.authenticated && req.user) {
+      let token = jwt.sign({ userid: req.user._id?.toString() }, process.env.TOKEN_SECRET!);
+      return res.status(200).json({ token: token, message: `Logged in as ${req.user?.username}.` });
     } else {
-      return res.status(400).json({ message: 'Username is required!' });
+      return res.status(400).json({ message: 'Incorrect username or password!' });
     }
   } else {
     return res.status(400).json({ message: 'Bad request!' });
   }
 }
 
-export default connectDB(handler);
+export default authenticate(handler);
