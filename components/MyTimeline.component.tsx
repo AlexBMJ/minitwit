@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { TUser } from '../models/User.scheme';
+import User, { TUser } from '../models/User.scheme';
 import styles from './styles/timeline.module.scss';
 import Image from 'next/image';
 import { TMessage } from '../models/Message.schema';
@@ -37,6 +37,7 @@ const MyTimeline: React.FunctionComponent<{
             <p>This is you</p>
           ) : (
             <FollowButtons
+              loggedInUser={loggedInUser}
               mutateFollower={mutateFollower}
               username={user.username}
               isFollowing={isFollowing ? isFollowing : false}
@@ -67,16 +68,17 @@ const MyTimeline: React.FunctionComponent<{
 export default MyTimeline;
 
 export const FollowButtons: React.FunctionComponent<{
+  loggedInUser?: TUser;
   isFollowing: boolean;
   username: string;
   mutateFollower: mutateFollowerType | undefined;
-}> = ({ isFollowing, username, mutateFollower }) => {
+}> = ({ loggedInUser, isFollowing, username, mutateFollower }) => {
   async function doTheFollow(task: 'follow' | 'unfollow') {
     try {
       if (username) {
         const r = await axios.post(
-          `/api/${username}/${task}`,
-          {},
+          `/api/fllws/${loggedInUser?.username}`,
+          task === 'follow' ? { follow: username } : { unfollow: username },
           {
             headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` },
           }

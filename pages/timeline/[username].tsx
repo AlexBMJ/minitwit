@@ -26,7 +26,7 @@ const UsernameTimeline: NextPage = () => {
     data: isFollowingData,
     mutate: mutateFollow,
     error: errortwo,
-  } = useSWR([`/api/${username}/isfollowing`, accessToken], fetcher);
+  } = useSWR([`/api/fllws/${user?.user.username}?isfollowing=${username}`, accessToken], fetcher);
 
   const [userViewing, setUserViewing] = useState<UserInfo>();
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
@@ -36,7 +36,6 @@ const UsernameTimeline: NextPage = () => {
       axios
         .get(`/api/${username}`)
         .then((response) => {
-          console.log(response.data);
           setUserViewing(response.data);
         })
         .catch((err) => {
@@ -45,7 +44,6 @@ const UsernameTimeline: NextPage = () => {
     }
 
     if (isFollowingData) {
-      console.log(isFollowingData);
       if (isFollowingData.user === username) {
         setIsFollowing(isFollowingData.isfollowing);
       }
