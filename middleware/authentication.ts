@@ -16,7 +16,6 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
     await mongoose.connect(process.env.CONNECTION_STRING!);
   }
   let user;
-  req.authenticated = false;
   if (req.headers.authorization) {
     const splittedAuth = req.headers.authorization?.split(' ');
     if (splittedAuth.length === 2) {
