@@ -33,10 +33,10 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
           return res.status(404).json({ message: 'No USER' });
         }
       } else {
-        res.status(403).json({ message: 'Unauthorized' });
+        return res.status(403).json({ message: 'Unauthorized' });
       }
     } else {
-      res.status(400).json({ message: 'Missing data' });
+      return res.status(400).json({ message: 'Missing data' });
     }
   } else {
     return res.status(400).json({ message: 'Method not supported!' });

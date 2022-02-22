@@ -16,7 +16,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
           }
           return res.status(404).json('User not found');
         } else {
-          res.status(403).json({ message: 'Unauthorized' });
+          return res.status(403).json({ message: 'Unauthorized' });
         }
       }
     }
