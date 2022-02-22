@@ -85,4 +85,18 @@ describe('Register tests', () => {
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData().user).toEqual(req.user);
   });
+
+  it('Register GET returns unauthorized', async () => {
+    req.method = 'GET';
+    await register(req, res);
+    expect(res.statusCode).toBe(403);
+    expect(res._getJSONData()).toBe('Unauthorized');
+  });
+
+  it('Register METHOD not accepted', async () => {
+    req.method = 'PUT';
+    await register(req, res);
+    expect(res.statusCode).toBe(400);
+    expect(res._getJSONData().message).toBe('Method not accepted!');
+  });
 });
