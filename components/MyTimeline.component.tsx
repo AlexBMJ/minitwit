@@ -9,6 +9,7 @@ import { UserInfo } from '../types/userInfo';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { KeyedMutator } from 'swr';
+import router from 'next/router';
 
 type messageMutatorType = KeyedMutator<{
   messages: TMessage[];
@@ -75,20 +76,25 @@ export const FollowButtons: React.FunctionComponent<{
 }> = ({ loggedInUser, isFollowing, username, mutateFollower }) => {
   async function doTheFollow(task: 'follow' | 'unfollow') {
     try {
-      if (username) {
-        const r = await axios.post(
-          `/api/fllws/${loggedInUser?.username}`,
-          task === 'follow' ? { follow: username } : { unfollow: username },
-          {
-            headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` },
-          }
-        );
+      if (loggedInUser && loggedInUser.username) {
+        if (username) {
+          const r = await axios.post(
+            `/api/fllws/${loggedInUser.username}`,
+            task === 'follow' ? { follow: username } : { unfollow: username },
+            {
+              headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` },
+            }
+          );
 
-        if (mutateFollower) {
-          mutateFollower();
+          if (mutateFollower) {
+            mutateFollower();
+          }
+        } else {
+          alert('No username!');
         }
       } else {
-        alert('No username!');
+        alert('You must be logged in to follow someone!');
+        router.push('/login');
       }
     } catch (e: any) {
       console.log(e.response.data);
