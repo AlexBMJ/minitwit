@@ -1,16 +1,10 @@
-import { NextApiResponse } from 'next';
 import { AuthRequest } from '../middleware/authentication';
 import register from '../pages/api/register';
 import User, { TUser } from '../models/User.scheme';
-import Message from '../models/Message.schema';
 import * as httpMocks from 'node-mocks-http';
-import mongoose, { Mongoose } from 'mongoose';
-import * as MongoClient from 'mongodb';
-
-interface TestAPIResponse extends NextApiResponse {
-  _getJSONData: () => any;
-  _getData: () => any;
-}
+import mongoose from 'mongoose';
+import { TestAPIResponse } from '../types/tests';
+import { removeAllDataFromDB } from '../helpers/test_helper';
 
 describe('Register tests', () => {
   let req: AuthRequest;
@@ -19,6 +13,8 @@ describe('Register tests', () => {
     // JEST automatically sets MONGO_URL to the memory db
     await mongoose.connect(process.env.MONGO_URL!);
     await mongoose.connection.useDb('minitwit');
+
+    await removeAllDataFromDB(true);
   });
 
   beforeEach(async () => {

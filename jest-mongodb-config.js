@@ -8,5 +8,6 @@ module.exports = {
       dbName: 'minitwit',
     },
     autoStart: false,
+    useSharedDBForAllJestWorkers: false,
   },
 };
