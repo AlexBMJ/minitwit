@@ -1,2 +1,3 @@
 #!/bin/bash
-mongo "mongodb://dbuser:kdO86x8d9Nbc@localhost:27017/minitwit?authSource=admin" < sim_user.js
+source .env
+mongo $CONNECTION_STRING < sim_user.js
