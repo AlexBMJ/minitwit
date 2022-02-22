@@ -78,6 +78,8 @@ web_modules/
 # Output of 'npm pack'
 *.tgz
 
+.globalConfig.json
+
 # Yarn Integrity file
 .yarn-integrity
 
