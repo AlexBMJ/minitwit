@@ -6,8 +6,6 @@ import { TestAPIResponse } from '../types/tests';
 import login from '../pages/api/login';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import Follow from '../models/Follower.schema';
-import Message from '../models/Message.schema';
 import { removeAllDataFromDB } from '../helpers/test_helper';
 
 describe('Login tests', () => {
