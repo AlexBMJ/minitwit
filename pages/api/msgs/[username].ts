@@ -21,7 +21,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       if (req.authenticated && req.user && (req.user.username == username || req.user.admin)) {
         let user = await await get_user({ username: username.toLowerCase() });
         if (user) {
-          const newMessage = await new Message({
+          await new Message({
             author_id: user._id,
             flagged: false,
             pub_date: new Date(),
