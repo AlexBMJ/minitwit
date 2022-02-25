@@ -45,8 +45,7 @@ const Login: NextPage = () => {
     }
   }
 
-  if (!user?.user || error) {
-    return (
+  return !(!user?.user || error) ? <p>Loading...</p> : (
       <div>
         <Head>
           <title>Sign In</title>
@@ -55,9 +54,9 @@ const Login: NextPage = () => {
           <h2>Sign In</h2>
 
           {errorMessage && (
-            <div className="error">
-              <strong>Error:</strong> {errorMessage}
-            </div>
+              <div className="error">
+                <strong>Error:</strong> {errorMessage}
+              </div>
           )}
 
           <form onSubmit={submit} method="post">
@@ -65,43 +64,40 @@ const Login: NextPage = () => {
               <dt>Username:</dt>
               <dd>
                 <input
-                  onChange={(e) =>
-                    setFormBody({
-                      ...formBody,
-                      username: e.target.value,
-                    })
-                  }
-                  type="text"
-                  name="username"
-                  size={30}
+                    onChange={(e) =>
+                        setFormBody({
+                          ...formBody,
+                          username: e.target.value,
+                        })
+                    }
+                    type="text"
+                    name="username"
+                    size={30}
                 />
               </dd>
               <dt>Password:</dt>
               <dd>
                 <input
-                  onChange={(e) =>
-                    setFormBody({
-                      ...formBody,
-                      password: e.target.value,
-                    })
-                  }
-                  type="password"
-                  name="password"
-                  size={30}
+                    onChange={(e) =>
+                        setFormBody({
+                          ...formBody,
+                          password: e.target.value,
+                        })
+                    }
+                    type="password"
+                    name="password"
+                    size={30}
                 />
               </dd>
             </dl>
             <div className="actions">
-              <input type="submit" value="Sign In" />
+              <input type="submit" value="Sign In"/>
             </div>
           </form>
         </Layout>
-        <Footer />
+        <Footer/>
       </div>
-    );
-  } else {
-    return <p>Loading...</p>;
-  }
+  );
 };
 
 export default Login;

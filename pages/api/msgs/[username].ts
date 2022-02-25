@@ -1,7 +1,7 @@
 import type {NextApiResponse} from 'next';
 import Message from '../../../models/Message.schema';
 import authenticate, {AuthRequest} from '../../../middleware/authentication';
-import {get_user} from '../../../helpers/user_helper';
+import {getUser} from '../../../helpers/user_helper';
 import MiniTwitRoute from "../../../helpers/api_helper";
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
@@ -28,7 +28,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       return res.status(403).json({message: 'Unauthorized'});
     }
 
-    let user = await await get_user({username: username.toLowerCase()});
+    let user = await await getUser({username: username.toLowerCase()});
 
     if (!user) {
       return res.status(404).json({message: 'No USER'});

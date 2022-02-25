@@ -45,8 +45,7 @@ const Register: NextPage = () => {
     }
   }
 
-  if (!user?.user || error) {
-    return (
+  return !(!user?.user || error) ? <p>Loading...</p> : (
       <>
         <Head>
           <title>Register - MiniTwit</title>
@@ -54,40 +53,40 @@ const Register: NextPage = () => {
         <Layout>
           <h2>Register</h2>
           {errorMessage && (
-            <div className="error">
-              <strong>Error:</strong> {errorMessage}
-            </div>
+              <div className="error">
+                <strong>Error:</strong> {errorMessage}
+              </div>
           )}
 
           <form onSubmit={registerUser} method="post">
             <dt>Username:</dt>
             <dd>
               <input
-                onChange={(e) => setFormBody({ ...formBody, username: e.target.value })}
-                type="text"
-                name="username"
-                size={30}
-                value={formBody.username}
+                  onChange={(e) => setFormBody({...formBody, username: e.target.value})}
+                  type="text"
+                  name="username"
+                  size={30}
+                  value={formBody.username}
               />
             </dd>
             <dt>E-Mail:</dt>
             <dd>
               <input
-                onChange={(e) => setFormBody({ ...formBody, email: e.target.value })}
-                type="text"
-                name="email"
-                size={30}
-                value={formBody.email}
+                  onChange={(e) => setFormBody({...formBody, email: e.target.value})}
+                  type="text"
+                  name="email"
+                  size={30}
+                  value={formBody.email}
               />
             </dd>
             <dt>Password:</dt>
             <dd>
               <input
-                onChange={(e) => setFormBody({ ...formBody, pwd: e.target.value })}
-                type="password"
-                name="password"
-                size={30}
-                value={formBody.pwd}
+                  onChange={(e) => setFormBody({...formBody, pwd: e.target.value})}
+                  type="password"
+                  name="password"
+                  size={30}
+                  value={formBody.pwd}
               />
             </dd>
             <dt>
@@ -95,25 +94,22 @@ const Register: NextPage = () => {
             </dt>
             <dd>
               <input
-                onChange={(e) => setFormBody({ ...formBody, passwordAgain: e.target.value })}
-                type="password"
-                name="password2"
-                size={30}
-                value={formBody.passwordAgain}
+                  onChange={(e) => setFormBody({...formBody, passwordAgain: e.target.value})}
+                  type="password"
+                  name="password2"
+                  size={30}
+                  value={formBody.passwordAgain}
               />
             </dd>
 
             <div className="actions">
-              <input type="submit" value="Sign Up" />
+              <input type="submit" value="Sign Up"/>
             </div>
           </form>
         </Layout>
-        <Footer />
+        <Footer/>
       </>
-    );
-  } else {
-    return <p>Loading...</p>;
-  }
+  );
 };
 
 export default Register;

@@ -1,17 +1,17 @@
 import type {NextApiResponse} from 'next';
-import {follow, get_user, isfollowing, unfollow} from '../../../helpers/user_helper';
+import {follow, getUser, isFollowing, unfollow} from '../../../helpers/user_helper';
 import authenticate, {AuthRequest} from '../../../middleware/authentication';
 import MiniTwitRoute from "../../../helpers/api_helper";
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
-  const user = await get_user({username: <string>req.query.username});
+  const user = await getUser({username: <string>req.query.username});
 
   if (req.method === 'POST') {
     if (!(req.body.follow || req.body.unfollow)) {
       return res.status(404).json('Bad Request');
     }
 
-    const to_follow = await get_user({username: <string>req.body.follow || <string>req.body.unfollow});
+    const to_follow = await getUser({username: <string>req.body.follow || <string>req.body.unfollow});
 
     if (!(user && to_follow)) {
       return res.status(404).json('Bad Request');
@@ -34,7 +34,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       return res.status(404).json('Bad Request');
     }
 
-    const is_following = await get_user({username: <string>req.query.isfollowing});
+    const is_following = await getUser({username: <string>req.query.isfollowing});
 
     if (!(user && is_following)) {
       return res.status(404).json('Bad Request');
@@ -45,7 +45,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     }
 
     if (user._id && is_following._id) {
-      let follow_status = await isfollowing(user._id, is_following._id);
+      let follow_status = await isFollowing(user._id, is_following._id);
       return res.status(200).json({user: is_following.username, isfollowing: follow_status});
     }
 
