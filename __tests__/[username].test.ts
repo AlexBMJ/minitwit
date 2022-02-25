@@ -2,10 +2,16 @@ import username from '../pages/api/[username]';
 import httpMocks from 'node-mocks-http';
 import mongoose from 'mongoose';
 import { removeAllDataFromDB } from '../helpers/test_helper';
-import User from '../models/User.scheme';
+import User, { TUser } from '../models/User.scheme';
 import bcrypt from 'bcryptjs';
+import {AuthRequest} from "../middleware/authentication";
+import {TestAPIResponse} from "../types/tests";
 
 describe('given existing user', () => {
+
+  let req: AuthRequest;
+  let res: TestAPIResponse;
+  let user: mongoose.Document<unknown, any, TUser> & TUser & { _id: mongoose.Types.ObjectId | undefined; };
   beforeAll(async () => {
     // Setup Memory DB
     // JEST automatically sets MONGO_URL to the memory db
@@ -15,7 +21,7 @@ describe('given existing user', () => {
     await removeAllDataFromDB(true);
 
     const hash = await bcrypt.hash('1234', 10);
-    await new User({
+    user = await new User({
       username: 'bech',
       admin: false,
       email: 'milb@itu.dk',
@@ -23,26 +29,51 @@ describe('given existing user', () => {
     }).save();
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
-  it('should respond with a 200 status code and user data', async () => {
-    const req = httpMocks.createRequest({
+  beforeEach(async() => {
+    const mockHTTP = httpMocks.createMocks({
       method: 'GET',
       url: '/api',
       query: {
         username: 'bech',
       },
     });
+    req = mockHTTP.req
+    res = mockHTTP.res
 
-    const res = httpMocks.createResponse();
+
+  })
+
+  afterAll(async () => {
+    await mongoose.connection.close();
+  });
+
+  it('should respond with a 200 status code and user data', async () => {
+
     await username(req, res);
-
     expect(res.statusCode).toBe(200);
     const data = res._getJSONData();
     expect(data.username).toBe('bech');
     expect(data.email).toBe('milb@itu.dk');
     expect(data.messages).toStrictEqual([]);
   });
+
+  it("should respond with a 404 status code non existing user", async ()=> {
+    req.query.username = "iDontExist";
+    await username(req, res);
+    expect(res.statusCode).toBe(404);
+  });
+
+  it("should respond with a 400 status code for missing username", async ()=> {
+    req.query.username = ""
+    await username(req, res);
+    expect(res.statusCode).toBe(400);
+    expect(res._getJSONData().message).toBe("No username!");
+  });
+
+  it("should respond with a 400 status code delete request", async ()=> {
+    req.method = "delete";
+    await username(req, res);
+    expect(res.statusCode).toBe(400);
+  });
+
 });
