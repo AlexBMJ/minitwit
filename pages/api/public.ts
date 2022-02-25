@@ -1,12 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Message from '../../models/Message.schema';
+import MiniTwitRoute from "../../helpers/api_helper";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== 'GET') {
-    return res.status(400);
-  }
-
-  const messages = await Message.aggregate()
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const messages = await Message
+    .aggregate()
     .lookup({
       from: 'users',
       localField: 'author_id',
@@ -19,3 +17,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   return res.status(200).json(messages);
 };
+
+export default MiniTwitRoute(handler, 'GET');
