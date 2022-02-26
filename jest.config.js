@@ -14,6 +14,8 @@ const customJestConfig = {
   moduleDirectories: ['node_modules', '<rootDir>/'],
   testEnvironment: 'node',
   preset: '@shelf/jest-mongodb',
+  collectCoverage: true,
+  coverageDirectory: '.'
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
