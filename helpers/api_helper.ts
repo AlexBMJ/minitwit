@@ -2,7 +2,7 @@ import {NextApiHandler, NextApiResponse} from "next";
 import {AuthRequest} from "../middleware/authentication";
 
 const MiniTwitRoute = (handler: NextApiHandler, ...methods: string[]) => async (req: AuthRequest, res: NextApiResponse) => {
-    if (methods.indexOf(req.method!) === null) {
+    if (methods.indexOf(req.method!) === -1) {
         return res.status(404).json('Bad Request');
     }
 
