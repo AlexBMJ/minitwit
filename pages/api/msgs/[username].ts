@@ -5,11 +5,15 @@ import { get_user } from '../../../helpers/user_helper';
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
+    const username = <string>req.query.username;
     const amount = <string>req.query.no;
     const numberAmount = Number(amount);
 
-    if (numberAmount !== NaN) {
-      const recentMessages = await Message.find({}).limit(numberAmount).sort({ pub_date: -1 }).exec();
+    if (!isNaN(numberAmount)) {
+      const recentMessages = await Message.find({ author_name: username })
+        .limit(numberAmount)
+        .sort({ pub_date: -1 })
+        .exec();
 
       return res.status(200).json({ messages: recentMessages });
     } else {
@@ -21,7 +25,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       if (req.authenticated && req.user && (req.user.username == username || req.user.admin)) {
         let user = await await get_user({ username: username.toLowerCase() });
         if (user) {
-          const newMessage = await new Message({
+          await new Message({
             author_id: user._id,
             flagged: false,
             pub_date: new Date(),

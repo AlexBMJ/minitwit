@@ -32,6 +32,11 @@ lib-cov
 coverage
 *.lcov
 
+lcov-report
+lcov.info
+clover.xml
+coverage-final.json
+
 # nyc test coverage
 .nyc_output
 
@@ -77,6 +82,8 @@ web_modules/
 
 # Output of 'npm pack'
 *.tgz
+
+globalConfig.json
 
 # Yarn Integrity file
 .yarn-integrity
