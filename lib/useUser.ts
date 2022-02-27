@@ -26,15 +26,17 @@ export default function useUser({ redirectTo = '', redirectIfFound = false } = {
     if ((!redirectTo || !user?.user?.email) && !error) {
       return;
     }
+    
     if (error) {
+      
       if (redirectTo && !redirectIfFound) {
         setIsLoading(false);
-        Router.push(redirectTo);
-      }
+        
+        if (redirectIfFound) {
+          return;
+        }
 
-      if (redirectTo && redirectIfFound) {
-        setIsLoading(false);
-        return;
+        Router.push(redirectTo);
       }
     }
 
@@ -58,7 +60,7 @@ export default function useUser({ redirectTo = '', redirectIfFound = false } = {
 
 export async function logout({ redirectTo = '' }: { redirectTo: string }) {
   if (typeof window !== 'undefined') {
-    var accessToken = localStorage.getItem('access_token') || '';
+    const accessToken = localStorage.getItem('access_token') || '';
     localStorage.clear();
     Router.push(redirectTo);
   }
