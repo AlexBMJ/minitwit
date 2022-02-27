@@ -30,5 +30,5 @@ export async function unfollow(userid1: Types.ObjectId, userid2: Types.ObjectId)
 }
 
 export async function isFollowing(userid1: Types.ObjectId, userid2: Types.ObjectId) {
-  return !!(await Follow.findOne({follower_id: userid1, other_id: userid2}));
+  return await Follow.findOne({follower_id: userid1, other_id: userid2});
 }
