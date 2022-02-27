@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs';
 import { AuthRequest } from '../middleware/authentication';
 import { TestAPIResponse } from '../types/tests';
 
-describe('given existing user', () => {
+describe('username tests', () => {
   let req: AuthRequest;
   let res: TestAPIResponse;
   let user: TUser;
