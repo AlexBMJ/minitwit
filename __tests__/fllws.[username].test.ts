@@ -106,17 +106,8 @@ describe('POST methods for Follow and unfollow tests', () => {
   });
 
   it('GET - Should return 404 for non existing user', async () => {
-    // Start by following the user
-    await Follow(req, res);
-
-    req.method = 'GET';
-    req.query.isfollowing = 'bech';
-
-    // make get request for non existing user
-    await Follow(req, res);
-
-    expect(res.statusCode).toBe(404);
-    expect(res._getData()).toBe('User not found');
+    // Needs to be fixed
+    expect(200).toBe(404);
   });
 });
 
