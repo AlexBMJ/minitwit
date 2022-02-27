@@ -86,10 +86,9 @@ describe('POST methods for Follow and unfollow tests', () => {
   });
 
   it('POST - Should return 403 for unauthorized user', async () => {
-    req.user!.username = 'someoneWhoDoesntExist';
-    req.query.authenticated = 'qweqwdasdqweqw';
+    req.authenticated = false;
     await Follow(req, res);
-    expect(res.statusCode).toBe(404);
+    expect(res.statusCode).toBe(403);
   });
 
   it('GET - Should return 200 for following user', async () => {

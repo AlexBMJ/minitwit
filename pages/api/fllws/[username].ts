@@ -16,7 +16,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
           }
           return res.status(404).json('User not found');
         } else {
-          res.status(403).json({ message: 'Unauthorized' });
+          return res.status(403).json({ message: 'Unauthorized' });
         }
       }
     }
@@ -29,14 +29,14 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
             let follow_status = await isfollowing(user._id, is_following._id);
             return res.status(200).json({ user: is_following.username, isfollowing: follow_status });
           }
-          return res.status(404).json('User not found');
+          return res.status(404).send('User not found');
         } else {
-          res.status(403).json({ message: 'Unauthorized' });
+          return res.status(403).json({ message: 'Unauthorized' });
         }
       }
     }
   }
-  return res.status(404).json('Bad Request');
+  return res.status(404).send('Bad Request');
 };
 
 export default authenticate(handler);
