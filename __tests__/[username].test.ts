@@ -10,7 +10,7 @@ import { TestAPIResponse } from '../types/tests';
 describe('given existing user', () => {
   let req: AuthRequest;
   let res: TestAPIResponse;
-  let user: mongoose.Document<unknown, any, TUser> & TUser & { _id: mongoose.Types.ObjectId | undefined };
+  let user: TUser;
   beforeAll(async () => {
     // Setup Memory DB
     // JEST automatically sets MONGO_URL to the memory db

@@ -92,6 +92,22 @@ describe('Login tests', () => {
     expect(res.statusCode).toBe(403);
     expect(res._getJSONData()).toBe('Unauthorized');
   });
+
+  it('Login successfully with BASIC POST', async () => {
+    // Default password is 1234
+    req.headers.authorization = `Basic ${Buffer.from(`${userObject.username}:1234`).toString('base64')}`;
+    await login(req, res);
+    expect(res._getJSONData().token).toBe(bearerToken);
+    expect(res._getJSONData().message).toBe(`Logged in as ${userObject.username.toLowerCase()}.`);
+    expect(res.statusCode).toBe(200);
+  });
+
+  it('Login unsuccessfully with BASIC POST', async () => {
+    req.headers.authorization = `Basic ${Buffer.from(`${userObject.username}:fakepassword`).toString('base64')}`;
+    await login(req, res);
+    expect(res._getJSONData().message).toBe(`Incorrect username or password!`);
+    expect(res.statusCode).toBe(400);
+  });
 });
 
 afterAll(async () => {
