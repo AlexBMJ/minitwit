@@ -15,7 +15,6 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.CONNECTION_STRING!);
   }
-
   req.authenticated = false;
 
   if (!req.headers.authorization) {

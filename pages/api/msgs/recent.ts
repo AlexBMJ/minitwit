@@ -8,7 +8,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (!isNaN(numberAmount)) {
     const recentMessages = await Message.find({}).limit(numberAmount).sort({pub_date: -1}).exec();
-
     return res.status(200).json({messages: recentMessages});
   }
 

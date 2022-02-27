@@ -17,7 +17,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     if (req.authenticated && req.user) {
       let token = jwt.sign({userid: req.user._id?.toString()}, process.env.TOKEN_SECRET!);
-      return res.status(200).json({token: token, message: `Logged in as ${req.user?.username}.`});
+      return res.status(200).json({token: token, message: `Logged in as ${req.user?.username.toLowerCase()}.`});
     }
     
     return res.status(400).json({message: 'Incorrect username or password!'});
