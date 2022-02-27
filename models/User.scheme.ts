@@ -30,5 +30,7 @@ const UserSchema = new Schema<TUser>({
   },
 });
 
+UserSchema.index({username: 1, email: 1});
+
 var User = <Model<TUser>>mongoose.models.User || mongoose.model<TUser, Model<TUser>>('User', UserSchema);
 export default User;

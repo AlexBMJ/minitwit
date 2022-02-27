@@ -33,6 +33,8 @@ const MessageSchema = new Schema<TMessage>({
   },
 });
 
+MessageSchema.index({author_id: 1});
+
 var Message =
   <Model<TMessage>>mongoose.models.Message || mongoose.model<TMessage, Model<TMessage>>('Message', MessageSchema);
 export default Message;
