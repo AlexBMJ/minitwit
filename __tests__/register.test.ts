@@ -46,7 +46,6 @@ describe('Register tests', () => {
     }).save();
     await register(req, res);
 
-    //console.log(res._getData());
     expect(res.statusCode).toBe(400);
     expect(res._getJSONData().message).toEqual('User with that email was already found!');
   });
