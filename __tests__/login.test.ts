@@ -1,12 +1,12 @@
-import { AuthRequest } from '../middleware/authentication';
-import User, { TUser } from '../models/User.scheme';
+import {AuthRequest} from '../middleware/authentication';
+import User, {TUser} from '../models/User.scheme';
 import * as httpMocks from 'node-mocks-http';
 import mongoose from 'mongoose';
-import { TestAPIResponse } from '../types/tests';
+import {TestAPIResponse} from '../types/tests';
 import login from '../pages/api/login';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { removeAllDataFromDB } from '../helpers/test_helper';
+import {removeAllDataFromDB} from '../helpers/test_helper';
 
 describe('Login tests', () => {
   let req: AuthRequest;
@@ -24,13 +24,12 @@ describe('Login tests', () => {
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('1234', salt);
-    const newUser = await new User({
+    userObject = await new User({
       username: 'bech',
       admin: false,
       email: 'milb@itu.dk',
       pw_hash: hash,
     }).save();
-    userObject = newUser;
     bearerToken = await jwt.sign({ userid: userObject._id!.toString() }, process.env.TOKEN_SECRET!);
   });
 
