@@ -45,10 +45,6 @@ describe('Login tests', () => {
     res = mockHTTP.res;
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
   it('Login successfully with bearer', async () => {
     req.headers.authorization = `Bearer ${bearerToken}`;
     await login(req, res);
@@ -96,4 +92,8 @@ describe('Login tests', () => {
     expect(res.statusCode).toBe(403);
     expect(res._getJSONData()).toBe('Unauthorized');
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
 });

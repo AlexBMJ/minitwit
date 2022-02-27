@@ -31,10 +31,6 @@ describe('Register tests', () => {
     res = mockHTTP.res;
   });
 
-  afterAll(async () => {
-    await mongoose.connection.close();
-  });
-
   it('Register successfully', async () => {
     await register(req, res);
 
@@ -95,4 +91,8 @@ describe('Register tests', () => {
     expect(res.statusCode).toBe(400);
     expect(res._getJSONData().message).toBe('Method not accepted!');
   });
+});
+
+afterAll(async () => {
+  await mongoose.connection.close();
 });
