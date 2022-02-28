@@ -15,6 +15,7 @@ const customJestConfig = {
   preset: '@shelf/jest-mongodb',
   collectCoverage: true,
   coverageDirectory: './code_coverage',
+  watchPathIgnorePatterns: ['globalConfig'],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
