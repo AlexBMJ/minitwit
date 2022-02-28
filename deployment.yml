@@ -1,0 +1,36 @@
+version: '3.9'
+
+volumes:
+  db_data:
+
+services:
+  app:
+    image: ghcr.io/alexbmj/minitwit:latest
+    ports:
+      - '3000:3000'
+    env_file:
+      - ./.env
+    deploy:
+      mode: replicated
+      replicas: 3
+
+  db:
+    image: mongo:4.4.12
+    ports:
+      - '27017:27017'
+    volumes:
+      - db_data:/data/db
+    env_file:
+      - ./.env
+    deploy:
+      mode: global
+
+  shepherd:
+    image: mazzolino/shepherd
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+        - node.role == manager
+        
