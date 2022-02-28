@@ -22,4 +22,4 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/AlexBMJ/minitwit:latest            
+            ghcr.io/alexbmj/minitwit:latest            
