@@ -44,7 +44,6 @@ describe('Login tests', () => {
     req.headers.authorization = `Bearer ${bearerToken}`;
     await login(req, res);
 
-    expect(res._getJSONData().token).toBe(bearerToken);
     expect(res._getJSONData().message).toBe(`Logged in as ${userObject.username.toLowerCase()}.`);
     expect(res.statusCode).toBe(200);
   });
@@ -92,7 +91,6 @@ describe('Login tests', () => {
     // Default password is 1234
     req.headers.authorization = `Basic ${Buffer.from(`${userObject.username}:1234`).toString('base64')}`;
     await login(req, res);
-    expect(res._getJSONData().token).toBe(bearerToken);
     expect(res._getJSONData().message).toBe(`Logged in as ${userObject.username.toLowerCase()}.`);
     expect(res.statusCode).toBe(200);
   });
