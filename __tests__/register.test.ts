@@ -11,10 +11,8 @@ describe('Register tests', () => {
   let res: TestAPIResponse;
   beforeAll(async () => {
     // JEST automatically sets MONGO_URL to the memory db
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
-
-    await removeAllDataFromDB(true);
   });
 
   beforeEach(async () => {
@@ -93,5 +91,6 @@ describe('Register tests', () => {
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });

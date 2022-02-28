@@ -4,10 +4,10 @@ import { AuthRequest } from '../middleware/authentication';
 import User, { TUser } from '../models/User.scheme';
 import { TestAPIResponse } from '../types/tests';
 import * as httpMocks from 'node-mocks-http';
-import recent from '../pages/api/msgs/recent';
+import msg from '../pages/api/msgs';
 import Message from '../models/Message.schema';
 
-describe('Test recent messages', () => {
+describe('Ensure api/msgs works as intended', () => {
   let req: AuthRequest;
   let res: TestAPIResponse;
 
@@ -30,19 +30,21 @@ describe('Test recent messages', () => {
 
   it('Should return invalid method', async () => {
     req.method = 'POST';
-    await recent(req, res);
+    await msg(req, res);
     expect(res.statusCode).toBe(400);
     expect(res._getJSONData().message).toBe('Method not supported!');
   });
 
-  it('Should return not a number', async () => {
+  it('Should return not a number given not a number', async () => {
     req.query.amount = 'awsd';
-    await recent(req, res);
+    await msg(req, res);
     expect(res.statusCode).toBe(400);
     expect(res._getJSONData().message).toBe('Not a number...');
   });
 
   it('Should return the recent messages', async () => {
+    req.query.amount = '2000';
+
     const messageOne = await new Message({
       author_id: new mongoose.Types.ObjectId(),
       author_name: 'bech',
@@ -59,7 +61,7 @@ describe('Test recent messages', () => {
       text: 'LLL',
     }).save();
 
-    await recent(req, res);
+    await msg(req, res);
 
     const messages = JSON.stringify([
       { ...messageTwo.toJSON(), pub_date: messageTwo.pub_date.toISOString() },

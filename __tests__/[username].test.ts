@@ -14,10 +14,8 @@ describe('username tests', () => {
   beforeAll(async () => {
     // Setup Memory DB
     // JEST automatically sets MONGO_URL to the memory db
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     mongoose.connection.useDb('minitwit');
-
-    await removeAllDataFromDB(true);
 
     const hash = await bcrypt.hash('1234', 10);
     user = await new User({
@@ -70,5 +68,6 @@ describe('username tests', () => {
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });

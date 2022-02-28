@@ -14,9 +14,8 @@ describe('GET requests for messages per user', () => {
   let res: TestAPIResponse;
   let user: TUser;
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
-    await removeAllDataFromDB(true);
 
     user = await new User({
       username: 'deniz',
@@ -78,9 +77,8 @@ describe('POST requests for messages of a new user', () => {
   let bearerToken: string;
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
-    await removeAllDataFromDB(true);
 
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('123', salt);
@@ -144,5 +142,6 @@ describe('POST requests for messages of a new user', () => {
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });
