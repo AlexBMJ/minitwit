@@ -29,8 +29,9 @@ services:
     image: mazzolino/shepherd
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - IMAGE_AUTOCLEAN_LIMIT=3
     deploy:
       placement:
         constraints:
         - node.role == manager
-        
