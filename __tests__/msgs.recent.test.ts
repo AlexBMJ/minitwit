@@ -12,7 +12,7 @@ describe('Test recent messages', () => {
   let res: TestAPIResponse;
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
   });
 

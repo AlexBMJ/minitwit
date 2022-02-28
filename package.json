@@ -6,8 +6,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "testcoverage": "jest --coverage"
+    "test": "jest --clearCache && jest --maxWorkers=1",
+    "testcoverage": "jest --clearCache && jest --coverage --maxWorkers=1"
   },
   "dependencies": {
     "axios": "^0.26.0",

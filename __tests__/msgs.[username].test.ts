@@ -14,7 +14,7 @@ describe('GET requests for messages per user', () => {
   let res: TestAPIResponse;
   let user: TUser;
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
 
     user = await new User({
@@ -77,7 +77,7 @@ describe('POST requests for messages of a new user', () => {
   let bearerToken: string;
 
   beforeAll(async () => {
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
 
     const salt = await bcrypt.genSalt(10);

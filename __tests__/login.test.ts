@@ -17,7 +17,7 @@ describe('Login tests', () => {
   beforeAll(async () => {
     // Setup Memory DB
     // JEST automatically sets MONGO_URL to the memory db
-    await mongoose.connect(process.env.MONGO_URL!);
+    await mongoose.connect(global.__MONGO_URI__!);
     await mongoose.connection.useDb('minitwit');
 
     const salt = await bcrypt.genSalt(10);
