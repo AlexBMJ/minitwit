@@ -14,7 +14,6 @@ describe('Test recent messages', () => {
   beforeAll(async () => {
     await mongoose.connect(process.env.MONGO_URL!);
     await mongoose.connection.useDb('minitwit');
-    await removeAllDataFromDB(true);
   });
 
   beforeEach(async () => {
@@ -67,12 +66,13 @@ describe('Test recent messages', () => {
       { ...messageOne.toJSON(), pub_date: messageOne.pub_date.toISOString() },
     ]);
 
-    //expect(res.statusCode).toBe(200);
-    //expect(res._getJSONData().messages.length).toBe(2);
-    //expect(res._getJSONData().messages).toEqual(JSON.parse(messages));
+    expect(res.statusCode).toBe(200);
+    expect(res._getJSONData().messages.length).toBe(2);
+    expect(res._getJSONData().messages).toEqual(JSON.parse(messages));
   });
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });

@@ -17,8 +17,6 @@ describe('username tests', () => {
     await mongoose.connect(process.env.MONGO_URL!);
     mongoose.connection.useDb('minitwit');
 
-    await removeAllDataFromDB(true);
-
     const hash = await bcrypt.hash('1234', 10);
     user = await new User({
       username: 'bech',
@@ -70,5 +68,6 @@ describe('username tests', () => {
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });

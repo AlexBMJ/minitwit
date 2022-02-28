@@ -1,12 +1,12 @@
-import {AuthRequest} from '../middleware/authentication';
-import User, {TUser} from '../models/User.scheme';
+import { AuthRequest } from '../middleware/authentication';
+import User, { TUser } from '../models/User.scheme';
 import * as httpMocks from 'node-mocks-http';
 import mongoose from 'mongoose';
-import {TestAPIResponse} from '../types/tests';
+import { TestAPIResponse } from '../types/tests';
 import login from '../pages/api/login';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import {removeAllDataFromDB} from '../helpers/test_helper';
+import { removeAllDataFromDB } from '../helpers/test_helper';
 
 describe('Login tests', () => {
   let req: AuthRequest;
@@ -20,8 +20,6 @@ describe('Login tests', () => {
     await mongoose.connect(process.env.MONGO_URL!);
     await mongoose.connection.useDb('minitwit');
 
-    await removeAllDataFromDB(true);
-
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('1234', salt);
     userObject = await new User({
@@ -34,8 +32,6 @@ describe('Login tests', () => {
   });
 
   beforeEach(async () => {
-    // Cleans up entire db
-
     const mockHTTP = httpMocks.createMocks({
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -96,9 +92,9 @@ describe('Login tests', () => {
     // Default password is 1234
     req.headers.authorization = `Basic ${Buffer.from(`${userObject.username}:1234`).toString('base64')}`;
     await login(req, res);
-    //expect(res._getJSONData().token).toBe(bearerToken);
-    //expect(res._getJSONData().message).toBe(`Logged in as ${userObject.username.toLowerCase()}.`);
-    //expect(res.statusCode).toBe(200);
+    expect(res._getJSONData().token).toBe(bearerToken);
+    expect(res._getJSONData().message).toBe(`Logged in as ${userObject.username.toLowerCase()}.`);
+    expect(res.statusCode).toBe(200);
   });
 
   it('Login unsuccessfully with BASIC POST', async () => {
@@ -110,5 +106,6 @@ describe('Login tests', () => {
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });

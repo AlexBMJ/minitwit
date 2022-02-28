@@ -23,8 +23,6 @@ describe('POST methods for Follow and unfollow tests', () => {
     await mongoose.connect(process.env.MONGO_URL!);
     await mongoose.connection.useDb('minitwit');
 
-    await removeAllDataFromDB(true);
-
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash('1234', salt);
 
@@ -111,5 +109,6 @@ describe('POST methods for Follow and unfollow tests', () => {
 });
 
 afterAll(async () => {
+  await removeAllDataFromDB(true);
   await mongoose.connection.close();
 });
