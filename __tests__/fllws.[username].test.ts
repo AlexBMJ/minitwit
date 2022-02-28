@@ -102,9 +102,21 @@ describe('POST methods for Follow and unfollow tests', () => {
     expect(res._getJSONData().isfollowing).toBe(true);
   });
 
-  it('GET - Should return 404 for non existing user', async () => {
-    // Needs to be fixed
-    //expect(200).toBe(404);
+  it('POST - It should return 204 for unfollowing user', async () => {
+    delete req.body.follow;
+    req.body.unfollow = 'bech';
+    await Follow(req, res);
+
+    expect(res.statusCode).toBe(204);
+  });
+
+  it('GET - It should return 403 unaothorized', async () => {
+    req.method = 'GET';
+    req.authenticated = false;
+    req.query.isfollowing = 'bech';
+    await Follow(req, res);
+    expect(res.statusCode).toBe(403);
+    expect(res._getJSONData().message).toBe('Unauthorized');
   });
 });
 

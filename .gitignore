@@ -16,7 +16,7 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-./code_coverage
+code_coverage
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
