@@ -50,7 +50,7 @@ describe('Login tests', () => {
 
   it('Login with incorrect details', async () => {
     // Random bearer
-    req.headers.authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI2MjE1MmVkZjllN2Q2ZDk3NDIyOGJkMjcifQ.m4SHH08j8H_m_x65YHkAWeWHeCv9eZqwQWD1BtPShhI`;
+    req.headers.authorization = `Bearer ${await jwt.sign({}, process.env.TOKEN_SECRET!)}`;
     await login(req, res);
 
     expect(res.statusCode).toBe(400);

@@ -53,7 +53,7 @@ describe('GET requests for messages per user', () => {
     req.query.username = user.username;
     const newMessage = await new Message({
       author_id: user._id,
-      author_name: user.username,
+      username: user.username,
       flagged: false,
       pub_date: new Date(),
       text: 'Lets go',

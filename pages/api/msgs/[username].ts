@@ -6,9 +6,11 @@ import { get_user } from '../../../helpers/user_helper';
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const username = <string>req.query.username;
-    const amount = <string>req.query.no;
+    let amount = <string>req.query.no;
+    if (amount == undefined || amount.length < 1) {
+      amount = '100';
+    }
     const numberAmount = Number(amount);
-
     if (!isNaN(numberAmount)) {
       const recentMessages = await Message.find({ author_name: username })
         .limit(numberAmount)
@@ -30,7 +32,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
             flagged: false,
             pub_date: new Date(),
             text: req.body.content,
-            author_name: user.username,
+            username: user.username,
           }).save();
           return res.status(204).send('');
         } else {

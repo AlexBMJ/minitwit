@@ -6,4 +6,6 @@ const nextConfig = {
   },
 };
 
+global.latest = -1;
+
 module.exports = nextConfig;

@@ -21,7 +21,7 @@ describe('Ensure api/msgs works as intended', () => {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
       query: {
-        amount: '5',
+        no: '5',
       },
     });
     req = mockHTTP.req;
@@ -36,18 +36,18 @@ describe('Ensure api/msgs works as intended', () => {
   });
 
   it('Should return not a number given not a number', async () => {
-    req.query.amount = 'awsd';
+    req.query.no = 'awsd';
     await msg(req, res);
     expect(res.statusCode).toBe(400);
     expect(res._getJSONData().message).toBe('Not a number...');
   });
 
   it('Should return the recent messages', async () => {
-    req.query.amount = '2000';
+    req.query.no = '2000';
 
     const messageOne = await new Message({
       author_id: new mongoose.Types.ObjectId(),
-      author_name: 'bech',
+      username: 'bech',
       flagged: false,
       pub_date: new Date(),
       text: 'WWW',
@@ -55,7 +55,7 @@ describe('Ensure api/msgs works as intended', () => {
 
     const messageTwo = await new Message({
       author_id: new mongoose.Types.ObjectId(),
-      author_name: 'deniz',
+      username: 'deniz',
       flagged: false,
       pub_date: new Date(),
       text: 'LLL',

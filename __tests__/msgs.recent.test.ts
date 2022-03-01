@@ -4,7 +4,7 @@ import { AuthRequest } from '../middleware/authentication';
 import User, { TUser } from '../models/User.scheme';
 import { TestAPIResponse } from '../types/tests';
 import * as httpMocks from 'node-mocks-http';
-import recent from '../pages/api/msgs/recent';
+import recent from '../pages/api/msgs';
 import Message from '../models/Message.schema';
 
 describe('Test recent messages', () => {
@@ -21,7 +21,7 @@ describe('Test recent messages', () => {
       method: 'GET',
       headers: { 'content-type': 'application/json' },
       query: {
-        amount: '5',
+        no: '5',
       },
     });
     req = mockHTTP.req;
@@ -36,7 +36,7 @@ describe('Test recent messages', () => {
   });
 
   it('Should return not a number', async () => {
-    req.query.amount = 'awsd';
+    req.query.no = 'awsd';
     await recent(req, res);
     expect(res.statusCode).toBe(400);
     expect(res._getJSONData().message).toBe('Not a number...');
@@ -45,7 +45,7 @@ describe('Test recent messages', () => {
   it('Should return the recent messages', async () => {
     const messageOne = await new Message({
       author_id: new mongoose.Types.ObjectId(),
-      author_name: 'bech',
+      username: 'bech',
       flagged: false,
       pub_date: new Date(),
       text: 'WWW',
@@ -53,7 +53,7 @@ describe('Test recent messages', () => {
 
     const messageTwo = await new Message({
       author_id: new mongoose.Types.ObjectId(),
-      author_name: 'deniz',
+      username: 'deniz',
       flagged: false,
       pub_date: new Date(),
       text: 'LLL',

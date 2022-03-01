@@ -1,12 +1,10 @@
 import Head from 'next/head';
-import User, { TUser } from '../models/User.scheme';
-import styles from './styles/timeline.module.scss';
+import { TUser } from '../models/User.scheme';
 import Image from 'next/image';
 import { TMessage } from '../models/Message.schema';
-import mongoose from 'mongoose';
 import Link from 'next/link';
 import { UserInfo } from '../types/userInfo';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { KeyedMutator } from 'swr';
 import router from 'next/router';
@@ -166,7 +164,7 @@ export const Messages: React.FunctionComponent<{
               <div className="messageImage">
                 <Image alt="Good image" src="/oldman.jpeg" layout="fill" />
               </div>
-              <Link href={`/timeline/${v.author_name}`}>{v.author_name}</Link>
+              <Link href={`/timeline/${v.username}`}>{v.username}</Link>
               <p>{v.text}</p>
               <small>&mdash; {v.pub_date.toString()}</small>
             </li>

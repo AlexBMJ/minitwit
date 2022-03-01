@@ -3,9 +3,11 @@ import Message from '../../models/Message.schema';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
-    const amount = <string>req.query.amount;
+    let amount = <string>req.query.no;
+    if (amount == undefined || amount.length < 1) {
+      amount = '100';
+    }
     const numberAmount = Number(amount);
-
     if (!isNaN(numberAmount)) {
       const recentMessages = await Message.find({}).limit(numberAmount).sort({ pub_date: -1 }).exec();
 
