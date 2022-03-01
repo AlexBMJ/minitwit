@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import setlatest from '../../helpers/latest_helper';
 import { get_user } from '../../helpers/user_helper';
 import Message from '../../models/Message.schema';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
+    setlatest(req);
     if (req.query.username) {
       const user_obj = await get_user({ username: <string>req.query.username });
 

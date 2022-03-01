@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import setlatest from '../../../helpers/latest_helper';
 import { follow, get_user, isfollowing, unfollow } from '../../../helpers/user_helper';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 
@@ -6,6 +7,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
   const user = await get_user({ username: <string>req.query.username });
 
   if (req.method === 'POST') {
+    setlatest(req);
     if (req.body.follow || req.body.unfollow) {
       const to_follow = await get_user({ username: <string>req.body.follow || <string>req.body.unfollow });
       if (user && user._id && to_follow && to_follow._id) {
@@ -18,6 +20,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       }
     }
   } else if (req.method === 'GET') {
+    setlatest(req);
     if (req.query.isfollowing) {
       const is_following = await get_user({ username: <string>req.query.isfollowing });
       if (user && user._id && is_following && is_following._id) {

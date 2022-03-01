@@ -2,9 +2,11 @@ import type { NextApiResponse } from 'next';
 import Message from '../../../models/Message.schema';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import { get_user } from '../../../helpers/user_helper';
+import setlatest from '../../../helpers/latest_helper';
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
+    setlatest(req);
     const username = <string>req.query.username;
     let amount = <string>req.query.no;
     if (amount == undefined || amount.length < 1) {
@@ -22,6 +24,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       return res.status(400).json({ message: 'Not a number...' });
     }
   } else if (req.method === 'POST') {
+    setlatest(req);
     const username = <string>req.query.username;
     if (req.body.content) {
       if (req.authenticated && req.user && (req.user.username == username || req.user.admin)) {
