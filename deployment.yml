@@ -32,6 +32,7 @@ services:
     environment:
       - IMAGE_AUTOCLEAN_LIMIT=3
       - IGNORELIST_SERVICE="minitwit_shepherd minitwit_db"
+      - TZ=Europe/Copenhagen
     deploy:
       placement:
         constraints:
