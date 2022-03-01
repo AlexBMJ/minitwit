@@ -31,7 +31,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - IMAGE_AUTOCLEAN_LIMIT=3
+      - IGNORELIST_SERVICE="minitwit_shepherd minitwit_db"
     deploy:
       placement:
         constraints:
-        - node.role == manager
+          - node.role == manager
