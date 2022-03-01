@@ -3,9 +3,11 @@ import bcrypt from 'bcryptjs';
 import User from '../../models/User.scheme';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
 import { get_user } from '../../helpers/user_helper';
+import setlatest from '../../helpers/latest_helper';
 
 async function handler(req: AuthRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
+    setlatest(req);
     const { username, email, pwd }: { username: string; email: string; pwd: string } = req.body;
 
     if (username && email && pwd) {
@@ -36,6 +38,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
       return res.status(400).json({ message: 'Username, email and password must be set!' });
     }
   } else if (req.method === 'GET') {
+    setlatest(req);
     if (req.authenticated) {
       return res.status(200).json({ user: req.user });
     }
