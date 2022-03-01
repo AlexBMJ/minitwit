@@ -125,6 +125,7 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
 
         if (messageMutator) {
           messageMutator();
+          setNewMessage("");
         }
       } catch (e: any) {
         console.log(e.response.data);
@@ -145,6 +146,7 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
           onChange={(e) => setNewMessage(e.target.value)}
           required
           placeholder="What is on your mind?"
+          value={newMessage}
         />
         <button type="submit">Share!</button>
       </form>
