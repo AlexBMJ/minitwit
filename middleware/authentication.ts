@@ -25,6 +25,7 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
           user = await User.findById(decoded.userid);
         } catch (err) {
           user = null;
+          req.authenticated = false;
         }
       } else if (splittedAuth[0] == 'Basic') {
         let creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 2);
