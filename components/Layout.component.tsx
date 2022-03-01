@@ -24,7 +24,7 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
               <Link href="/" passHref>
                 {`${user.username} timeline`}
               </Link>
-              | <span onClick={() => logout({ redirectTo: '/login' })}>Sign out</span> |
+              | <span className={styles.signout} onClick={() => logout({ redirectTo: '/login' })}>Sign out</span> |
             </div>
           ) : (
             <div>
