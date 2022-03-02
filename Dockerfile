@@ -1,5 +1,7 @@
 FROM node:16-alpine
 
+RUN apk add --update --no-cache tzdata
+
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock ./
