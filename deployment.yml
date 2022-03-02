@@ -34,9 +34,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - IMAGE_AUTOCLEAN_LIMIT=3
-      - IGNORELIST_SERVICES="minitwit_shepherd minitwit_db"
-      - TZ=Europe/Copenhagen
+      IMAGE_AUTOCLEAN_LIMIT: 3
+      IGNORELIST_SERVICES: "minitwit_shepherd minitwit_db"
+      TZ: Europe/Copenhagen
     deploy:
       placement:
         constraints:
