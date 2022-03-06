@@ -1,5 +1,5 @@
 import type { NextApiResponse } from 'next';
-import { follow, getUser, isfollowing, unfollow } from '../../../helpers/user_helper';
+import { follow, getUser, isFollowing, unfollow } from '../../../helpers/user_helper';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import MiniTwitRoute from "../../../middleware/MiniTwitRoute";
 
@@ -27,7 +27,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     if (req.query.isfollowing) {
       const is_following = await getUser({ username: <string>req.query.isfollowing });
       if (user._id && is_following && is_following._id) {
-        let follow_status = await isfollowing(user._id, is_following._id);
+        let follow_status = await isFollowing(user._id, is_following._id);
         return res.status(200).json({ user: is_following.username, isfollowing: follow_status });
       }
     }
