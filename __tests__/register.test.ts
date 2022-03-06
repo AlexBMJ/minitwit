@@ -85,7 +85,7 @@ describe('Register tests', () => {
   it('Register METHOD not accepted', async () => {
     req.method = 'PUT';
     await register(req, res);
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(405);
     expect(res._getJSONData().message).toBe('Method not accepted!');
   });
 });

@@ -61,8 +61,8 @@ describe('Login tests', () => {
     req.method = 'PUT';
 
     await login(req, res);
-    expect(res.statusCode).toBe(400);
-    expect(res._getJSONData().message).toBe('Bad request!');
+    expect(res.statusCode).toBe(405);
+    expect(res._getJSONData().message).toBe('Method not accepted!');
   });
 
   it('Login successfull with GET', async () => {

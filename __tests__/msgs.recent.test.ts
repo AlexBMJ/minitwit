@@ -31,8 +31,8 @@ describe('Test recent messages', () => {
   it('Should return invalid method', async () => {
     req.method = 'POST';
     await recent(req, res);
-    expect(res.statusCode).toBe(400);
-    expect(res._getJSONData().message).toBe('Method not supported!');
+    expect(res.statusCode).toBe(405);
+    expect(res._getJSONData().message).toBe('Method not accepted!');
   });
 
   it('Should return not a number', async () => {

@@ -2,9 +2,14 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import setlatest from '../../../helpers/latest_helper';
 import { follow, get_user, isfollowing, unfollow } from '../../../helpers/user_helper';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
+import MiniTwitRoute from "../../../middleware/MiniTwitRoute";
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   const user = await get_user({ username: <string>req.query.username });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not found" })
+  }
 
   if (req.method === 'POST') {
     setlatest(req);
@@ -19,7 +24,8 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
         }
       }
     }
-  } else if (req.method === 'GET') {
+  }
+  else if (req.method === 'GET') {
     setlatest(req);
     if (req.query.isfollowing) {
       const is_following = await get_user({ username: <string>req.query.isfollowing });
@@ -33,7 +39,6 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       }
     }
   }
-  return res.status(404).send('Bad Request');
 };
 
-export default authenticate(handler);
+export default MiniTwitRoute(authenticate(handler), 'GET', 'POST');

@@ -3,6 +3,7 @@ import Message from '../../../models/Message.schema';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import { get_user } from '../../../helpers/user_helper';
 import setlatest from '../../../helpers/latest_helper';
+import MiniTwitRoute from "../../../middleware/MiniTwitRoute";
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
@@ -23,7 +24,8 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     } else {
       return res.status(400).json({ message: 'Not a number...' });
     }
-  } else if (req.method === 'POST') {
+  }
+  else if (req.method === 'POST') {
     setlatest(req);
     const username = <string>req.query.username;
     if (req.body.content) {
@@ -47,9 +49,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     } else {
       return res.status(400).json({ message: 'Missing data' });
     }
-  } else {
-    return res.status(400).json({ message: 'Method not supported!' });
   }
 };
 
-export default authenticate(handler);
+export default MiniTwitRoute(authenticate(handler), 'GET', 'POST');
