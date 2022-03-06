@@ -2,7 +2,7 @@ import { NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import User from '../../models/User.scheme';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
-import { get_user } from '../../helpers/user_helper';
+import { getUser } from '../../helpers/user_helper';
 import MiniTwitRoute from "../../middleware/MiniTwitRoute";
 
 async function handler(req: AuthRequest, res: NextApiResponse) {
@@ -27,7 +27,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
   }
 
   try {
-    const user = await get_user({username: username});
+    const user = await getUser({username: username});
 
     if (user) {
       return res.status(400).json({message: 'User with that email was already found!'});
