@@ -3,11 +3,9 @@ import bcrypt from 'bcryptjs';
 import User from '../../models/User.scheme';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
 import { get_user } from '../../helpers/user_helper';
-import setlatest from '../../helpers/latest_helper';
 import MiniTwitRoute from "../../middleware/MiniTwitRoute";
 
 async function handler(req: AuthRequest, res: NextApiResponse) {
-  setlatest(req);
 
   if (req.method === 'GET') {
     if (req.authenticated) {

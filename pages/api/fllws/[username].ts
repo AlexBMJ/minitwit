@@ -1,5 +1,4 @@
 import type { NextApiResponse } from 'next';
-import setlatest from '../../../helpers/latest_helper';
 import { follow, get_user, isfollowing, unfollow } from '../../../helpers/user_helper';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import MiniTwitRoute from "../../../middleware/MiniTwitRoute";
@@ -10,8 +9,6 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
   if (!user) {
     return res.status(404).json({ message: "User not found" })
   }
-
-  setlatest(req);
 
   if (!(req.authenticated && req.user && (req.user.username == user.username || req.user.admin))) {
     return res.status(403).json({ message: 'Unauthorized' });

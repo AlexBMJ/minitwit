@@ -1,11 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import setlatest from '../../helpers/latest_helper';
 import { get_user } from '../../helpers/user_helper';
 import Message from '../../models/Message.schema';
 import MiniTwitRoute from "../../middleware/MiniTwitRoute";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  setlatest(req);
   if (!req.query.username) {
     return res.status(400).json({message: 'No username!'});
   }

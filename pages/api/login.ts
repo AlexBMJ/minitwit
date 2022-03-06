@@ -1,13 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiResponse } from 'next';
 import * as jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
-import setlatest from '../../helpers/latest_helper';
 import MiniTwitRoute from "../../middleware/MiniTwitRoute";
 
 async function handler(req: AuthRequest, res: NextApiResponse) {
-  setlatest(req);
   if (req.method === 'GET') {
     if (req.authenticated) {
       return res.status(200).json({ user: req.user });

@@ -2,12 +2,9 @@ import type { NextApiResponse } from 'next';
 import Message from '../../../models/Message.schema';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import { get_user } from '../../../helpers/user_helper';
-import setlatest from '../../../helpers/latest_helper';
 import MiniTwitRoute from "../../../middleware/MiniTwitRoute";
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
-  setlatest(req);
-
   const username = <string>req.query.username;
 
   if (req.method === 'GET') {

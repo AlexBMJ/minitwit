@@ -1,5 +1,6 @@
 import {NextApiHandler, NextApiRequest, NextApiResponse} from 'next';
 import {TUser} from '../models/User.scheme';
+import setLatest from "../helpers/latest_helper";
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;
@@ -11,6 +12,7 @@ const MiniTwitRoute = (handler: NextApiHandler, ...routes: string[]) => async (r
     return res.status(405).json({ message: 'Method not accepted!' });
   }
 
+  setLatest(req);
   return handler(req, res);
 };
 
