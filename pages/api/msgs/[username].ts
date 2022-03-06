@@ -14,7 +14,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     }
     const numberAmount = Number(amount);
     if (!isNaN(numberAmount)) {
-      const recentMessages = await Message.find({ author_name: username })
+      const recentMessages = await Message.find({ username: username })
         .limit(numberAmount)
         .sort({ pub_date: -1 })
         .exec();
