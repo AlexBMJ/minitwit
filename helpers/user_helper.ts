@@ -1,4 +1,4 @@
-import { Model, models, Mongoose, Types } from 'mongoose';
+import { Types } from 'mongoose';
 import Follow from '../models/Follower.schema';
 import User from '../models/User.scheme';
 import { TUser } from '../models/User.scheme';

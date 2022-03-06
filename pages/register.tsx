@@ -1,10 +1,9 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
-import React, { ReactComponentElement, useState } from 'react';
+import React, { useState } from 'react';
 import Footer from '../components/FooterComponent';
 import Layout from '../components/Layout.component';
-import styles from '../styles/register.module.scss';
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios from 'axios';
 import Router from 'next/router';
 import useUser from '../lib/useUser';
 

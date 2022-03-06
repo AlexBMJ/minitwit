@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import User from '../models/User.scheme';
 
 const connectDB = (handler: NextApiHandler) => async (req: NextApiRequest, res: NextApiResponse) => {
   if (mongoose.connections[0].readyState) {
