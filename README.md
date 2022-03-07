@@ -16,10 +16,10 @@ A new docker image is built when a new release is published using Github Actions
 ### .ENV
 
 ```
-MONGO_INITDB_ROOT_PASSWORD="<your password>"
-MONGO_INITDB_ROOT_USERNAME="<your username>"
+MONGO_INITDB_ROOT_USERNAME="<username>"
+MONGO_INITDB_ROOT_PASSWORD="<password>"
 MONGO_INITDB_DATABASE="minitwit"
-CONNECTION_STRING="mongodb://<your username>:<password>@db:27017/minitwit?authSource=admin"
+CONNECTION_STRING="mongodb://<username>:<password>@db:27017/minitwit?authSource=admin"
 TOKEN_SECRET="<token secret>" 
 ```
 
@@ -27,4 +27,3 @@ TOKEN_SECRET="<token secret>"
 `sudo docker stack init`
 
 `sudo docker stack deploy -c deployment.yml minitwit` with [deployment.yml](/deployment.yml)
-
