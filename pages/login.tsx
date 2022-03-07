@@ -6,7 +6,6 @@ import Footer from '../components/FooterComponent';
 import Router from 'next/router';
 import Layout from '../components/Layout.component';
 import useUser from '../lib/useUser';
-import styles from '../styles/login.module.scss';
 
 const Login: NextPage = () => {
   const { user, mutateUser, error } = useUser({ redirectIfFound: true, redirectTo: '/' });

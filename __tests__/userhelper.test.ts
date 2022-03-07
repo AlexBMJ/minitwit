@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { removeAllDataFromDB } from '../helpers/test_helper';
-import { get_user } from '../helpers/user_helper';
+import { getUser } from '../helpers/user_helper';
 import User, { TUser } from '../models/User.scheme';
 
 describe('Test user helper', () => {
@@ -25,19 +25,19 @@ describe('Test user helper', () => {
   });
 
   it('get_user by id should return user', async () => {
-    const expected = await get_user({ _id: firstUser!._id });
+    const expected = await getUser({ _id: firstUser!._id });
 
     expect(expected?.toJSON()).toEqual(firstUser?.toJSON());
   });
 
   it('get_user by email should return user', async () => {
-    const expected = await get_user({ email: firstUser!.email });
+    const expected = await getUser({ email: firstUser!.email });
 
     expect(expected?.toJSON()).toEqual(firstUser?.toJSON());
   });
 
   it('get_user by nothing should return null', async () => {
-    const expected = await get_user({ admin: true });
+    const expected = await getUser({ admin: true });
 
     expect(expected).toBe(null);
   });

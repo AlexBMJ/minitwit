@@ -63,7 +63,7 @@ describe('username tests', () => {
   it('should respond with a 400 status code delete request', async () => {
     req.method = 'delete';
     await username(req, res);
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(405);
   });
 });
 

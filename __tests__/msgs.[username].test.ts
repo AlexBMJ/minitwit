@@ -136,8 +136,8 @@ describe('POST requests for messages of a new user', () => {
   it('should return 400 method not supported', async () => {
     req.method = 'Delete';
     await MessagesFromUser(req, res);
-    expect(res.statusCode).toBe(400);
-    expect(res._getJSONData().message).toBe('Method not supported!');
+    expect(res.statusCode).toBe(405);
+    expect(res._getJSONData().message).toBe('Method not accepted!');
   });
 });
 

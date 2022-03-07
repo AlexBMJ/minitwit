@@ -18,6 +18,7 @@ const FollowSchema = new Schema<TFollower>({
   },
 });
 
-var Follow =
-  <Model<TFollower>>mongoose.models.Follow || mongoose.model<TFollower, Model<TFollower>>('Follow', FollowSchema);
+FollowSchema.index({follower_id: 1, other_id: 1});
+
+const Follow = <Model<TFollower>>mongoose.models.Follow || mongoose.model<TFollower, Model<TFollower>>('Follow', FollowSchema);
 export default Follow;
