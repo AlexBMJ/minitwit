@@ -8,21 +8,32 @@ export interface AuthRequest extends NextApiRequest {
   authenticated?: boolean;
 }
 
-const MiniTwitRoute = async (handler: NextApiHandler, ...routes: string[]) => async (req: AuthRequest, res: NextApiResponse) => {
+
+const guages: client.Gauge<string>[] = [];
+
+const MiniTwitRoute = (handler: NextApiHandler, ...routes: string[]) => async (req: AuthRequest, res: NextApiResponse) => {
   if (!routes.includes(req.method!)) {
     return res.status(405).json({ message: 'Method not accepted!' });
   }
 
   setLatest(req);
 
-  const gauge = new client.Gauge({
-    name: 'metric_name',
-    help: 'metric_help',
-  });
+  let gauge = guages.find((v) => v.labels.name === req.url!);
+
+  console.log(req.url);
+
+  if (!gauge) {
+    gauge = new client.Gauge({
+      name: req.url!.replace("/", "_"),
+      help: `Speed for ${req.url}`
+    });
+    guages.push(gauge);
+  }
+
   gauge.setToCurrentTime();
 
   const end = gauge.startTimer();
-  const result = await handler(req, res);  
+  const result = handler(req, res);  
   end();
 
   return result;

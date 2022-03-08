@@ -32,6 +32,8 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       }
     }
   }
+
+  return res.status(400).json({message: 'Bad request'});
 };
 
 export default MiniTwitRoute(authenticate(handler), 'GET', 'POST');
