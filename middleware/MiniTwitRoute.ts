@@ -18,26 +18,20 @@ const MiniTwitRoute =
 
     setLatest(req);
 
-    let url2 = req.url || '';
-
-    if (req.query.username) {
-      const match = url2.match(/^\/api\/(?:latest|login|msgs|register|fllws)/);
-
-      if (match) {
-        url2 = match[0];
-      }
-      //url2 = url2.replaceAll(encodeURIComponent(req.query.username.toString()), '');
-    }
-
-    let url = `minitwit${urlParse(url2, false).pathname.replaceAll('/', '_')}`;
-
+    let url = req.url || '';
     console.log(url);
+    const match = url.match(/^\/api\/(?:latest|login|msgs|register|fllws)/);
+    if (match) {
+      url = match[0];
+    }
+    let endpoint = `minitwit${url.replaceAll('/', '_')}`;
+    console.log(endpoint);
 
     const foundMetric: any =
-      (await client.register.getMetricsAsArray()).find((v) => v.name === url) ||
+      (await client.register.getMetricsAsArray()).find((v) => v.name === endpoint) ||
       new client.Gauge({
-        name: url!,
-        help: `Speed for ${urlParse(url2, false)}`,
+        name: endpoint,
+        help: `Speed for ${endpoint}`,
       });
 
     foundMetric.setToCurrentTime();
