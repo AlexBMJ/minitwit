@@ -10,18 +10,17 @@ import useUser, { fetcher } from '../../lib/useUser';
 import { UserInfo } from '../../types/userInfo';
 
 const UsernameTimeline: NextPage = () => {
-  const { user, mutateUser, error } = useUser({ redirectIfFound: false });
+  const { user } = useUser({ redirectIfFound: false });
   const router = useRouter();
   const { username } = router.query;
   let accessToken = '';
   if (typeof window !== 'undefined') {
     accessToken = localStorage.getItem('access_token') || '';
   }
-  const {
-    data: isFollowingData,
-    mutate: mutateFollow,
-    error: errortwo,
-  } = useSWR([`/api/fllws/${user?.user.username}?isfollowing=${username}`, accessToken], fetcher);
+  const { data: isFollowingData, mutate: mutateFollow } = useSWR(
+    [`/api/fllws/${user?.user.username}?isfollowing=${username}`, accessToken],
+    fetcher
+  );
 
   const [userViewing, setUserViewing] = useState<UserInfo>();
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
