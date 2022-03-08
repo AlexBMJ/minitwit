@@ -1,42 +1,52 @@
-import {NextApiHandler, NextApiRequest, NextApiResponse} from 'next';
-import {TUser} from '../models/User.scheme';
-import setLatest from "../helpers/latest_helper";
-import client from 'prom-client';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { TUser } from '../models/User.scheme';
+import setLatest from '../helpers/latest_helper';
+import client, { Gauge } from 'prom-client';
+import urlParse from 'url-parse';
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;
   authenticated?: boolean;
 }
 
+const MiniTwitRoute =
+  (handler: NextApiHandler, ...routes: string[]) =>
+  async (req: AuthRequest, res: NextApiResponse) => {
+    if (!routes.includes(req.method!)) {
+      return res.status(405).json({ message: 'Method not accepted!' });
+    }
 
-const guages: client.Gauge<string>[] = [];
+    setLatest(req);
 
-const MiniTwitRoute = (handler: NextApiHandler, ...routes: string[]) => async (req: AuthRequest, res: NextApiResponse) => {
-  if (!routes.includes(req.method!)) {
-    return res.status(405).json({ message: 'Method not accepted!' });
-  }
+    let url2 = req.url || '';
 
-  setLatest(req);
+    if (req.query.username) {
+      const match = url2.match(/^\/api\/(?:latest|login|msgs|register|fllws)/);
 
-  let gauge = guages.find((v) => v.labels.name === req.url!);
+      if (match) {
+        url2 = match[0];
+      }
+      //url2 = url2.replaceAll(encodeURIComponent(req.query.username.toString()), '');
+    }
 
-  console.log(req.url);
+    let url = `minitwit${urlParse(url2, false).pathname.replaceAll('/', '_')}`;
 
-  if (!gauge) {
-    gauge = new client.Gauge({
-      name: req.url!.replace("/", "_"),
-      help: `Speed for ${req.url}`
-    });
-    guages.push(gauge);
-  }
+    console.log(url);
 
-  gauge.setToCurrentTime();
+    const foundMetric: any =
+      (await client.register.getMetricsAsArray()).find((v) => v.name === url) ||
+      new client.Gauge({
+        name: url!,
+        help: `Speed for ${urlParse(url2, false)}`,
+      });
 
-  const end = gauge.startTimer();
-  const result = handler(req, res);  
-  end();
+    foundMetric.setToCurrentTime();
 
-  return result;
-};
+    const end = foundMetric.startTimer();
+    const result = handler(req, res);
+    end();
+
+    return result;
+  };
 
 export default MiniTwitRoute;

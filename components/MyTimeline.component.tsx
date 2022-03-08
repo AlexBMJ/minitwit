@@ -4,16 +4,15 @@ import Image from 'next/image';
 import { TMessage } from '../models/Message.schema';
 import Link from 'next/link';
 import { UserInfo } from '../types/userInfo';
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import axios from 'axios';
 import { KeyedMutator } from 'swr';
 import router from 'next/router';
+import { fetcherGetWithToken } from '../lib/useUser';
 
 type messageMutatorType = KeyedMutator<{
   messages: TMessage[];
 }>;
-
-type mutateFollowerType = KeyedMutator<any>;
 
 const MyTimeline: React.FunctionComponent<{
   user?: UserInfo;
@@ -21,7 +20,7 @@ const MyTimeline: React.FunctionComponent<{
   messages?: TMessage[];
   messagesMutator?: messageMutatorType;
   isFollowing?: boolean;
-  mutateFollower?: mutateFollowerType;
+  mutateFollower: Dispatch<SetStateAction<boolean>>;
 }> = ({ user, loggedInUser, messages, messagesMutator, isFollowing, mutateFollower }) => {
   if (user) {
     return (
@@ -37,8 +36,9 @@ const MyTimeline: React.FunctionComponent<{
           ) : (
             <FollowButtons
               loggedInUser={loggedInUser}
-              mutateFollower={mutateFollower}
               username={user.username}
+              mutateFollower={mutateFollower}
+              user={loggedInUser?.username ? loggedInUser.username : ''}
               isFollowing={isFollowing ? isFollowing : false}
             />
           )}
@@ -70,8 +70,9 @@ export const FollowButtons: React.FunctionComponent<{
   loggedInUser?: TUser;
   isFollowing: boolean;
   username: string;
-  mutateFollower: mutateFollowerType | undefined;
-}> = ({ loggedInUser, isFollowing, username, mutateFollower }) => {
+  user: string;
+  mutateFollower: Dispatch<SetStateAction<boolean>>;
+}> = ({ loggedInUser, isFollowing, username, user, mutateFollower }) => {
   async function doTheFollow(task: 'follow' | 'unfollow') {
     try {
       if (loggedInUser && loggedInUser.username) {
@@ -84,8 +85,10 @@ export const FollowButtons: React.FunctionComponent<{
             }
           );
 
-          if (mutateFollower) {
-            mutateFollower();
+          const accessToken = localStorage.getItem('access_token');
+          if (accessToken && user) {
+            const r = await fetcherGetWithToken(`/api/fllws/${user}?isfollowing=${username}`, accessToken);
+            mutateFollower(r.isfollowing);
           }
         } else {
           alert('No username!');
@@ -125,7 +128,7 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
 
         if (messageMutator) {
           messageMutator();
-          setNewMessage("");
+          setNewMessage('');
         }
       } catch (e: any) {
         console.log(e.response.data);

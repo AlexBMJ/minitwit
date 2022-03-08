@@ -1,13 +1,15 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { register, collectDefaultMetrics } from "prom-client";
-import MiniTwitRoute from "../../middleware/MiniTwitRoute";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { register, collectDefaultMetrics } from 'prom-client';
+import MiniTwitRoute from '../../middleware/MiniTwitRoute';
 
-collectDefaultMetrics({ prefix: "minitwit_" });
+if (!global.initialized) {
+  collectDefaultMetrics({ prefix: 'minitwit_' });
+  global.initialized = true;
+}
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  res.setHeader('Content-type', register.contentType);
+  return res.send(await register.metrics());
+}
 
-  res.setHeader("Content-type", register.contentType);
-  return res.send(register.metrics());
-};
-
-export default MiniTwitRoute(handler);
+export default MiniTwitRoute(handler, 'GET');
