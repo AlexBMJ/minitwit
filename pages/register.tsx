@@ -8,7 +8,7 @@ import Router from 'next/router';
 import useUser from '../lib/useUser';
 
 const Register: NextPage = () => {
-  const { user, mutateUser, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
+  const { user, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [formBody, setFormBody] = useState<{
     username?: string;
