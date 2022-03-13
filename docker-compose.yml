@@ -10,7 +10,7 @@ services:
     command: sh -c './wait-for db:27017 -- yarn run dev'
     restart: always
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - .:/usr/src/app
     env_file:
@@ -34,13 +34,13 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"
+      - '9090:9090'
     networks:
       - main
 
   grafana:
-    image: grafana/grafana:4.5.2
+    image: grafana/grafana
     ports:
-      - "4000:3000"
+      - '4000:3000'
     networks:
       - main
