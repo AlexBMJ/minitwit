@@ -10,7 +10,7 @@ import useUser, { fetcher, fetcherGetWithToken } from '../../lib/useUser';
 import { UserInfo } from '../../types/userInfo';
 
 const UsernameTimeline: NextPage = () => {
-  const { user, mutateUser, error } = useUser({ redirectIfFound: false });
+  const { user } = useUser({ redirectIfFound: false });
   const router = useRouter();
   const { username } = router.query;
   let accessToken = '';
