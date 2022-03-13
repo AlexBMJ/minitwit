@@ -17,6 +17,8 @@ const Home: NextPage = () => {
   } = useSWR<{ messages: TMessage[] }>('/api/msgs?no=20', fetcherGet);
   const [pMessages, setPMessages] = useState<TMessage[]>([]);
 
+  const { mutate: mutateFollower, error: errorthree } = useSWR('/api/fllws', fetcherGet);
+
   useEffect(() => {
     // Hent alle beskeder
     if (data) {
@@ -28,9 +30,14 @@ const Home: NextPage = () => {
     <div>
       <Layout user={user?.user}>
         {user?.user ? (
-          <Timeline messagesMutator={mutateMessages} messages={pMessages} loggedInUser={user.user} />
+          <Timeline
+            messagesMutator={mutateMessages}
+            messages={pMessages}
+            loggedInUser={user.user}
+            mutateFollower={mutateFollower}
+          />
         ) : (
-          <Timeline messagesMutator={mutateMessages} messages={pMessages} />
+          <Timeline messagesMutator={mutateMessages} messages={pMessages} mutateFollower={mutateFollower} />
         )}
       </Layout>
       <Footer />
