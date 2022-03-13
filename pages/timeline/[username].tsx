@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import Footer from '../../components/FooterComponent';
 import Layout from '../../components/Layout.component';
 import Timeline from '../../components/MyTimeline.component';
-import useUser, { fetcher } from '../../lib/useUser';
+import useUser, { fetcher, fetcherGetWithToken } from '../../lib/useUser';
 import { UserInfo } from '../../types/userInfo';
 
 const UsernameTimeline: NextPage = () => {
@@ -17,10 +17,6 @@ const UsernameTimeline: NextPage = () => {
   if (typeof window !== 'undefined') {
     accessToken = localStorage.getItem('access_token') || '';
   }
-  const { data: isFollowingData, mutate: mutateFollow } = useSWR(
-    [`/api/fllws/${user?.user.username}?isfollowing=${username}`, accessToken],
-    fetcher
-  );
 
   const [userViewing, setUserViewing] = useState<UserInfo>();
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
@@ -37,12 +33,13 @@ const UsernameTimeline: NextPage = () => {
         });
     }
 
-    if (isFollowingData) {
-      if (isFollowingData.user === username) {
-        setIsFollowing(isFollowingData.isfollowing);
+    (async function getFollower() {
+      if (user?.user.username && username) {
+        const r = await fetcherGetWithToken(`/api/fllws/${user?.user.username}?isfollowing=${username}`, accessToken);
+        setIsFollowing(r.isfollowing);
       }
-    }
-  }, [username, isFollowingData]);
+    })();
+  }, [username, user, accessToken]);
 
   return (
     <div>
@@ -50,7 +47,7 @@ const UsernameTimeline: NextPage = () => {
         {userViewing ? (
           <Timeline
             loggedInUser={user?.user}
-            mutateFollower={mutateFollow}
+            mutateFollower={setIsFollowing}
             isFollowing={isFollowing}
             user={userViewing}
           />
