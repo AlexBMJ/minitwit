@@ -2,6 +2,7 @@ version: '3.9'
 
 volumes:
   db_data:
+  grafana-storage:
 
 services:
   app:
@@ -35,9 +36,28 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       IMAGE_AUTOCLEAN_LIMIT: 3
-      IGNORELIST_SERVICES: "minitwit_shepherd minitwit_db"
+      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db'
       TZ: Europe/Copenhagen
     deploy:
       placement:
         constraints:
           - node.role == manager
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - '9090:9090'
+    networks:
+      - main
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    ports:
+      - '4000:3000'
+    networks:
+      - main
