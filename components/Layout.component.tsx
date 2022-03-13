@@ -6,13 +6,7 @@ import { TUser } from '../models/User.scheme';
 import styles from '../styles/layout.module.scss';
 
 const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) => {
-  const g = {
-    user: {
-      username: '123',
-    },
-  };
-
-  const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [errorMessages] = useState<string[]>([]);
 
   return (
     <div>
@@ -22,14 +16,16 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
           {user ? (
             <div>
               <Link href="/" passHref>
-                {`${user.username} timeline`}
-              </Link>
-              | <span className={styles.signout} onClick={() => logout({ redirectTo: '/login' })}>Sign out</span> |
+                {`Public Timeline`}
+              </Link>{' '}
+              | <Link href={`/timeline/${user.username}`}>My Timeline</Link> |{' '}
+              <span className={styles.signout} onClick={() => logout({ redirectTo: '/login' })}>
+                Sign out
+              </span>
             </div>
           ) : (
             <div>
-              |<Link href="/">Timeline</Link> | |<Link href="/register">Register</Link> | |
-              <Link href="/login">Login</Link> |
+              <Link href="/">Timeline</Link> | <Link href="/register">Register</Link> | <Link href="/login">Login</Link>
             </div>
           )}
         </div>
