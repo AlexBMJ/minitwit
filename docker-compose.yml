@@ -1,9 +1,5 @@
 version: '3.9'
 
-networks:
-  main:
-    name: main
-
 volumes:
   grafana-storage:
 
@@ -13,7 +9,7 @@ services:
     command: sh -c './wait-for db:27017 -- yarn run dev'
     restart: always
     ports:
-      - '3000:3000'
+      - '3080:3080'
     volumes:
       - .:/usr/src/app
     env_file:
@@ -33,19 +29,14 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
-    networks:
-      - main
 
   grafana:
     image: grafana/grafana
     volumes:
       - grafana-storage:/var/lib/grafana
     ports:
-      - '4000:3000'
-    networks:
-      - main
+      - '3000:3000'

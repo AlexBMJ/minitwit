@@ -8,7 +8,7 @@ services:
   app:
     image: ghcr.io/alexbmj/minitwit:latest
     ports:
-      - '3000:3000'
+      - '3080:3080'
     env_file:
       - ./.env
     environment:
@@ -36,7 +36,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       IMAGE_AUTOCLEAN_LIMIT: 3
-      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db'
+      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db minitwit_prometheus minitwit_grafana'
       TZ: Europe/Copenhagen
     deploy:
       placement:
@@ -45,19 +45,18 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
-    networks:
-      - main
+    deploy:
+      mode: global
 
   grafana:
     image: grafana/grafana
     volumes:
       - grafana-storage:/var/lib/grafana
     ports:
-      - '4000:3000'
-    networks:
-      - main
+      - '3000:3000'
+    deploy:
+      mode: global
