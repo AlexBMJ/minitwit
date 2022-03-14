@@ -12,4 +12,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   return res.send(await register.metrics());
 }
 
-export default MiniTwitRoute(handler, ['GET']);
+export default MiniTwitRoute(handler, ['GET'], 'api_metrics');
