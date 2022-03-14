@@ -5,4 +5,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(200).json({ latest: global.latest });
 };
 
-export default MiniTwitRoute(handler, 'GET');
+export default MiniTwitRoute(handler, ['GET']);
