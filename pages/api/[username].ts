@@ -21,4 +21,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   return res.status(404).json({});
 };
 
-export default MiniTwitRoute(handler, ['GET'], 'api/[username]');
+export default MiniTwitRoute(handler, ['GET'], 'api/username');

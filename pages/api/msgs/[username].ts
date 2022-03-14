@@ -54,4 +54,4 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
   }
 };
 
-export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api/msgs/[username]');
+export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api/msgs/username');
