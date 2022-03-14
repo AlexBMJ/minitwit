@@ -43,4 +43,4 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
   }
 }
 
-export default MiniTwitRoute(authenticate(handler), ['GET', 'POST']);
+export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api_register');

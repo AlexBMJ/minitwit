@@ -2,7 +2,7 @@ import type { NextApiResponse } from 'next';
 import Message from '../../../models/Message.schema';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import { getUser } from '../../../helpers/user_helper';
-import MiniTwitRoute from "../../../middleware/MiniTwitRoute";
+import MiniTwitRoute from '../../../middleware/MiniTwitRoute';
 
 const handler = async (req: AuthRequest, res: NextApiResponse) => {
   const username = <string>req.query.username;
@@ -17,30 +17,27 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     const numberAmount = Number(amount);
 
     if (isNaN(numberAmount)) {
-      return res.status(400).json({message: 'Not a number...'});
+      return res.status(400).json({ message: 'Not a number...' });
     }
 
-    const recentMessages = await Message.find({username: username})
-        .limit(numberAmount)
-        .sort({pub_date: -1})
-        .exec();
+    const recentMessages = await Message.find({ username: username }).limit(numberAmount).sort({ pub_date: -1 }).exec();
 
-    return res.status(200).json({messages: recentMessages});
+    return res.status(200).json({ messages: recentMessages });
   }
 
   if (req.method === 'POST') {
     if (!req.body.content) {
-      return res.status(400).json({message: 'Missing data'});
+      return res.status(400).json({ message: 'Missing data' });
     }
 
     if (!(req.authenticated && req.user && (req.user.username == username || req.user.admin))) {
-      return res.status(403).json({message: 'Unauthorized'});
+      return res.status(403).json({ message: 'Unauthorized' });
     }
 
-    let user = await getUser({username: username.toLowerCase()});
+    let user = await getUser({ username: username.toLowerCase() });
 
     if (!user) {
-      return res.status(404).json({message: 'No USER'});
+      return res.status(404).json({ message: 'No USER' });
     }
 
     await new Message({
@@ -54,4 +51,4 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
   }
 };
 
-export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api/msgs/username');
+export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api_msgs_username');

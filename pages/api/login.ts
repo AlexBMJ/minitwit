@@ -1,7 +1,7 @@
 import type { NextApiResponse } from 'next';
 import * as jwt from 'jsonwebtoken';
 import authenticate, { AuthRequest } from '../../middleware/authentication';
-import MiniTwitRoute from "../../middleware/MiniTwitRoute";
+import MiniTwitRoute from '../../middleware/MiniTwitRoute';
 
 async function handler(req: AuthRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -21,4 +21,4 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
   return res.status(400).json({ message: 'Incorrect username or password!' });
 }
 
-export default MiniTwitRoute(authenticate(handler), ['GET', 'POST']);
+export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api_login');
