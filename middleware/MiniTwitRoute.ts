@@ -16,6 +16,7 @@ const MiniTwitRoute = (handler: NextApiHandler, routes: string[], path = '') => 
     setLatest(req);
 
     let endpoint = path === '' ? req.url! : path;
+    endpoint = endpoint.replaceAll('/', '_');
 
     const foundMetric: any =
         (await client.register.getMetricsAsArray()).find((v) => v.name === endpoint) ||
