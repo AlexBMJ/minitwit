@@ -10,7 +10,7 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3080
 
 RUN yarn build
 

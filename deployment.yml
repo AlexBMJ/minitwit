@@ -1,9 +1,5 @@
 version: '3.9'
 
-networks:
-  main:
-    name: main
-
 volumes:
   db_data:
   grafana-storage:
@@ -12,7 +8,7 @@ services:
   app:
     image: ghcr.io/alexbmj/minitwit:latest
     ports:
-      - '3000:3000'
+      - '3080:3080'
     env_file:
       - ./.env
     environment:
@@ -49,7 +45,6 @@ services:
 
   prometheus:
     image: prom/prometheus
-    container_name: prometheus
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
@@ -62,6 +57,6 @@ services:
     volumes:
       - grafana-storage:/var/lib/grafana
     ports:
-      - '4000:3000'
+      - '3000:3000'
     deploy:
       mode: global
