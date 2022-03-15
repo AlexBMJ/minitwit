@@ -98,7 +98,7 @@ describe('Login tests', () => {
   it('Login unsuccessfully with BASIC POST', async () => {
     req.headers.authorization = `Basic ${Buffer.from(`${userObject.username}:fakepassword`).toString('base64')}`;
     await login(req, res);
-    expect(res._getJSONData().message).toBe(`Incorrect username or password!`);
+    expect(res._getJSONData().message).toBe('Incorrect username or password!');
     expect(res.statusCode).toBe(400);
   });
 });

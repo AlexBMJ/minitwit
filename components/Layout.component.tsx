@@ -16,7 +16,7 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
           {user ? (
             <div>
               <Link href="/" passHref>
-                {`Public Timeline`}
+                {'Public Timeline'}
               </Link>{' '}
               | <Link href={`/timeline/${user.username}`}>My Timeline</Link> |{' '}
               <span className={styles.signout} onClick={() => logout({ redirectTo: '/login' })}>

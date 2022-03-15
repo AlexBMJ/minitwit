@@ -34,7 +34,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
       return res.status(403).json({ message: 'Unauthorized' });
     }
 
-    let user = await getUser({ username: username.toLowerCase() });
+    const user = await getUser({ username: username.toLowerCase() });
 
     if (!user) {
       return res.status(404).json({ message: 'No USER' });
