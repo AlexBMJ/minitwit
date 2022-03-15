@@ -8,7 +8,7 @@ if (!global.initialized) {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  res.setHeader('Content-type', register.contentType);
+  res.setHeader('Content-Type', register.contentType);
   return res.send(await register.metrics());
 }
 
