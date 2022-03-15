@@ -39,7 +39,7 @@ jobs:
       uses: codecov/codecov-action@v1
 
     - name: Scan for licenses
-      run: pip install setuptools wheel && pip install scancode-toolkit && scancode -clpeui -n 2 --json-pp sample.json pages components helpers models middleware lib helpers components
+      run: pip install setuptools wheel && pip install scancode-toolkit && scancode -clpeui -n 2 --json-pp scancode_output.json ../minitwit
 
 
 
