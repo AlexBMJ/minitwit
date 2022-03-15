@@ -26,7 +26,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     if (req.query.isfollowing) {
       const is_following = await getUser({ username: <string>req.query.isfollowing });
       if (user._id && is_following && is_following._id) {
-        let follow_status = await isFollowing(user._id, is_following._id);
+        const follow_status = await isFollowing(user._id, is_following._id);
         return res.status(200).json({ user: is_following.username, isfollowing: follow_status });
       }
     }

@@ -29,8 +29,13 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - run: yarn install
-    - run: yarn run build
-    - run: yarn test
-    - name: Upload coverage to Codecov
+    - name: Install dependencies
+      run: yarn install
+    - name: Build the project
+      run: yarn run build
+    - name: Run tests
+      run: yarn test
+    - name: Upload test code coverage to Codecov
       uses: codecov/codecov-action@v1
+    - name: Check if ES lint rules are followed
+      run: yarn run eslint "." --ext .ts --ext .tsx --ext .js
