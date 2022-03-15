@@ -17,6 +17,7 @@ module.exports = {
     indent: ['error', 2]
   },
   ignorePatterns: [
-    'global.d.ts'
+    'global.d.ts',
+    'jest.config.js'
   ]
 };
