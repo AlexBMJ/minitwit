@@ -21,15 +21,15 @@ const authenticate = (handler: NextApiHandler) => async (req: AuthRequest, res: 
     if (splittedAuth.length === 2) {
       if (splittedAuth[0] == 'Bearer') {
         try {
-          var decoded = <Token>jwt.verify(splittedAuth[1], process.env.TOKEN_SECRET!);
+          const decoded = <Token>jwt.verify(splittedAuth[1], process.env.TOKEN_SECRET!);
           user = await User.findById(decoded.userid);
         } catch (err) {
           user = null;
           req.authenticated = false;
         }
       } else if (splittedAuth[0] == 'Basic') {
-        let creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 2);
-        let check_user = await getUser({ username: creds[0] });
+        const creds = Buffer.from(splittedAuth[1], 'base64').toString('ascii').split(':', 2);
+        const check_user = await getUser({ username: creds[0] });
         if (check_user) {
           const result = await compare(creds[1], check_user.pw_hash);
           if (result) {
