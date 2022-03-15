@@ -2,7 +2,7 @@ import Follow from '../models/Follower.schema';
 import Message from '../models/Message.schema';
 import User from '../models/User.scheme';
 
-export async function removeAllDataFromDB(areYouSure: boolean = false) {
+export async function removeAllDataFromDB(areYouSure = false) {
   if (areYouSure) {
     await User.deleteMany({});
     await Follow.deleteMany({});

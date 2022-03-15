@@ -1,4 +1,4 @@
 export declare global {
-  var latest: Number;
-  var initialized: boolean = false;
+  var latest: number;
+  var initialized = false;
 }

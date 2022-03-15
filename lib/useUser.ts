@@ -20,7 +20,7 @@ export default function useUser({ redirectTo = '', redirectIfFound = false } = {
     accessToken = localStorage.getItem('access_token') || '';
   }
 
-  let { data: user, mutate: mutateUser, error } = useSWR<{ user: TUser }>(['/api/login', accessToken], fetcher);
+  const { data: user, mutate: mutateUser, error } = useSWR<{ user: TUser }>(['/api/login', accessToken], fetcher);
 
   useEffect(() => {
     // if no redirect needed, just return (example: already on /dashboard)
@@ -61,7 +61,7 @@ export default function useUser({ redirectTo = '', redirectIfFound = false } = {
 
 export async function logout({ redirectTo = '' }: { redirectTo: string }) {
   if (typeof window !== 'undefined') {
-    var accessToken = localStorage.getItem('access_token') || '';
+    const accessToken = localStorage.getItem('access_token') || '';
     localStorage.clear();
     Router.push(redirectTo);
   }
