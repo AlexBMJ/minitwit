@@ -16,9 +16,8 @@ const MiniTwitRoute =
     }
     setLatest(req);
 
-    const foundMetric: any = httpRequestDurationMilliseconds();
-
-    foundMetric.startTimer();
+    const foundMetric: any = await httpRequestDurationMilliseconds();
+    console.log(foundMetric);
     const timer = foundMetric.startTimer();
     const result = handler(req, res);
     timer({ route: endpoint, method: req.method, status_code: res.statusCode });
