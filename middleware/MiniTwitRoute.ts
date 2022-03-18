@@ -1,7 +1,8 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { TUser } from '../models/User.scheme';
 import setLatest from '../helpers/latest_helper';
-import client from 'prom-client';
+import Prometheus, { Histogram } from 'prom-client';
+import httpRequestDurationMilliseconds from '../helpers/metrics_helper';
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;
@@ -13,22 +14,14 @@ const MiniTwitRoute =
     if (!routes.includes(req.method!)) {
       return res.status(405).json({ message: 'Method not accepted!' });
     }
-
     setLatest(req);
 
-    const foundMetric: any =
-      (await client.register.getMetricsAsArray()).find((v) => v.name === endpoint) ||
-      new client.Gauge({
-        name: endpoint,
-        help: `Speed for ${endpoint}`,
-      });
+    const foundMetric: any = httpRequestDurationMilliseconds();
 
-    foundMetric.setToCurrentTime();
-
-    const end = foundMetric.startTimer();
+    foundMetric.startTimer();
+    const timer = foundMetric.startTimer();
     const result = handler(req, res);
-    end();
-
+    timer({ route: endpoint, method: req.method, status_code: res.statusCode });
     return result;
   };
 
