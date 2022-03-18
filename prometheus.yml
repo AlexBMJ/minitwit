@@ -13,7 +13,7 @@ scrape_configs:
   - job_name: 'prometheus'
 
     # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
+    scrape_interval: 15s
 
     static_configs:
       - targets: ['prometheus:9090']
@@ -21,9 +21,9 @@ scrape_configs:
   - job_name: 'itu-minitwit-app'
 
     # Override the global default and scrape targets from this job every 5 seconds.
-    scrape_interval: 5s
+    scrape_interval: 2s
 
     static_configs:
-      - targets: ['app:3080']
+      - targets: ['app:3080/api']
         labels:
           group: 'production'

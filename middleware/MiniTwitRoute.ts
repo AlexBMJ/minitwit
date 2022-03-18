@@ -1,6 +1,8 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { TUser } from '../models/User.scheme';
 import setLatest from '../helpers/latest_helper';
+import Prometheus, { Histogram } from 'prom-client';
+import httpRequestDurationMilliseconds from '../helpers/metrics_helper';
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;
@@ -13,13 +15,13 @@ const MiniTwitRoute =
       return res.status(405).json({ message: 'Method not accepted!' });
     }
     setLatest(req);
-    console.log('AOWUIDHAIOWUDH');
-    console.log(global.metrics);
 
-    const timer = global.metrics.httpRequestDurationMilliseconds.startTimer({ route: endpoint, path: req.url });
+    const foundMetric: any = httpRequestDurationMilliseconds();
+
+    foundMetric.startTimer();
+    const timer = foundMetric.startTimer();
     const result = handler(req, res);
-    global.metrics.httpRequestDurationMilliseconds.labels({ status_code: res.statusCode });
-    timer();
+    timer({ route: endpoint, method: req.method, status_code: res.statusCode });
     return result;
   };
 

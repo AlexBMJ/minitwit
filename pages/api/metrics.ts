@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { register, collectDefaultMetrics } from 'prom-client';
+import httpRequestDurationMilliseconds from '../../helpers/metrics_helper';
+import metrics_helper from '../../helpers/metrics_helper';
 import MiniTwitRoute from '../../middleware/MiniTwitRoute';
 
 if (!global.initialized) {
