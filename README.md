@@ -24,6 +24,6 @@ TOKEN_SECRET="<token secret>"
 ```
 
 ### DEPLOY DOCKER STACK
-`sudo docker stack init`
+`sudo docker swarm init`
 
 `sudo docker stack deploy -c deployment.yml minitwit` with [deployment.yml](/deployment.yml)
