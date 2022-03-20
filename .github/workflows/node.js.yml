@@ -37,12 +37,6 @@ jobs:
       run: yarn test
     - name: Upload test code coverage to Codecov
       uses: codecov/codecov-action@v1
-
-    - name: Scan for licenses
-      run: pip install setuptools wheel && pip install scancode-toolkit && scancode --license -n 2 --json-pp scancode_output.json ../minitwit
-
-
-
     - name: Check if ES lint rules are followed
       run: yarn run eslint "." --ext .ts --ext .tsx --ext .js
 
