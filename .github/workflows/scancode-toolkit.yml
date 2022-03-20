@@ -15,4 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Scan for licenses
-        run: pip install setuptools wheel && pip install scancode-toolkit && scancode --license -n 2 --json-pp scancode_output.json ../minitwit
+        run: |
+          pip install setuptools wheel
+          pip install scancode-toolkit
+          scancode --license -n 2 --json-pp scancode_output.json ../minitwit
