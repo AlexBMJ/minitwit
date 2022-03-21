@@ -1,0 +1,21 @@
+name: Scancode-toolkit
+
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 12 * * *'
+
+jobs:
+  scan-licenses:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Scan for licenses
+        run: |
+          pip install setuptools wheel
+          pip install scancode-toolkit
+          scancode --license -n 2 --json-pp scancode_output.json ../minitwit

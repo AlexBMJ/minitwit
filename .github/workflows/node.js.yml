@@ -39,3 +39,4 @@ jobs:
       uses: codecov/codecov-action@v1
     - name: Check if ES lint rules are followed
       run: yarn run eslint "." --ext .ts --ext .tsx --ext .js
+
