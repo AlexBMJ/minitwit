@@ -185,3 +185,17 @@ div.error {
   height: 50px;
   width: 50px;
 }
+
+.loadmoretweets {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: darkcyan;
+  color: white;
+}
