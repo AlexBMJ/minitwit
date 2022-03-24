@@ -2,9 +2,12 @@ import pino from 'pino';
 
 
 export default pino(
-  pino.destination({
-    dest: 'log.log',
-    sync: false,
-    minLength: 4096,
-  })
+    pino.transport({
+        target: 'pino-socket',
+        options: {
+            address: 'localhost',
+            port: 5000,
+            mode: 'tcp'
+        }
+    })
 );
