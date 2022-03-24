@@ -1,10 +1,9 @@
 import '../styles/globals.scss';
 import type { AppProps } from 'next/app';
-import Layout from '../components/Layout.component';
+import logger from '../app/logger';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  <Layout></Layout>;
-  return <Component {...pageProps} />;
+  return <Component {...pageProps}/>;
 }
 
 export default MyApp;
