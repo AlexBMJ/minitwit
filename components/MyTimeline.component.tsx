@@ -98,7 +98,7 @@ export const FollowButtons: React.FunctionComponent<{
         router.push('/login');
       }
     } catch (e: any) {
-      console.log(e.response.data);
+      console.log(e);
     }
   }
 
@@ -166,7 +166,7 @@ export const Messages: React.FunctionComponent<{
         {messages.map((v, i) => {
           return (
             <li key={i}>
-              <div className="messageImage">
+              <div className="messageimage">
                 <Image alt="Good image" src="/oldman.jpeg" layout="fill" />
               </div>
               <Link href={`/timeline/${v.username}`}>{v.username}</Link>
