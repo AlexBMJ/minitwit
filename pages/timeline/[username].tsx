@@ -2,11 +2,10 @@ import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import useSWR from 'swr';
 import Footer from '../../components/FooterComponent';
 import Layout from '../../components/Layout.component';
 import Timeline from '../../components/MyTimeline.component';
-import useUser, { fetcher, fetcherGetWithToken } from '../../lib/useUser';
+import useUser, { fetcherGetWithToken } from '../../lib/useUser';
 import { UserInfo } from '../../types/userInfo';
 
 const UsernameTimeline: NextPage = () => {

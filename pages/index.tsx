@@ -1,4 +1,8 @@
 import type { NextPage } from 'next';
+<<<<<<< Updated upstream
+=======
+import { useRouter } from 'next/router';
+>>>>>>> Stashed changes
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Footer from '../components/FooterComponent';
@@ -13,15 +17,39 @@ const Home: NextPage = () => {
   const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>('/api/msgs?no=20', fetcherGet);
   const [pMessages, setPMessages] = useState<TMessage[]>([]);
 
-  const { mutate: mutateFollower, error: errorthree } = useSWR('/api/fllws', fetcherGet);
+  const { mutate: mutateFollower } = useSWR('/api/fllws', fetcherGet);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     // Hent alle beskeder
+=======
+    // Fetch all messages
+
+>>>>>>> Stashed changes
     if (data) {
       setPMessages(data.messages);
     }
   }, [data]);
 
+<<<<<<< Updated upstream
+=======
+  useEffect(() => {
+    if (R.query.skip) {
+      setSkipNumber(Number(R.query.skip.toString()) || 0);
+    }
+  }, []);
+
+  async function loadMoreTweets() {
+    const currentSkip = skipNumber;
+    const currentNumber = Number(R.query.no?.toString());
+    const newSkip = currentSkip + currentNumber;
+    const r = await fetcherGet(`/api/msgs?no=${R.query.no?.toString() || '20'}&skip=${newSkip || '0'}`);
+
+    setSkipNumber(newSkip);
+    setPMessages([...pMessages, ...r.messages]);
+  }
+
+>>>>>>> Stashed changes
   return (
     <div>
       <Layout user={user?.user}>

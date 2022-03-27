@@ -77,7 +77,7 @@ export const FollowButtons: React.FunctionComponent<{
     try {
       if (loggedInUser && loggedInUser.username) {
         if (username) {
-          const r = await axios.post(
+          await axios.post(
             `/api/fllws/${loggedInUser.username}`,
             task === 'follow' ? { follow: username } : { unfollow: username },
             {

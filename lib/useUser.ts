@@ -61,7 +61,7 @@ export default function useUser({ redirectTo = '', redirectIfFound = false } = {
 
 export async function logout({ redirectTo = '' }: { redirectTo: string }) {
   if (typeof window !== 'undefined') {
-    const accessToken = localStorage.getItem('access_token') || '';
+    localStorage.getItem('access_token') || '';
     localStorage.clear();
     Router.push(redirectTo);
   }
