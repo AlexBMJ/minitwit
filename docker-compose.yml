@@ -46,25 +46,17 @@ services:
       - grafana-storage:/var/lib/grafana
     ports:
       - '3000:3000'
-  # The 'setup' service runs a one-off script which initializes the
-  # 'logstash_internal' and 'kibana_system' users inside Elasticsearch with the
-  # values of the passwords defined in the '.env' file.
-  #
-  # This task is only performed during the *initial* startup of the stack. On all
-  # subsequent runs, the service simply returns immediately, without performing
-  # any modification to existing users.
-  # elasticsearch_setup:
-  #   build:
-  #     context: docker-elk/setup
-  #     args:
-  #       ELASTIC_VERSION: ${ELASTIC_VERSION}
-  #   init: true
-  #   volumes:
-  #     - setup:/state:Z
-  #   env_file:
-  #     - ./.env
-  #   networks:
-  #     - elk
+
+  elasticsearch_setup:
+    build:
+      context: docker-elk/setup
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - setup:/state:Z
+    env_file:
+      - ./.env
 
   elasticsearch:
     build:
@@ -72,21 +64,19 @@ services:
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./docker-elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
-      - elasticsearch:/usr/share/elasticsearch/data:z
+      - elasticsearch:/usr/share/elasticsearch/data:Z
     ports:
       - '9200:9200'
       - '9300:9300'
     environment:
       ES_JAVA_OPTS: -Xmx256m -Xms256m
-      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
-      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
-
+      cluster.name: docker-cluster
+      network.host: '0.0.0.0'
+      xpack.license.self_generated.type: basic
+      xpack.security.enabled: 'false'
     env_file:
       - ./.env
-    networks:
-      - elk
 
   logstash:
     build:
@@ -94,7 +84,6 @@ services:
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
     volumes:
-      - ./docker-elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
       - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
     ports:
       - '5044:5044'
@@ -103,25 +92,26 @@ services:
       - '9600:9600'
     environment:
       LS_JAVA_OPTS: -Xmx256m -Xms256m
-    env_file:
-      - ./.env
-    networks:
-      - elk
+      http.host: '0.0.0.0'
     depends_on:
       - elasticsearch
+    env_file:
+      - ./.env
 
   kibana:
     build:
       context: docker-elk/kibana
       args:
         ELASTIC_VERSION: ${ELASTIC_VERSION}
-    volumes:
-      - ./docker-elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
     ports:
       - '5601:5601'
+    environment:
+      server.name: kibana
+      server.host: '0.0.0.0'
+      elasticsearch.hosts: http://elasticsearch:9200
+      monitoring.ui.container.elasticsearch.enabled: 'true'
+      elasticsearch.username: kibana_system
     env_file:
       - ./.env
-    networks:
-      - elk
     depends_on:
       - elasticsearch
