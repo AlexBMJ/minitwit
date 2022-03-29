@@ -19,15 +19,18 @@ A new docker image is built when a new release is published using Github Actions
 ### .ENV
 
 ```
-MONGO_INITDB_ROOT_USERNAME=<username>
-MONGO_INITDB_ROOT_PASSWORD=<password>
+MONGO_INITDB_ROOT_PASSWORD=changeme
+MONGO_INITDB_ROOT_USERNAME=dbuser
 MONGO_INITDB_DATABASE=minitwit
-CONNECTION_STRING=mongodb://<username>:<password>@db:27017/minitwit?authSource=admin
-TOKEN_SECRET=<token secret>
+CONNECTION_STRING=mongodb://changeme:changeme@localhost:27017/minitwit?authSource=admin
+TOKEN_SECRET=changeme
 ELASTIC_VERSION=8.1.1
 KIBANA_SYSTEM_PASSWORD=changeme
 ELASTIC_PASSWORD=changeme
 LOGSTASH_INTERNAL_PASSWORD=changeme
+KIBANA_SYSTEM_PASSWORD=changeme
+ELASTICSEARCH_PASSWORD=changeme
+KIBANA_PASSWORD=changeme
 ```
 
 ### DEPLOY DOCKER STACK
