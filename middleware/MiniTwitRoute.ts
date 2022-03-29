@@ -11,7 +11,7 @@ export interface AuthRequest extends NextApiRequest {
 
 const MiniTwitRoute =
   (handler: NextApiHandler, routes: string[], endpoint: string) => async (req: AuthRequest, res: NextApiResponse) => {
-    if (routes.length > 0 && !routes.includes(req.method!)) {
+    if (routes && routes.length > 0 && !routes.includes(req.method!)) {
       return res.status(405).json({ message: 'Method not accepted!' });
     }
     setLatest(req);
