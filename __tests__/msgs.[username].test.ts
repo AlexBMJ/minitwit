@@ -9,7 +9,6 @@ import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import Message from '../models/Message.schema';
 jest.mock('../app/logger');
-import logger from '../app/logger';
 
 describe('GET requests for messages per user', () => {
   let req: AuthRequest;

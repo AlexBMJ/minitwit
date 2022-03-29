@@ -5,6 +5,7 @@ import * as httpMocks from 'node-mocks-http';
 import mongoose from 'mongoose';
 import { TestAPIResponse } from '../types/tests';
 import { removeAllDataFromDB } from '../helpers/test_helper';
+jest.mock('../app/logger');
 
 describe('Register tests', () => {
   let req: AuthRequest;

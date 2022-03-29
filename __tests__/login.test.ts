@@ -7,6 +7,7 @@ import login from '../pages/api/login';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { removeAllDataFromDB } from '../helpers/test_helper';
+jest.mock('../app/logger');
 
 describe('Login tests', () => {
   let req: AuthRequest;

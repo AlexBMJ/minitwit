@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { removeAllDataFromDB } from '../helpers/test_helper';
 import { getUser } from '../helpers/user_helper';
 import User, { TUser } from '../models/User.scheme';
+jest.mock('../app/logger');
 
 describe('Test user helper', () => {
   let firstUser:
