@@ -7,8 +7,6 @@ import { AuthRequest } from '../middleware/authentication';
 import { TestAPIResponse } from '../types/tests';
 import * as jwt from 'jsonwebtoken';
 import Follow from '../pages/api/fllws/[username]';
-import exp from 'constants';
-import * as user_helper from '../helpers/user_helper';
 
 describe('POST methods for Follow and unfollow tests', () => {
   let req: AuthRequest;
@@ -16,11 +14,10 @@ describe('POST methods for Follow and unfollow tests', () => {
   let firstUser: TUser;
   let secondUser: TUser;
   let bearerTokenForFirstUser: string;
-  let bearerTokenForSecondUser: string;
 
   beforeAll(async () => {
     // JEST automatically sets MONGO_URL to the memory db
-    await mongoose.connect(global.__MONGO_URI__!);
+    await mongoose.connect(global.__MONGO_URI__);
     await mongoose.connection.useDb('minitwit');
 
     const salt = await bcrypt.genSalt(10);
@@ -40,8 +37,8 @@ describe('POST methods for Follow and unfollow tests', () => {
       pw_hash: hash,
     }).save();
 
-    bearerTokenForFirstUser = await jwt.sign({ userid: firstUser._id!.toString() }, process.env.TOKEN_SECRET!);
-    bearerTokenForSecondUser = await jwt.sign({ userid: secondUser._id!.toString() }, process.env.TOKEN_SECRET!);
+    bearerTokenForFirstUser = jwt.sign({ userid: firstUser._id?.toString() }, process.env.TOKEN_SECRET!);
+    jwt.sign({ userid: secondUser._id?.toString() }, process.env.TOKEN_SECRET!);
   });
 
   beforeEach(async () => {
