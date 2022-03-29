@@ -12,16 +12,16 @@ export interface AuthRequest extends NextApiRequest {
 
 const MiniTwitRoute =
   (handler: NextApiHandler, routes: string[], endpoint: string) => async (req: AuthRequest, res: NextApiResponse) => {
-    // logger.info(
-    //   {
-    //     method: req.method,
-    //     url: req.url,
-    //     endpoint: endpoint,
-    //     body: req.body,
-    //     query: req.query,
-    //   },
-    //   `Received request: [${req.method}] ${req.url}`
-    // );
+    logger.info(
+      {
+        method: req.method,
+        url: req.url,
+        endpoint: endpoint,
+        body: req.body,
+        query: req.query,
+      },
+      `Received request: [${req.method}] ${req.url}`
+    );
 
     if (routes && routes.length > 0 && !routes.includes(req.method!)) {
       // logger.info(
