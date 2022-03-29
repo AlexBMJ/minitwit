@@ -29,12 +29,21 @@ const Home: NextPage = () => {
 
   async function loadMoreTweets() {
     const currentSkip = skipNumber;
-    const currentNumber = Number(R.query.no?.toString());
+    const currentNumber = Number(R.query.no?.toString()) || 20;
     const newSkip = currentSkip + currentNumber;
-    const r = await fetcherGet(`/api/msgs?no=${R.query.no?.toString() || '20'}&skip=${newSkip || '0'}`);
-    
-    setSkipNumber(newSkip);
-    setPMessages([...pMessages, ...r.messages]);
+    try {
+      const r = await fetcherGet(`/api/msgs?no=${currentNumber}&skip=${newSkip || '0'}`);
+
+      if (r.messages && r.messages.length > 0) {
+        setSkipNumber(newSkip);
+        setPMessages([...pMessages, ...r.messages]);
+      } else {
+        alert('No more messages to load...');
+      }
+    } catch (err) {
+      console.log(err);
+      alert('There was an error! Check console');
+    }
   }
 
   return (

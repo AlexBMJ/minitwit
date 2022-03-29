@@ -10,6 +10,7 @@ export interface AuthRequest extends NextApiRequest {
   authenticated?: boolean;
 }
 
+<<<<<<< Setup-ELK
 const MiniTwitRoute = (handler: NextApiHandler, routes: string[], endpoint: string) => async (req: AuthRequest, res: NextApiResponse) => {
   
     logger.info( {
@@ -28,6 +29,11 @@ const MiniTwitRoute = (handler: NextApiHandler, routes: string[], endpoint: stri
         body: req.body,
         query: req.query
       }, `Unaccepted method received for: [${req.method}] ${req.url}`);
+=======
+const MiniTwitRoute =
+  (handler: NextApiHandler, routes: string[], endpoint: string) => async (req: AuthRequest, res: NextApiResponse) => {
+    if (routes && routes.length > 0 && !routes.includes(req.method!)) {
+>>>>>>> main
       return res.status(405).json({ message: 'Method not accepted!' });
     }
     

@@ -20,7 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (isNaN(numberAmount) || isNaN(skipAmount)) {
     return res.status(400).json({ message: 'Not a number...' });
   }
-
   const recentMessages = await Message.find({}).skip(skipAmount).limit(numberAmount).sort({ pub_date: -1 }).exec();
   return res.status(200).json({ messages: recentMessages });
 };
