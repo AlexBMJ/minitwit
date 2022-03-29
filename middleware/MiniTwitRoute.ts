@@ -24,16 +24,16 @@ const MiniTwitRoute =
     );
 
     if (routes && routes.length > 0 && !routes.includes(req.method!)) {
-      // logger.info(
-      //   {
-      //     method: req.method,
-      //     url: req.url,
-      //     endpoint,
-      //     body: req.body,
-      //     query: req.query,
-      //   },
-      //   `Unaccepted method received for: [${req.method}] ${req.url}`
-      // );
+      logger.info(
+        {
+          method: req.method,
+          url: req.url,
+          endpoint,
+          body: req.body,
+          query: req.query,
+        },
+        `Unaccepted method received for: [${req.method}] ${req.url}`
+      );
 
       return res.status(405).json({ message: 'Method not accepted!' });
     }
@@ -47,27 +47,27 @@ const MiniTwitRoute =
 
     try {
       result = await handler(req, res);
-      // logger.info(
-      //   {
-      //     method: req.method,
-      //     url: req.url,
-      //     endpoint,
-      //     body: req.body,
-      //     query: req.query,
-      //   },
-      //   `Handler executed successfully for ${endpoint}`
-      // );
+      logger.info(
+        {
+          method: req.method,
+          url: req.url,
+          endpoint,
+          body: req.body,
+          query: req.query,
+        },
+        `Handler executed successfully for ${endpoint}`
+      );
     } catch (ex) {
-      // logger.error(
-      //   {
-      //     method: req.method,
-      //     url: req.url,
-      //     endpoint,
-      //     body: req.body,
-      //     query: req.query,
-      //   },
-      //   `Exception received for handler: ${ex}`
-      // );
+      logger.error(
+        {
+          method: req.method,
+          url: req.url,
+          endpoint,
+          body: req.body,
+          query: req.query,
+        },
+        `Exception received for handler: ${ex}`
+      );
     }
 
     timer({ route: endpoint, method: req.method, status_code: res.statusCode });
