@@ -32,7 +32,7 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     }
   }
 
-  return res.status(500).send("unreachable");
+  return res.status(500).send('unreachable');
 };
 
 export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api_fllws_username');

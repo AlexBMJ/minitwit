@@ -21,7 +21,7 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
     return res.status(400).json({ message: 'Username, email and password must be set!' });
   }
 
-  if (username.includes(':')) {
+  if (username && username.includes(':')) {
     return res.status(400).json({ message: 'Username cannot contain the colon character' });
   }
 

@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const [skipNumber, setSkipNumber] = useState(0);
   const R = useRouter();
 
-  const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
+  const { mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
     `/api/msgs?no=${R.query.no?.toString() || '20'}&skip=${R.query.skip?.toString() || '0'}`,
     fetcherGet
   );
@@ -25,16 +25,25 @@ const Home: NextPage = () => {
     if (R.query.skip) {
       setSkipNumber(Number(R.query.skip.toString()) || 0);
     }
-  }, []);
+  }, [R.query.skip]);
 
   async function loadMoreTweets() {
     const currentSkip = skipNumber;
-    const currentNumber = Number(R.query.no?.toString());
+    const currentNumber = Number(R.query.no?.toString()) || 20;
     const newSkip = currentSkip + currentNumber;
-    const r = await fetcherGet(`/api/msgs?no=${R.query.no?.toString() || '20'}&skip=${newSkip || '0'}`);
-    
-    setSkipNumber(newSkip);
-    setPMessages([...pMessages, ...r.messages]);
+    try {
+      const r = await fetcherGet(`/api/msgs?no=${currentNumber}&skip=${newSkip || '0'}`);
+
+      if (r.messages && r.messages.length > 0) {
+        setSkipNumber(newSkip);
+        setPMessages([...pMessages, ...r.messages]);
+      } else {
+        alert('No more messages to load...');
+      }
+    } catch (err) {
+      console.log(err);
+      alert('There was an error! Check console');
+    }
   }
 
   return (
