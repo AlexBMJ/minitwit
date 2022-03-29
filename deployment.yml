@@ -3,6 +3,8 @@ version: '3.9'
 volumes:
   db_data:
   grafana-storage:
+  setup:
+  elasticsearch:
 
 services:
   app:
@@ -36,7 +38,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       IMAGE_AUTOCLEAN_LIMIT: 3
-      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db minitwit_prometheus minitwit_grafana'
+      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db minitwit_prometheus minitwit_grafana minitwit_kibana minitwit_logstash minitwit_elasticsearch minitwit_setup'
       TZ: Europe/Copenhagen
     deploy:
       placement:
@@ -60,3 +62,55 @@ services:
       - '3000:3000'
     deploy:
       mode: global
+
+  setup:
+    image: 'setup'
+    init: true
+    volumes:
+      - setup:/state:Z
+    env_file:
+      - ./.env
+
+  elasticsearch:
+    image: 'elasticsearch'
+    volumes:
+      - ./docker-elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
+      - elasticsearch:/usr/share/elasticsearch/data:z
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    environment:
+      ES_JAVA_OPTS: -Xmx256m -Xms256m
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+    env_file:
+      - ./.env
+
+  logstash:
+    image: 'logstash'
+    volumes:
+      - ./docker-elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+      - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    ports:
+      - '5044:5044'
+      - '5000:5000/tcp'
+      - '5000:5000/udp'
+      - '9600:9600'
+    environment:
+      LS_JAVA_OPTS: -Xmx256m -Xms256m
+    depends_on:
+      - elasticsearch
+    env_file:
+      - ./.env
+
+  kibana:
+    image: 'kibana'
+    volumes:
+      - ./docker-elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - '5601:5601'
+    env_file:
+      - ./.env
+    depends_on:
+      - elasticsearch
