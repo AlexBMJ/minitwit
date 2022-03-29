@@ -47,27 +47,27 @@ const MiniTwitRoute =
 
     try {
       result = await handler(req, res);
-      logger.info(
-        {
-          method: req.method,
-          url: req.url,
-          endpoint,
-          body: req.body,
-          query: req.query,
-        },
-        `Handler executed successfully for ${endpoint}`
-      );
+      // logger.info(
+      //   {
+      //     method: req.method,
+      //     url: req.url,
+      //     endpoint,
+      //     body: req.body,
+      //     query: req.query,
+      //   },
+      //   `Handler executed successfully for ${endpoint}`
+      // );
     } catch (ex) {
-      logger.error(
-        {
-          method: req.method,
-          url: req.url,
-          endpoint,
-          body: req.body,
-          query: req.query,
-        },
-        `Exception received for handler: ${ex}`
-      );
+      // logger.error(
+      //   {
+      //     method: req.method,
+      //     url: req.url,
+      //     endpoint,
+      //     body: req.body,
+      //     query: req.query,
+      //   },
+      //   `Exception received for handler: ${ex}`
+      // );
     }
 
     timer({ route: endpoint, method: req.method, status_code: res.statusCode });
