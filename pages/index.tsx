@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   const [skipNumber, setSkipNumber] = useState(0);
   const R = useRouter();
 
-  const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
+  const { mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
     `/api/msgs?no=${R.query.no?.toString() || '20'}&skip=${R.query.skip?.toString() || '0'}`,
     fetcherGet
   );
@@ -25,7 +25,7 @@ const Home: NextPage = () => {
     if (R.query.skip) {
       setSkipNumber(Number(R.query.skip.toString()) || 0);
     }
-  }, []);
+  }, [R.query.skip]);
 
   async function loadMoreTweets() {
     const currentSkip = skipNumber;
