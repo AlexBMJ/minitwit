@@ -11,7 +11,7 @@ describe('Register tests', () => {
   let res: TestAPIResponse;
   beforeAll(async () => {
     // JEST automatically sets MONGO_URL to the memory db
-    await mongoose.connect(global.__MONGO_URI__!);
+    await mongoose.connect(global.__MONGO_URI__);
     await mongoose.connection.useDb('minitwit');
   });
 
