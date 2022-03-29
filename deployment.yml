@@ -64,7 +64,7 @@ services:
       mode: global
 
   setup:
-    image: 'setup'
+    image: 'minitwit_setup'
     init: true
     volumes:
       - setup:/state:Z
@@ -72,7 +72,7 @@ services:
       - ./.env
 
   elasticsearch:
-    image: 'elasticsearch'
+    image: 'minitwit_elasticsearch'
     volumes:
       - ./docker-elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
       - elasticsearch:/usr/share/elasticsearch/data:z
@@ -88,7 +88,7 @@ services:
       - ./.env
 
   logstash:
-    image: 'logstash'
+    image: 'minitwit_logstash'
     volumes:
       - ./docker-elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
       - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
@@ -105,7 +105,7 @@ services:
       - ./.env
 
   kibana:
-    image: 'kibana'
+    image: 'minitwit_kibana'
     volumes:
       - ./docker-elk/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
     ports:
