@@ -38,7 +38,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       IMAGE_AUTOCLEAN_LIMIT: 3
-      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db minitwit_prometheus minitwit_grafana minitwit_kibana minitwit_logstash minitwit_elasticsearch minitwit_setup'
+      IGNORELIST_SERVICES: 'minitwit_shepherd minitwit_db minitwit_prometheus minitwit_grafana minitwit_kibana minitwit_logstash minitwit_elasticsearch minitwit_elasticsearch_setup'
       TZ: Europe/Copenhagen
     deploy:
       placement:
@@ -63,19 +63,19 @@ services:
     deploy:
       mode: global
 
-  setup:
-    image: 'minitwit_setup'
-    init: true
-    volumes:
-      - setup:/state:Z
-    env_file:
-      - ./.env
+  # elasticsearch_setup:
+  #   image: 'minitwit_setup'
+  #   init: true
+  #   volumes:
+  #     - setup:/state:Z
+  #   env_file:
+  #     - ./.env
 
   elasticsearch:
     image: 'minitwit_elasticsearch'
     volumes:
-      - ./docker-elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,z
-      - elasticsearch:/usr/share/elasticsearch/data:z
+      - ./docker-elk/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch:/usr/share/elasticsearch/data:Z
     ports:
       - '9200:9200'
       - '9300:9300'
