@@ -13,12 +13,12 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
         <h1>MiniTwit</h1>
         {user ? (
           <div className={styles.navitems}>
-            <div className={styles.navitem}>
-              <Link href="/">Public Timeline</Link>
-            </div>
-            <div className={styles.navitem}>
-              <Link href={`/timeline/${user.username}`}>My Timeline</Link>
-            </div>
+            <Link href="/" passHref>
+              <div className={styles.navitem}>Public Timeline</div>
+            </Link>
+            <Link href={`/timeline/${user.username}`} passHref>
+              <div className={styles.navitem}>My Timeline</div>
+            </Link>
             <div className={styles.navitem} onClick={() => logout({ redirectTo: '/login' })}>
               Sign out
             </div>
@@ -48,7 +48,7 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
 
         {children}
         <div className={styles.footer}>
-          <p>Footer</p>
+          <p>Mintwit - a Next.js project</p>
         </div>
       </div>
     </div>

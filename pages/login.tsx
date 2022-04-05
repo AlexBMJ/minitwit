@@ -2,10 +2,10 @@ import axios from 'axios';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useState } from 'react';
-import Footer from '../components/FooterComponent';
 import Router from 'next/router';
 import Layout from '../components/Layout.component';
 import useUser from '../lib/useUser';
+import styles from '../styles/auth.module.scss';
 
 const Login: NextPage = () => {
   const { user, mutateUser, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
@@ -46,15 +46,15 @@ const Login: NextPage = () => {
 
   if (!user?.user || error) {
     return (
-      <div>
+      <Layout>
         <Head>
-          <title>Sign In</title>
+          <title>Login</title>
         </Head>
-        <Layout>
+        <div className={styles.auth}>
           <h2>Sign In</h2>
 
           {errorMessage && (
-            <div className="error">
+            <div className={styles.error}>
               <strong>Error:</strong> {errorMessage}
             </div>
           )}
@@ -70,6 +70,7 @@ const Login: NextPage = () => {
                       username: e.target.value,
                     })
                   }
+                  placeholder="Username"
                   type="text"
                   name="username"
                   size={30}
@@ -84,19 +85,19 @@ const Login: NextPage = () => {
                       password: e.target.value,
                     })
                   }
+                  placeholder="Password"
                   type="password"
                   name="password"
                   size={30}
                 />
               </dd>
             </dl>
-            <div className="actions">
-              <input type="submit" value="Sign In" />
+            <div>
+              <button type="submit">Sign in</button>
             </div>
           </form>
-        </Layout>
-        <Footer />
-      </div>
+        </div>
+      </Layout>
     );
   } else {
     return <p>Loading...</p>;

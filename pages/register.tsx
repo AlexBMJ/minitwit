@@ -6,6 +6,7 @@ import Layout from '../components/Layout.component';
 import axios from 'axios';
 import Router from 'next/router';
 import useUser from '../lib/useUser';
+import styles from '../styles/auth.module.scss';
 
 const Register: NextPage = () => {
   const { user, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
@@ -46,14 +47,14 @@ const Register: NextPage = () => {
 
   if (!user?.user || error) {
     return (
-      <>
+      <Layout>
         <Head>
-          <title>Register - MiniTwit</title>
+          <title>Register</title>
         </Head>
-        <Layout>
+        <div className={styles.auth}>
           <h2>Register</h2>
           {errorMessage && (
-            <div className="error">
+            <div className={styles.error}>
               <strong>Error:</strong> {errorMessage}
             </div>
           )}
@@ -65,6 +66,7 @@ const Register: NextPage = () => {
                 onChange={(e) => setFormBody({ ...formBody, username: e.target.value })}
                 type="text"
                 name="username"
+                placeholder="Username"
                 size={30}
                 value={formBody.username}
               />
@@ -73,8 +75,9 @@ const Register: NextPage = () => {
             <dd>
               <input
                 onChange={(e) => setFormBody({ ...formBody, email: e.target.value })}
-                type="text"
+                type="email"
                 name="email"
+                placeholder="Email"
                 size={30}
                 value={formBody.email}
               />
@@ -85,6 +88,7 @@ const Register: NextPage = () => {
                 onChange={(e) => setFormBody({ ...formBody, pwd: e.target.value })}
                 type="password"
                 name="password"
+                placeholder="Password"
                 size={30}
                 value={formBody.pwd}
               />
@@ -97,18 +101,18 @@ const Register: NextPage = () => {
                 onChange={(e) => setFormBody({ ...formBody, passwordAgain: e.target.value })}
                 type="password"
                 name="password2"
+                placeholder="Password 2"
                 size={30}
                 value={formBody.passwordAgain}
               />
             </dd>
 
             <div className="actions">
-              <input type="submit" value="Sign Up" />
+              <button type="submit">Sign up</button>
             </div>
           </form>
-        </Layout>
-        <Footer />
-      </>
+        </div>
+      </Layout>
     );
   } else {
     return <p>Loading...</p>;
