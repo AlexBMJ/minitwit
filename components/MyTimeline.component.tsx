@@ -169,7 +169,7 @@ export const Messages: React.FunctionComponent<{
             <li key={i}>
               <div className={styles.image}>
                 <div className={styles.messageimage}>
-                  <Image alt="Good image" src="/oldman.jpeg" layout="fill" />
+                  <Image alt="Profile picture" src={`https://secure.gravatar.com/avatar/${v.author_id}?d=identicon&s=64`} layout="fill" />
                 </div>
               </div>
               <div className={styles.messagecontent}>
