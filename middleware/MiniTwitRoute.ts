@@ -1,9 +1,8 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { TUser } from '../models/User.scheme';
 import setLatest from '../helpers/latest_helper';
-import Prometheus, { Histogram } from 'prom-client';
 import httpRequestDurationMilliseconds from '../helpers/metrics_helper';
-import logger from '../app/logger';
+import logger from '../helpers/logger';
 
 export interface AuthRequest extends NextApiRequest {
   user?: TUser;

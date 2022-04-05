@@ -2,9 +2,9 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { register, collectDefaultMetrics } from 'prom-client';
 import MiniTwitRoute from '../../middleware/MiniTwitRoute';
 
-if (!global.initialized) {
+if (!global.metric_init) {
   collectDefaultMetrics({ prefix: 'minitwit_' });
-  global.initialized = true;
+  global.metric_init = true;
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

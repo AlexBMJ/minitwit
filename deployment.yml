@@ -7,17 +7,17 @@ volumes:
   elasticsearch:
 
 services:
-  # app:
-  #   image: ghcr.io/alexbmj/minitwit:latest
-  #   ports:
-  #     - '3080:3080'
-  #   env_file:
-  #     - ./.env
-  #   environment:
-  #     - TZ=Europe/Copenhagen
-  #   deploy:
-  #     mode: replicated
-  #     replicas: 3
+  app:
+    image: minitwit_app
+    ports:
+      - '3080:3080'
+    env_file:
+      - ./.env
+    environment:
+      - TZ=Europe/Copenhagen
+    deploy:
+      mode: replicated
+      replicas: 3
 
   db:
     image: mongo:4.4.12
@@ -48,7 +48,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
     deploy:
@@ -63,13 +63,13 @@ services:
     deploy:
       mode: global
 
-  # elasticsearch_setup:
-  #   image: 'minitwit_elasticsearch_setup'
-  #   init: true
-  #   volumes:
-  #     - setup:/state:Z
-  #   env_file:
-  #     - ./.env
+  elasticsearch_setup:
+    image: 'minitwit_elasticsearch_setup'
+    init: true
+    volumes:
+      - setup:/state:Z
+    env_file:
+      - ./.env
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.1.1
@@ -91,7 +91,7 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:8.1.1
     volumes:
-      - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./config/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
     ports:
       - '5044:5044'
       - '5000:5000/tcp'
@@ -118,4 +118,4 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - elasticsearch
+      - logstash
