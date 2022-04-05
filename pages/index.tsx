@@ -64,7 +64,7 @@ const Home: NextPage = () => {
             loggedInUser={user.user}
             mutateFollower={mutateFollower}
           />
-          <button onClick={() => loadMoreTweets()} className="loadmoretweets" type="button">
+          <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
             Load more
           </button>
         </div>

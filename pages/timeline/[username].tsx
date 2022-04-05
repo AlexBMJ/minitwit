@@ -42,21 +42,18 @@ const UsernameTimeline: NextPage = () => {
   }, [username, user, accessToken]);
 
   return (
-    <div>
-      <Layout user={user?.user}>
-        {userViewing ? (
-          <Timeline
-            loggedInUser={user?.user}
-            mutateFollower={setIsFollowing}
-            isFollowing={isFollowing}
-            user={userViewing}
-          />
-        ) : (
-          <p>User not found</p>
-        )}
-      </Layout>
-      <Footer />
-    </div>
+    <Layout user={user?.user}>
+      {userViewing ? (
+        <Timeline
+          loggedInUser={user?.user}
+          mutateFollower={setIsFollowing}
+          isFollowing={isFollowing}
+          user={userViewing}
+        />
+      ) : (
+        <p>User not found</p>
+      )}
+    </Layout>
   );
 };
 

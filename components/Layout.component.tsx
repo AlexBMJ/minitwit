@@ -38,13 +38,8 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
         )}
       </div>
       <div className={styles.content}>
-        <ul className={styles.errorMessage}>
-          <li>test</li>
-          <li>test</li>
-        </ul>
-
         {errorMessages.length > 0 && (
-          <ul className="flashes">
+          <ul className={styles.errorMessage}>
             {errorMessages.map((v, k) => {
               return <li key={k}>{v}</li>;
             })}
