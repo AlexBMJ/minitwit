@@ -3,6 +3,7 @@ version: '3.9'
 volumes:
   db_data:
   grafana-storage:
+  prometheus_data:
 
 services:
   app:
@@ -46,6 +47,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
+      - prometheus_data:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
