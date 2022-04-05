@@ -1,9 +1,78 @@
-.signout {
-  background: white;
-  color: #24776f;
-  cursor: pointer;
+@import './colors.scss';
+
+.page {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
-.signout:hover {
-  color: #333;
+.navigation {
+  width: 20%;
+  background-color: $color3;
+  height: 100%;
+
+  h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    color: $white;
+  }
+
+  .navitems {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    .navitem {
+      text-align: left;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      background-color: $color4;
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      color: $white;
+
+      a {
+        text-decoration: none;
+        color: $white;
+      }
+    }
+  }
+}
+
+.content {
+  background-color: $color4;
+  width: 80%;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+
+  .footer {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin-top: auto;
+      color: $white;
+    }
+  }
+
+  .errorMessage {
+    background-color: $red;
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    li {
+      color: white;
+    }
+  }
 }

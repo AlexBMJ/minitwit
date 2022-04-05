@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Link from 'next/link';
 import { useState } from 'react';
 import { logout } from '../lib/useUser';
@@ -9,26 +8,40 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
   const [errorMessages] = useState<string[]>([]);
 
   return (
-    <div>
-      <div className="page">
+    <div className={styles.page}>
+      <div className={styles.navigation}>
         <h1>MiniTwit</h1>
-        <div className="navigiation">
-          {user ? (
-            <div>
-              <Link href="/" passHref>
-                {'Public Timeline'}
-              </Link>{' '}
-              | <Link href={`/timeline/${user.username}`}>My Timeline</Link> |{' '}
-              <span className={styles.signout} onClick={() => logout({ redirectTo: '/login' })}>
-                Sign out
-              </span>
+        {user ? (
+          <div className={styles.navitems}>
+            <div className={styles.navitem}>
+              <Link href="/">Public Timeline</Link>
             </div>
-          ) : (
-            <div>
-              <Link href="/">Timeline</Link> | <Link href="/register">Register</Link> | <Link href="/login">Login</Link>
+            <div className={styles.navitem}>
+              <Link href={`/timeline/${user.username}`}>My Timeline</Link>
             </div>
-          )}
-        </div>
+            <div className={styles.navitem} onClick={() => logout({ redirectTo: '/login' })}>
+              Sign out
+            </div>
+          </div>
+        ) : (
+          <div className={styles.navitems}>
+            <div className={styles.navitem}>
+              <Link href="/">Timeline</Link>
+            </div>
+            <div className={styles.navitem}>
+              <Link href="/register">Register</Link>
+            </div>
+            <div className={styles.navitem}>
+              <Link href="/login">Login</Link>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className={styles.content}>
+        <ul className={styles.errorMessage}>
+          <li>test</li>
+          <li>test</li>
+        </ul>
 
         {errorMessages.length > 0 && (
           <ul className="flashes">
@@ -39,6 +52,9 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
         )}
 
         {children}
+        <div className={styles.footer}>
+          <p>Footer</p>
+        </div>
       </div>
     </div>
   );
