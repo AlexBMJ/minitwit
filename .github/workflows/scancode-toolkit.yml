@@ -1,6 +1,5 @@
 name: Scancode-toolkit
 
-
 on:
   push:
     branches: [ main ]

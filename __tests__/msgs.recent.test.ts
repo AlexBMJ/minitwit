@@ -5,6 +5,7 @@ import { TestAPIResponse } from '../types/tests';
 import * as httpMocks from 'node-mocks-http';
 import recent from '../pages/api/msgs';
 import Message from '../models/Message.schema';
+jest.mock('../helpers/logger');
 
 describe('Test recent messages', () => {
   let req: AuthRequest;

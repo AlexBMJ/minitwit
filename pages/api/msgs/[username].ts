@@ -49,6 +49,9 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
     }).save();
     return res.status(204).send('');
   }
+
+  // This will never be reached
+  return res.status(500).send('unreachable');
 };
 
 export default MiniTwitRoute(authenticate(handler), ['GET', 'POST'], 'api_msgs_username');

@@ -8,7 +8,7 @@ import Layout from '../components/Layout.component';
 import useUser from '../lib/useUser';
 
 const Login: NextPage = () => {
-  const { user, mutateUser, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
+  const { user, error } = useUser({ redirectIfFound: true, redirectTo: '/' });
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [formBody, setFormBody] = useState<{ username?: string; password?: string }>({ username: '', password: '' });
 

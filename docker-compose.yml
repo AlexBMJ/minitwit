@@ -2,6 +2,12 @@ version: '3.9'
 
 volumes:
   grafana-storage:
+  setup:
+  elasticsearch:
+
+networks:
+  elk:
+    driver: bridge
 
 services:
   app:
@@ -40,3 +46,72 @@ services:
       - grafana-storage:/var/lib/grafana
     ports:
       - '3000:3000'
+
+  elasticsearch_setup:
+    build:
+      context: docker-elk/setup
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - setup:/state:Z
+    env_file:
+      - ./.env
+
+  elasticsearch:
+    build:
+      context: docker-elk/elasticsearch
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data:Z
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+    environment:
+      ES_JAVA_OPTS: -Xmx256m -Xms256m
+      discovery.type: single-node
+      cluster.name: docker-cluster
+      network.host: '0.0.0.0'
+      xpack.license.self_generated.type: basic
+      xpack.security.enabled: 'false'
+    env_file:
+      - ./.env
+
+  logstash:
+    build:
+      context: docker-elk/logstash
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    ports:
+      - '5044:5044'
+      - '5000:5000/tcp'
+      - '5000:5000/udp'
+      - '9600:9600'
+    environment:
+      LS_JAVA_OPTS: -Xmx256m -Xms256m
+      http.host: '0.0.0.0'
+    depends_on:
+      - elasticsearch
+    env_file:
+      - ./.env
+
+  kibana:
+    build:
+      context: docker-elk/kibana
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    ports:
+      - '5601:5601'
+    environment:
+      server.name: kibana
+      server.host: '0.0.0.0'
+      elasticsearch.hosts: http://elasticsearch:9200
+      monitoring.ui.container.elasticsearch.enabled: 'true'
+      elasticsearch.username: kibana_system
+    env_file:
+      - ./.env
+    depends_on:
+      - elasticsearch
