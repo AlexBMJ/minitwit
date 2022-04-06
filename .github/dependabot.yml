@@ -1,0 +1,21 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+     
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      # Check for updates at 9 in the morning every day
+      time: "09:00"
+      # Use Copenhagen Standard Time (UTC +09:00)
+      timezone: Europe/Copenhagen
+    # to pip against the `dependabot-updates` branch
+    target-branch: "main"
+    commit-message:
+      # Prefix all commit messages with "npm"
+      prefix: "npm"

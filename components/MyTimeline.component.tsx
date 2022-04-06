@@ -167,7 +167,7 @@ export const Messages: React.FunctionComponent<{
           return (
             <li key={i}>
               <div className="messageimage">
-                <Image alt="Good image" src="/oldman.jpeg" layout="fill" />
+                <Image alt="Profile picture" src={`https://secure.gravatar.com/avatar/${v.author_id}?d=identicon&s=64`} layout="fill" />
               </div>
               <Link href={`/timeline/${v.username}`}>{v.username}</Link>
               <p>{v.text}</p>

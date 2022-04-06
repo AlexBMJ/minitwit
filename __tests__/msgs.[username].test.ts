@@ -16,7 +16,7 @@ describe('GET requests for messages per user', () => {
   let user: TUser;
   //jest.spyOn(logger, 'info').mockImplementation();
   beforeAll(async () => {
-    await mongoose.connect(global.__MONGO_URI__!);
+    await mongoose.connect(global.__MONGO_URI__);
     await mongoose.connection.useDb('minitwit');
 
     user = await new User({

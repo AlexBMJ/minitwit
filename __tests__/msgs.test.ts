@@ -1,7 +1,6 @@
 import mongoose from 'mongoose';
 import { removeAllDataFromDB } from '../helpers/test_helper';
 import { AuthRequest } from '../middleware/authentication';
-import User, { TUser } from '../models/User.scheme';
 import { TestAPIResponse } from '../types/tests';
 import * as httpMocks from 'node-mocks-http';
 import msg from '../pages/api/msgs';
@@ -13,7 +12,7 @@ describe('Ensure api/msgs works as intended', () => {
   let res: TestAPIResponse;
 
   beforeAll(async () => {
-    await mongoose.connect(global.__MONGO_URI__!);
+    await mongoose.connect(global.__MONGO_URI__);
     await mongoose.connection.useDb('minitwit');
   });
 

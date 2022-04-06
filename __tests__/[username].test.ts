@@ -11,15 +11,14 @@ jest.mock('../app/logger');
 describe('username tests', () => {
   let req: AuthRequest;
   let res: TestAPIResponse;
-  let user: TUser;
   beforeAll(async () => {
     // Setup Memory DB
     // JEST automatically sets MONGO_URL to the memory db
-    await mongoose.connect(global.__MONGO_URI__!);
+    await mongoose.connect(global.__MONGO_URI__);
     mongoose.connection.useDb('minitwit');
 
     const hash = await bcrypt.hash('1234', 10);
-    user = await new User({
+    await new User({
       username: 'bech',
       admin: false,
       email: 'milb@itu.dk',
