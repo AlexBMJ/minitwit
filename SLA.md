@@ -6,31 +6,31 @@
 
 ## Who We Are
 
-WAY Group INC. consists of a group of young, motivated and aspiring developers, trying to make a change in the world. WAY Group INC. are mostly known for their minitwit application, which has received hundred thouasnds of tweets from thousands of active uesrs.
+WAY Group INC. consists of a group of young, motivated and aspiring developers, trying to make a change in the world. WAY Group INC. are mostly known for their minitwit application, which has received hundred thousands of tweets from active uesrs.
 
-Our goal is to bring the world closer together by making communication and expression available at the tip of users fingers.
+Our goal is to bring the world closer together by making communication available at the finger tip.
 
 ## Uptime & Availability
 
-WG will try its very best to achieve the highest possible uptime and be available for as long as it can. WG will use latest and modern approved technologies in an attempt of achieving this goal and to rectify any issues that may occur in the fastest way possible.
+WG will strive for the highest possible uptime and be available for as long as it can. WG will use latest and modern approved technologies in an attempt to achieve this goal and to rectify any issues that may occur.
 
-Uptime and availability can be found through our internal tracking technologies from Grafana and Prometheus. This can be viewed [here.](https://stats.minitwit.waygroup.net/). All of this can be viewed here by internal users. Guest accounts can be offered for affected users for validity and transparency of the accusations made.
+Uptime and availability can be found through our internal tracking technologies from Grafana and Prometheus. This can be viewed [here.](https://stats.minitwit.waygroup.net/). Currently only for internal users. Guest accounts can be offered for affected users for validity and transparency of the accusations made.
 
 ## Mean Response Time
 
-Based on statistical analysis, WG's mean response time for its MiniTwit application is < 1 second. Please note that the client's internet connection, speed, and other properties that is out of our hand is not something we take responsiblity for and into account for the calculation of those statistics.
+Based on statistical analysis, WG's mean response time for its minitwit application is less than 1 second. Please note that the client's internet connection, speed, and other factors that is out of our hand is not something we take responsiblity for and into account for the calculation of the statistics.
 
 ## Mean Time To Recover
 
-WG's mean recovery time for issues caused is ~1 hour.
+WG's mean recovery time for issues caused, can be expected to be around 1 hour.
 
 ## Failure Frequency
 
-WG's MiniTwit application only had issues in its first couple of weeks, which WG has decided not to take into account. Since then, MiniTwit has had no failures and only has small downtime maintenance periods.
+WG's minitwit application only had issues during the launch of minitwit (the first few weeks), which WG has decided not to take into account. Since then, minitwit have had no failures and only has small downtime during maintenance.
 
 ## Compensation
 
-If down time occurs that is specifically caused by WG, and not an external dependency, compensation will be ofered to affected users if the expected recovery time (stated above) has been exceeded.
+If down time occurs that is specifically caused by WG, and not an external dependency, compensation will be offered to affected users if the expected recovery time (stated above) has been exceeded.
 
 | Monthly Uptime Percentage | Compensation |
 | --- | --- |
@@ -38,4 +38,4 @@ If down time occurs that is specifically caused by WG, and not an external depen
 | 95% – 99.0% | 50 USD |
 | > 95% | 500 USD |
 
-Affected users will have to reach out through the support mail at support@waygroup.net. WG has the last say when claims occur and a reply is not guranteed. WG is, however, proud to publicize that their average support ticket response time is ~3 days.
+Affected users will have to reach out through the support mail at support@waygroup.net. WG will carefully go through the details of the claim and decided the outcome. If you do not hear back from WG, consider the case closed and the claim invalid. WG's average support ticket response time is ~3 days.
