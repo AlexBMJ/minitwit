@@ -8,7 +8,7 @@ volumes:
 
 services:
   app:
-    image: minitwit_app
+    image: ghcr.io/alexbmj/minitwit:latest
     ports:
       - '3080:3080'
     env_file:
