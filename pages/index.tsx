@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 import Footer from '../components/FooterComponent';
@@ -13,27 +13,19 @@ const Home: NextPage = () => {
   const [skipNumber, setSkipNumber] = useState(0);
   const R = useRouter();
 
-  const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
+  const { mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
     `/api/msgs?no=${R.query.no?.toString() || '20'}&skip=${R.query.skip?.toString() || '0'}`,
     fetcherGet
   );
   const [pMessages, setPMessages] = useState<TMessage[]>([]);
 
-  const { mutate: mutateFollower, error: errorthree } = useSWR('/api/fllws', fetcherGet);
-
-  useEffect(() => {
-    // Hent alle beskeder
-
-    if (data) {
-      setPMessages(data.messages);
-    }
-  }, [data]);
+  const { mutate: mutateFollower } = useSWR('/api/fllws', fetcherGet);
 
   useEffect(() => {
     if (R.query.skip) {
       setSkipNumber(Number(R.query.skip.toString()) || 0);
     }
-  }, []);
+  }, [R.query.skip]);
 
   async function loadMoreTweets() {
     const currentSkip = skipNumber;

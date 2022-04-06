@@ -8,11 +8,13 @@ import MessagesFromUser from '../pages/api/msgs/[username]';
 import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import Message from '../models/Message.schema';
+jest.mock('../helpers/logger');
 
 describe('GET requests for messages per user', () => {
   let req: AuthRequest;
   let res: TestAPIResponse;
   let user: TUser;
+  //jest.spyOn(logger, 'info').mockImplementation();
   beforeAll(async () => {
     await mongoose.connect(global.__MONGO_URI__);
     await mongoose.connection.useDb('minitwit');

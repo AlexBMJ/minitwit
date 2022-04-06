@@ -6,6 +6,7 @@ import User, { TUser } from '../models/User.scheme';
 import bcrypt from 'bcryptjs';
 import { AuthRequest } from '../middleware/authentication';
 import { TestAPIResponse } from '../types/tests';
+jest.mock('../helpers/logger');
 
 describe('username tests', () => {
   let req: AuthRequest;

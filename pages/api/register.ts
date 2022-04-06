@@ -37,7 +37,8 @@ async function handler(req: AuthRequest, res: NextApiResponse) {
 
     await new User({ email: email, pw_hash: hash, username: username.toLowerCase() }).save();
     return res.status(204).send('');
-  } catch (e) {
+  } 
+  catch (e) {
     console.log('ERROR', e);
     return res.status(500).json({});
   }

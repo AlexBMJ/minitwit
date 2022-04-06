@@ -77,7 +77,7 @@ export const FollowButtons: React.FunctionComponent<{
     try {
       if (loggedInUser && loggedInUser.username) {
         if (username) {
-          const r = await axios.post(
+          await axios.post(
             `/api/fllws/${loggedInUser.username}`,
             task === 'follow' ? { follow: username } : { unfollow: username },
             {
@@ -120,7 +120,7 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
 
     if (newMessage) {
       try {
-        const r = await axios.post(
+        await axios.post(
           '/api/msgs/' + user.username,
           { content: newMessage },
           { headers: { authorization: `Bearer ${localStorage.getItem('access_token') || ''}` } }

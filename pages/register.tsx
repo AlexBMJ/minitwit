@@ -24,7 +24,7 @@ const Register: NextPage = () => {
       if (formBody.pwd === formBody.passwordAgain) {
         try {
           setErrorMessage('');
-          const r = await axios.post('/api/register', formBody);
+          await axios.post('/api/register', formBody);
 
           alert('Successfully registered!');
           Router.push('/');
