@@ -8,7 +8,7 @@ import MessagesFromUser from '../pages/api/msgs/[username]';
 import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import Message from '../models/Message.schema';
-jest.mock('../app/logger');
+jest.mock('../helpers/logger');
 
 describe('GET requests for messages per user', () => {
   let req: AuthRequest;

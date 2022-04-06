@@ -7,7 +7,7 @@ import { AuthRequest } from '../middleware/authentication';
 import { TestAPIResponse } from '../types/tests';
 import * as jwt from 'jsonwebtoken';
 import Follow from '../pages/api/fllws/[username]';
-jest.mock('../app/logger');
+jest.mock('../helpers/logger');
 
 describe('POST methods for Follow and unfollow tests', () => {
   let req: AuthRequest;
