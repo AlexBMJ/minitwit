@@ -1,4 +1,4 @@
-@import './colors.scss';
+@import './colors.scss'; /* stylelint-disable-line */
 
 .page {
   width: 100%;
@@ -28,6 +28,7 @@
     width: 90%;
     margin-left: auto;
     margin-right: auto;
+
     .navitem {
       text-align: left;
       margin-top: 10px;
@@ -67,7 +68,7 @@
     }
   }
 
-  .errorMessage {
+  .errorMessage { /* stylelint-disable-line */
     background-color: $red;
     padding: 15px;
     box-sizing: border-box;
