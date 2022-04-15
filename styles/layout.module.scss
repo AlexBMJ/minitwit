@@ -56,19 +56,8 @@
   padding: 50px;
   box-sizing: border-box;
 
-  .footer {
-    margin-top: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-
-    p {
-      margin-top: auto;
-      color: $white;
-    }
-  }
-
-  .errorMessage { /* stylelint-disable-line */
+  .errorMessage {
+    /* stylelint-disable-line */
     background-color: $red;
     padding: 15px;
     box-sizing: border-box;
