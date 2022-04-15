@@ -9,6 +9,7 @@ import axios from 'axios';
 import { KeyedMutator } from 'swr';
 import router from 'next/router';
 import { fetcherGetWithToken } from '../lib/useUser';
+import styles from '../styles/mytimeline.module.scss';
 
 type messageMutatorType = KeyedMutator<{
   messages: TMessage[];
@@ -24,13 +25,13 @@ const MyTimeline: React.FunctionComponent<{
 }> = ({ user, loggedInUser, messages, messagesMutator, isFollowing, mutateFollower }) => {
   if (user) {
     return (
-      <>
+      <div className={styles.timeline}>
         <Head>
           <title>{user.username} Timeline</title>
         </Head>
 
-        <h2>{user.username} timeline</h2>
-        <div className="followstatus">
+        <h2>{user.username} Timeline</h2>
+        <div className={styles.followstatus}>
           {loggedInUser && loggedInUser.username === user.username ? (
             <p>This is you</p>
           ) : (
@@ -47,19 +48,19 @@ const MyTimeline: React.FunctionComponent<{
           <TwitBox messageMutator={messagesMutator} user={loggedInUser} />
         )}
         <Messages messages={user.messages} />
-      </>
+      </div>
     );
   } else {
     return (
-      <>
+      <div className={styles.timeline}>
         <Head>
-          <title>Public timeline</title>
+          <title>Public Timeline</title>
         </Head>
 
-        <h2>Public timeline</h2>
+        <h2>Public Timeline</h2>
         {loggedInUser && <TwitBox messageMutator={messagesMutator} user={loggedInUser} />}
         {messages && messages.length > 0 ? <Messages messages={messages} /> : <p>No messages</p>}
-      </>
+      </div>
     );
   }
 };
@@ -139,7 +140,7 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
   }
 
   return (
-    <div className="twitbox">
+    <div className={styles.twitbox}>
       <h3>What is on your mind {user.username}?</h3>
       <form onSubmit={postMessage} method="post">
         <input
@@ -162,16 +163,22 @@ export const Messages: React.FunctionComponent<{
 }> = ({ messages }) => {
   if (messages && messages.length > 0) {
     return (
-      <ul className="messages">
+      <ul className={styles.messages}>
         {messages.map((v, i) => {
           return (
             <li key={i}>
-              <div className="messageimage">
-                <Image alt="Profile picture" src={`https://secure.gravatar.com/avatar/${v.author_id}?d=identicon&s=64`} layout="fill" />
+              <div className={styles.image}>
+                <div className={styles.messageimage}>
+                  <Image alt="Profile picture" src={`https://secure.gravatar.com/avatar/${v.author_id}?d=identicon&s=64`} layout="fill" />
+                </div>
               </div>
-              <Link href={`/timeline/${v.username}`}>{v.username}</Link>
-              <p>{v.text}</p>
-              <small>&mdash; {v.pub_date.toString()}</small>
+              <div className={styles.messagecontent}>
+                <p className={styles.username}>
+                  <Link href={`/timeline/${v.username}`}>{v.username}</Link>
+                </p>
+                <p className={styles.text}>{v.text}</p>
+                <p className={styles.date}>&mdash; {v.pub_date.toString()}</p>
+              </div>
             </li>
           );
         })}

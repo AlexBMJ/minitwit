@@ -1,201 +1,203 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import './colors.scss'; /* stylelint-disable-line */
+
+* {
+  font-family: Inter, sans-serif !important;
+}
+
+html,
 body {
-  background: #caece9;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 14px;
-}
-
-a {
-  color: #26776f;
-}
-
-a:hover {
-  color: #333;
-}
-
-input[type='text'],
-input[type='password'] {
-  background: white;
-  border: 1px solid #bfe6e2;
-  padding: 2px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 14px;
-  border-radius: 2px;
-  color: #105751;
-}
-
-input[type='submit'] {
-  background: #105751;
-  border: 1px solid #073b36;
-  padding: 1px 3px;
-  font-family: 'Trebuchet MS', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 2px;
-  color: white;
-  display: block;
-}
-
-div.page {
-  background: white;
-  border: 1px solid #6eccc4;
-  width: 850px;
-  margin: 30px auto;
-  box-sizing: border-box;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-div.page h1 {
-  background: #6eccc4;
-  margin: 0;
-  padding: 10px 14px;
-  color: white;
-  letter-spacing: 1px;
-  text-shadow: 0 0 3px #24776f;
-  font-weight: normal;
-}
-
-div.page div.navigation {
-  background: #dee9e8;
-  padding: 4px 10px;
-  border-top: 1px solid #ccc;
-  border-bottom: 1px solid #eee;
-  color: #888;
-  font-size: 12px;
-  letter-spacing: 0.5px;
-}
-
-div.page div.navigation a {
-  color: #444;
-  font-weight: bold;
-}
-
-div.page h2 {
-  margin: 0 0 15px;
-  color: #105751;
-  text-shadow: 0 1px 2px #ccc;
-}
-
-div.page div.body {
-  padding: 10px;
-}
-
-div.footer {
-  text-align: center;
-  background: #eee;
-  color: #888;
-  padding: 5px 10px;
-  font-size: 12px;
-}
-
-div.page div.followstatus {
-  border: 1px solid #ccc;
-  background: #e3ebea;
-  border-radius: 2px;
-  padding: 3px;
-  font-size: 13px;
-}
-
-div.page ul.messages {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-ul.flashes li {
-  background: #b9f3ed;
-  border: 1px solid #81cec6;
-  border-radius: 2px;
-  padding: 4px;
-  font-size: 13px;
-}
-
-div.page ul.messages li {
-  margin: 10px 0;
-  padding: 5px;
-  background: #f0faf9;
-  border: 1px solid #dbf3f1;
-  border-radius: 2px;
-  min-height: 48px;
-}
-
-div.page ul.messages p {
-  margin: 0;
-}
-
-div.page ul.messages li img {
-  float: left;
-  padding: 0 10px 0 0;
-}
-
-div.page ul.messages li small {
-  font-size: 0.9em;
-  color: #888;
-}
-
-div.page div.twitbox {
-  margin: 10px 0;
-  padding: 5px;
-  background: #f0faf9;
-  border: 1px solid #94e2da;
-  border-radius: 5px;
-}
-
-div.page div.twitbox h3 {
-  margin: 0;
-  font-size: 1em;
-  color: #2c7e76;
-  margin-bottom: 10px;
-}
-
-div.page div.twitbox p {
-  margin: 0;
-}
-
-div.page div.twitbox input[type='text'] {
   width: 100%;
-  box-sizing: border-box;
-  display: block;
-  margin-bottom: 10px;
+  height: 100%;
+  background-color: $color4;
+
+  #__next { /* stylelint-disable-line */
+    height: 100%;
+  }
 }
 
-div.page div.twitbox input[type='submit'] {
-  width: 70px;
-  margin-left: 5px;
-  display: block;
-}
+// body {
+//   background: #caece9;
+//   font-family: 'Trebuchet MS', sans-serif;
+//   font-size: 14px;
+// }
 
-ul.flashes {
-  list-style: none;
-  margin: 10px 10px 0;
-  padding: 0;
-}
+// a {
+//   color: #26776f;
+// }
 
-div.error {
-  margin: 10px 0;
-  background: #fae4e4;
-  border: 1px solid #dd6f6f;
-  border-radius: 2px;
-  padding: 4px;
-  font-size: 13px;
-}
+// a:hover {
+//   color: #333;
+// }
 
-.messageimage {
-  position: relative;
-  height: 50px;
-  width: 50px;
-}
+// input[type='text'],
+// input[type='password'] {
+//   background: white;
+//   border: 1px solid #bfe6e2;
+//   padding: 2px;
+//   font-family: 'Trebuchet MS', sans-serif;
+//   font-size: 14px;
+//   border-radius: 2px;
+//   color: #105751;
+// }
 
-.loadmoretweets {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 250px;
-  padding: 10px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  background-color: darkcyan;
-  color: white;
-}
+// input[type='submit'] {
+//   background: #105751;
+//   border: 1px solid #073b36;
+//   padding: 1px 3px;
+//   font-family: 'Trebuchet MS', sans-serif;
+//   font-size: 14px;
+//   font-weight: bold;
+//   border-radius: 2px;
+//   color: white;
+//   display: block;
+// }
+
+// div.page h1 {
+//   background: #6eccc4;
+//   margin: 0;
+//   padding: 10px 14px;
+//   color: white;
+//   letter-spacing: 1px;
+//   text-shadow: 0 0 3px #24776f;
+//   font-weight: normal;
+// }
+
+// div.page div.navigation {
+//   background: #dee9e8;
+//   padding: 4px 10px;
+//   border-top: 1px solid #ccc;
+//   border-bottom: 1px solid #eee;
+//   color: #888;
+//   font-size: 12px;
+//   letter-spacing: 0.5px;
+// }
+
+// div.page div.navigation a {
+//   color: #444;
+//   font-weight: bold;
+// }
+
+// div.page h2 {
+//   margin: 0 0 15px;
+//   color: #105751;
+//   text-shadow: 0 1px 2px #ccc;
+// }
+
+// div.page div.body {
+//   padding: 10px;
+// }
+
+// div.footer {
+//   text-align: center;
+//   background: #eee;
+//   color: #888;
+//   padding: 5px 10px;
+//   font-size: 12px;
+// }
+
+// div.page div.followstatus {
+//   border: 1px solid #ccc;
+//   background: #e3ebea;
+//   border-radius: 2px;
+//   padding: 3px;
+//   font-size: 13px;
+// }
+
+// div.page ul.messages {
+//   list-style: none;
+//   margin: 0;
+//   padding: 0;
+// }
+
+// ul.flashes li {
+//   background: #b9f3ed;
+//   border: 1px solid #81cec6;
+//   border-radius: 2px;
+//   padding: 4px;
+//   font-size: 13px;
+// }
+
+// div.page ul.messages li {
+//   margin: 10px 0;
+//   padding: 5px;
+//   background: #f0faf9;
+//   border: 1px solid #dbf3f1;
+//   border-radius: 2px;
+//   min-height: 48px;
+// }
+
+// div.page ul.messages p {
+//   margin: 0;
+// }
+
+// div.page ul.messages li img {
+//   float: left;
+//   padding: 0 10px 0 0;
+// }
+
+// div.page ul.messages li small {
+//   font-size: 0.9em;
+//   color: #888;
+// }
+
+// div.page div.twitbox {
+//   margin: 10px 0;
+//   padding: 5px;
+//   background: #f0faf9;
+//   border: 1px solid #94e2da;
+//   border-radius: 5px;
+// }
+
+// div.page div.twitbox h3 {
+//   margin: 0;
+//   font-size: 1em;
+//   color: #2c7e76;
+//   margin-bottom: 10px;
+// }
+
+// div.page div.twitbox p {
+//   margin: 0;
+// }
+
+// div.page div.twitbox input[type='text'] {
+//   width: 100%;
+//   box-sizing: border-box;
+//   display: block;
+//   margin-bottom: 10px;
+// }
+
+// div.page div.twitbox input[type='submit'] {
+//   width: 70px;
+//   margin-left: 5px;
+//   display: block;
+// }
+
+// ul.flashes {
+//   list-style: none;
+//   margin: 10px 10px 0;
+//   padding: 0;
+// }
+
+// div.error {
+//   margin: 10px 0;
+//   background: #fae4e4;
+//   border: 1px solid #dd6f6f;
+//   border-radius: 2px;
+//   padding: 4px;
+//   font-size: 13px;
+// }
+
+// .loadmoretweets {
+//   display: block;
+//   margin-left: auto;
+//   margin-right: auto;
+//   width: 250px;
+//   padding: 10px;
+//   box-sizing: border-box;
+//   border-radius: 5px;
+//   border: none;
+//   cursor: pointer;
+//   background-color: darkcyan;
+//   color: white;
+// }

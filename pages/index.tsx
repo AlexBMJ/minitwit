@@ -2,11 +2,11 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import Footer from '../components/FooterComponent';
 import Layout from '../components/Layout.component';
 import Timeline from '../components/MyTimeline.component';
 import useUser, { fetcherGet } from '../lib/useUser';
 import { TMessage } from '../models/Message.schema';
+import styles from '../styles/index.module.scss';
 
 const Home: NextPage = () => {
   const { user } = useUser({ redirectIfFound: false, redirectTo: '/' });
@@ -47,26 +47,23 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div>
-      <Layout user={user?.user}>
-        {user?.user ? (
-          <div>
-            <Timeline
-              messagesMutator={mutateMessages}
-              messages={pMessages}
-              loggedInUser={user.user}
-              mutateFollower={mutateFollower}
-            />
-            <button onClick={() => loadMoreTweets()} className="loadmoretweets" type="button">
-              Load more
-            </button>
-          </div>
-        ) : (
-          <Timeline messagesMutator={mutateMessages} messages={pMessages} mutateFollower={mutateFollower} />
-        )}
-      </Layout>
-      <Footer />
-    </div>
+    <Layout user={user?.user}>
+      {user?.user ? (
+        <div>
+          <Timeline
+            messagesMutator={mutateMessages}
+            messages={pMessages}
+            loggedInUser={user.user}
+            mutateFollower={mutateFollower}
+          />
+          <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
+            Load more
+          </button>
+        </div>
+      ) : (
+        <Timeline messagesMutator={mutateMessages} messages={pMessages} mutateFollower={mutateFollower} />
+      )}
+    </Layout>
   );
 };
 

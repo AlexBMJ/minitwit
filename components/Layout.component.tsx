@@ -8,29 +8,38 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
   const [errorMessages] = useState<string[]>([]);
 
   return (
-    <div>
-      <div className="page">
+    <div className={styles.page}>
+      <div className={styles.navigation}>
         <h1>MiniTwit</h1>
-        <div className="navigiation">
-          {user ? (
-            <div>
-              <Link href="/" passHref>
-                {'Public Timeline'}
-              </Link>{' '}
-              | <Link href={`/timeline/${user.username}`}>My Timeline</Link> |{' '}
-              <span className={styles.signout} onClick={() => logout({ redirectTo: '/login' })}>
-                Sign out
-              </span>
+        {user ? (
+          <div className={styles.navitems}>
+            <Link href="/" passHref>
+              <div className={styles.navitem}>Public Timeline</div>
+            </Link>
+            <Link href={`/timeline/${user.username}`} passHref>
+              <div className={styles.navitem}>My Timeline</div>
+            </Link>
+            <div className={styles.navitem} onClick={() => logout({ redirectTo: '/login' })}>
+              Sign out
             </div>
-          ) : (
-            <div>
-              <Link href="/">Timeline</Link> | <Link href="/register">Register</Link> | <Link href="/login">Login</Link>
+          </div>
+        ) : (
+          <div className={styles.navitems}>
+            <div className={styles.navitem}>
+              <Link href="/">Timeline</Link>
             </div>
-          )}
-        </div>
-
+            <div className={styles.navitem}>
+              <Link href="/register">Register</Link>
+            </div>
+            <div className={styles.navitem}>
+              <Link href="/login">Login</Link>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className={styles.content}>
         {errorMessages.length > 0 && (
-          <ul className="flashes">
+          <ul className={styles.errorMessage}>
             {errorMessages.map((v, k) => {
               return <li key={k}>{v}</li>;
             })}
@@ -38,6 +47,9 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
         )}
 
         {children}
+        <div className={styles.footer}>
+          <p>Mintwit - a Next.js project</p>
+        </div>
       </div>
     </div>
   );
