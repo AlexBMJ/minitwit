@@ -1,7 +1,6 @@
 import { NextPage } from 'next';
 import Head from 'next/head';
 import React, { useState } from 'react';
-import Footer from '../components/FooterComponent';
 import Layout from '../components/Layout.component';
 import axios from 'axios';
 import Router from 'next/router';

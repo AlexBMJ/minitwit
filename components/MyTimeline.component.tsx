@@ -135,7 +135,7 @@ export const TwitBox: React.FunctionComponent<{ user: TUser; messageMutator: mes
         console.log(e.response.data);
       }
     } else {
-      alert('You must do somehting');
+      alert('You must do something');
     }
   }
 
@@ -169,7 +169,11 @@ export const Messages: React.FunctionComponent<{
             <li key={i}>
               <div className={styles.image}>
                 <div className={styles.messageimage}>
-                  <Image alt="Profile picture" src={`https://secure.gravatar.com/avatar/${v.author_id}?d=identicon&s=64`} layout="fill" />
+                  <Image
+                    alt="Profile picture"
+                    src={`https://secure.gravatar.com/avatar/${v.author_id}?d=identicon&s=64`}
+                    layout="fill"
+                  />
                 </div>
               </div>
               <div className={styles.messagecontent}>
@@ -185,6 +189,6 @@ export const Messages: React.FunctionComponent<{
       </ul>
     );
   } else {
-    return <p>There is no messages so far!</p>;
+    return <p>There are no messages so far!</p>;
   }
 };
