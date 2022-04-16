@@ -46,13 +46,15 @@ const Home: NextPage = () => {
             loggedInUser={user.user}
             mutateFollower={mutateFollower}
           />
-          <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
-            Load more
-          </button>
         </div>
       ) : (
-        <Timeline messagesMutator={mutateMessages} messages={pMessages} mutateFollower={mutateFollower} />
+        <div>
+          <Timeline messagesMutator={mutateMessages} messages={pMessages} mutateFollower={mutateFollower} />
+        </div>
       )}
+      <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
+        Load more
+      </button>
     </Layout>
   );
 };
