@@ -1,5 +1,5 @@
 import type { NextApiResponse } from 'next';
-import Message from '../../../models/Message.schema';
+import Message, { TMessage } from '../../../models/Message.schema';
 import authenticate, { AuthRequest } from '../../../middleware/authentication';
 import { getUser } from '../../../helpers/user_helper';
 import MiniTwitRoute from '../../../middleware/MiniTwitRoute';
@@ -9,19 +9,60 @@ const handler = async (req: AuthRequest, res: NextApiResponse) => {
 
   if (req.method === 'GET') {
     let amount = <string>req.query.no;
+    const before = <string>req.query.before;
+    const after = <string>req.query.after;
 
     if (amount == undefined || amount.length < 1) {
-      amount = '100';
+      amount = '20';
     }
 
     const numberAmount = Number(amount);
+    const numberBefore = Number(before);
+    const numberAfter = Number(after);
 
     if (isNaN(numberAmount)) {
       return res.status(400).json({ message: 'Not a number...' });
     }
 
-    const recentMessages = await Message.find({ username: username }).limit(numberAmount).sort({ pub_date: -1 }).exec();
-
+    let recentMessages: TMessage[];
+    if (!isNaN(numberBefore) && isNaN(numberAfter)) {
+      const beforeDate = new Date(numberBefore);
+      recentMessages = await Message.find({
+        username: username,
+        pub_date: {
+          $lt: beforeDate,
+        },
+      })
+        .sort({ pub_date: -1 })
+        .limit(numberAmount)
+        .exec();
+    } else if (isNaN(numberBefore) && !isNaN(numberAfter)) {
+      const afterDate = new Date(numberAfter);
+      recentMessages = await Message.find({
+        username: username,
+        pub_date: {
+          $gt: afterDate,
+        },
+      })
+        .sort({ pub_date: -1 })
+        .limit(numberAmount)
+        .exec();
+    } else if (!isNaN(numberBefore) && !isNaN(numberAfter)) {
+      const beforeDate = new Date(numberBefore);
+      const afterDate = new Date(numberAfter);
+      recentMessages = await Message.find({
+        username: username,
+        pub_date: {
+          $gt: afterDate,
+          $lt: beforeDate,
+        },
+      })
+        .sort({ pub_date: -1 })
+        .limit(numberAmount)
+        .exec();
+    } else {
+      recentMessages = await Message.find({ username: username }).sort({ pub_date: -1 }).limit(numberAmount).exec();
+    }
     return res.status(200).json({ messages: recentMessages });
   }
 

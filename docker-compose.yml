@@ -1,42 +1,38 @@
 version: '3.9'
 
 volumes:
+  db_data:
   grafana-storage:
+  prometheus_data:
   setup:
   elasticsearch:
 
-networks:
-  elk:
-    driver: bridge
-
 services:
   app:
-    build: .
-    command: sh -c './wait-for db:27017 -- yarn run dev'
-    restart: always
+    image: minitwit_app
     ports:
       - '3080:3080'
-    volumes:
-      - .:/usr/src/app
     env_file:
       - ./.env
-    depends_on:
-      - grafana
-      - prometheus
+    environment:
+      - TZ=Europe/Copenhagen
 
   db:
-    container_name: 'mongodb'
-    restart: always
     image: mongo:4.4.12
     ports:
       - '27017:27017'
+    volumes:
+      - db_data:/data/db
     env_file:
       - ./.env
+    environment:
+      - TZ=Europe/Copenhagen
 
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+      - ./config/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
 
@@ -48,10 +44,7 @@ services:
       - '3000:3000'
 
   elasticsearch_setup:
-    build:
-      context: docker-elk/setup
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    image: 'elasticsearch_setup'
     init: true
     volumes:
       - setup:/state:Z
@@ -59,10 +52,7 @@ services:
       - ./.env
 
   elasticsearch:
-    build:
-      context: docker-elk/elasticsearch
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.1.1
     volumes:
       - elasticsearch:/usr/share/elasticsearch/data:Z
     ports:
@@ -79,12 +69,9 @@ services:
       - ./.env
 
   logstash:
-    build:
-      context: docker-elk/logstash
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    image: docker.elastic.co/logstash/logstash:8.1.1
     volumes:
-      - ./docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+      - ./config/logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
     ports:
       - '5044:5044'
       - '5000:5000/tcp'
@@ -99,10 +86,7 @@ services:
       - ./.env
 
   kibana:
-    build:
-      context: docker-elk/kibana
-      args:
-        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    image: docker.elastic.co/kibana/kibana:8.1.1
     ports:
       - '5601:5601'
     environment:
@@ -114,4 +98,4 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - elasticsearch
+      - logstash

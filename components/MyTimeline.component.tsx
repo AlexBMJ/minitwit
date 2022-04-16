@@ -16,38 +16,47 @@ type messageMutatorType = KeyedMutator<{
 }>;
 
 const MyTimeline: React.FunctionComponent<{
-  user?: UserInfo;
+  username?: string;
   loggedInUser?: TUser;
   messages?: TMessage[];
   messagesMutator?: messageMutatorType;
   isFollowing?: boolean;
   mutateFollower: Dispatch<SetStateAction<boolean>>;
-}> = ({ user, loggedInUser, messages, messagesMutator, isFollowing, mutateFollower }) => {
-  if (user) {
+}> = ({ username, loggedInUser, messages, messagesMutator, isFollowing, mutateFollower }) => {
+  if (username) {
     return (
       <div className={styles.timeline}>
         <Head>
-          <title>{user.username} Timeline</title>
+          <title>{username} Timeline</title>
         </Head>
-
-        <h2>{user.username} Timeline</h2>
+        <h2>{username} Timeline</h2>
         <div className={styles.followstatus}>
-          {loggedInUser && loggedInUser.username === user.username ? (
+          {loggedInUser && loggedInUser.username === username ? (
             <p>This is you</p>
           ) : (
             <FollowButtons
               loggedInUser={loggedInUser}
-              username={user.username}
+              username={username}
               mutateFollower={mutateFollower}
               user={loggedInUser?.username ? loggedInUser.username : ''}
               isFollowing={isFollowing ? isFollowing : false}
             />
           )}
         </div>
-        {loggedInUser && loggedInUser.username === user.username && (
+        {loggedInUser && loggedInUser.username === username && (
           <TwitBox messageMutator={messagesMutator} user={loggedInUser} />
         )}
-        <Messages messages={user.messages} />
+        {messages && messages.length > 0 ? (
+          <Messages messages={messages} />
+        ) : (
+          <h4>
+            <Image alt="No tweets found" src="/empty_box.png" layout="fixed" width="64" height="64" />
+            <br />
+            <br />
+            No Tweets Found
+          </h4>
+        )}
+        ;
       </div>
     );
   } else {
@@ -59,7 +68,16 @@ const MyTimeline: React.FunctionComponent<{
 
         <h2>Public Timeline</h2>
         {loggedInUser && <TwitBox messageMutator={messagesMutator} user={loggedInUser} />}
-        {messages && messages.length > 0 ? <Messages messages={messages} /> : <p>No messages</p>}
+        {messages && messages.length > 0 ? (
+          <Messages messages={messages} />
+        ) : (
+          <h4>
+            <Image alt="No tweets found" src="/empty_box.png" layout="fixed" width="64" height="64" />
+            <br />
+            <br />
+            No Tweets Found
+          </h4>
+        )}
       </div>
     );
   }
