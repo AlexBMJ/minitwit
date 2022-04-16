@@ -1,12 +1,12 @@
-import axios from 'axios';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import Footer from '../../components/FooterComponent';
 import Layout from '../../components/Layout.component';
 import Timeline from '../../components/MyTimeline.component';
-import useUser, { fetcherGetWithToken } from '../../lib/useUser';
-import { UserInfo } from '../../types/userInfo';
+import useUser, { fetcherGet, fetcherGetWithToken } from '../../lib/useUser';
+import styles from '../../styles/mytimeline.module.scss';
+import { TMessage } from '../../models/Message.schema';
+import useSWR from 'swr';
 
 const UsernameTimeline: NextPage = () => {
   const { user } = useUser({ redirectIfFound: false });
@@ -16,20 +16,17 @@ const UsernameTimeline: NextPage = () => {
   if (typeof window !== 'undefined') {
     accessToken = localStorage.getItem('access_token') || '';
   }
-
-  const [userViewing, setUserViewing] = useState<UserInfo>();
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
+  const [pMessages, setPMessages] = useState<TMessage[]>([]);
+
+  const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
+    `/api/msgs/${username}${'?after=' + new Date(pMessages[0]?.pub_date)?.getTime().toString() || ''}`,
+    fetcherGet
+  );
 
   useEffect(() => {
-    if (username) {
-      axios
-        .get(`/api/${username}`)
-        .then((response) => {
-          setUserViewing(response.data);
-        })
-        .catch((err) => {
-          console.log(err.response.data);
-        });
+    if (data) {
+      setPMessages([...data.messages, ...pMessages]);
     }
 
     (async function getFollower() {
@@ -38,19 +35,40 @@ const UsernameTimeline: NextPage = () => {
         setIsFollowing(r.isfollowing);
       }
     })();
-  }, [username, user, accessToken]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username, data, user, accessToken]);
+
+  async function loadMoreTweets() {
+    const oldestMsgDate = new Date(pMessages[pMessages.length - 1]?.pub_date)?.getTime() || Date.now();
+    const r = await fetcherGet(`/api/msgs/${username}?before=${oldestMsgDate}`);
+
+    if (r.messages && r.messages.length > 0) {
+      setPMessages([...pMessages, ...r.messages]);
+    } else {
+      alert('No more messages to load...');
+    }
+  }
 
   return (
     <Layout user={user?.user}>
-      {userViewing ? (
-        <Timeline
-          loggedInUser={user?.user}
-          mutateFollower={setIsFollowing}
-          isFollowing={isFollowing}
-          user={userViewing}
-        />
+      {username && typeof username === 'string' ? (
+        <div>
+          <Timeline
+            messagesMutator={mutateMessages}
+            messages={pMessages}
+            loggedInUser={user?.user}
+            mutateFollower={setIsFollowing}
+            isFollowing={isFollowing}
+            username={username}
+          />
+          <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
+            Load more
+          </button>
+        </div>
       ) : (
-        <p>User not found</p>
+        <div className={styles.timeline}>
+          <h4>User not found</h4>
+        </div>
       )}
     </Layout>
   );

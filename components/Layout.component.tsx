@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { logout } from '../lib/useUser';
 import { TUser } from '../models/User.scheme';
 import styles from '../styles/layout.module.scss';
+import Footer from './FooterComponent';
 
 const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) => {
   const [errorMessages] = useState<string[]>([]);
@@ -47,9 +48,7 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
         )}
 
         {children}
-        <div className={styles.footer}>
-          <p>Mintwit - a Next.js project</p>
-        </div>
+        <Footer />
       </div>
     </div>
   );
