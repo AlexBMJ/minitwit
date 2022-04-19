@@ -4339,10 +4339,10 @@ pino-caller@^3.2.0:
   dependencies:
     source-map-support "^0.5.13"
 
-pino-socket@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/pino-socket/-/pino-socket-4.1.0.tgz#005a4b1f2875bc4c24f17737a047e5b45c7c770c"
-  integrity sha512-pb1cXjl+fW+N8wSNWmN96pt8Fv2Nz33IonLAjOBCTyhDFTIWVrMqGPyAj64XCEx/61as3eA2r6IGotERBh/gNA==
+pino-socket@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/pino-socket/-/pino-socket-4.1.1.tgz#9b861fd8acbd6a401d79366a226d9a937fbcf117"
+  integrity sha512-ABEby/SYN3TbvPGwbbKp3QSHDpeBNizm/wQUl9IrnvMD8g3+fdi6STsQwUc9bSvzTNPWGD44jSBOSIVoXFcCbA==
   dependencies:
     backoff "^2.5.0"
     nopt "^5.0.0"
