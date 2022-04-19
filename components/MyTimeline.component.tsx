@@ -15,6 +15,17 @@ type messageMutatorType = KeyedMutator<{
   messages: TMessage[];
 }>;
 
+function parseDate(d: Date): string {
+  
+  return (
+    ('0' + d.getDate()).slice(-2) + 
+    '-' + ('0'+(d.getMonth()+1)).slice(-2) + 
+    '-' +d.getFullYear() + 
+    ' ' + ('0' + d.getHours()).slice(-2) + ':' + 
+    ('0' + d.getMinutes()).slice(-2)
+  );
+}
+
 const MyTimeline: React.FunctionComponent<{
   username?: string;
   loggedInUser?: TUser;
@@ -199,7 +210,8 @@ export const Messages: React.FunctionComponent<{
                   <Link href={`/timeline/${v.username}`}>{v.username}</Link>
                 </p>
                 <p className={styles.text}>{v.text}</p>
-                <p className={styles.date}>&mdash; {v.pub_date.toString()}</p>
+                <p className={styles.date}>&mdash; {parseDate(new Date(v.pub_date))}</p>
+
               </div>
             </li>
           );
