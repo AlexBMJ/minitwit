@@ -27,6 +27,21 @@ const Register: NextPage = () => {
           await axios.post('/api/register', formBody);
 
           alert('Successfully registered!');
+          const r = await axios.post('/api/login', formBody, {
+            headers: {
+              authorization: `Basic ${Buffer.from(`${formBody.username}:${formBody.pwd}`).toString('base64')}`,
+            },
+          });
+
+          if (r.data.token) {
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('access_token', r.data.token);
+              Router.push('/');
+            }
+          } else {
+            setErrorMessage('Error getting token!');
+          }
+
           Router.push('/');
         } catch (err: any) {
           console.log(err.response.data);
