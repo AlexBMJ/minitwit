@@ -13,7 +13,7 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
   return (
     <div className={styles.page}>
       <div className={navbarOpen ? classNames(styles.navigation, styles.navigationOpen) : styles.navigation}>
-        <div onClick={() => setNavbarOpen(!navbarOpen)} className={styles.mobileNav}>
+        <div onClick={() => setNavbarOpen(!navbarOpen)} className={styles.mobilenav}>
           ☰
         </div>
 
