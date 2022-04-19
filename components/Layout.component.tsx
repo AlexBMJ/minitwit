@@ -26,15 +26,21 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
           </div>
         ) : (
           <div className={styles.navitems}>
-            <div className={styles.navitem}>
-              <Link href="/">Timeline</Link>
-            </div>
-            <div className={styles.navitem}>
-              <Link href="/register">Register</Link>
-            </div>
-            <div className={styles.navitem}>
-              <Link href="/login">Login</Link>
-            </div>
+            <Link href="/">
+              <div className={styles.navitem}>
+                Timeline
+              </div>
+            </Link>
+            <Link href="/register">
+              <div className={styles.navitem}>
+                Register
+              </div>
+            </Link>
+            <Link href="/login">
+              <div className={styles.navitem}>
+                Login
+              </div>
+            </Link>
           </div>
         )}
       </div>
