@@ -10,6 +10,7 @@ import styles from '../styles/mytimeline.module.scss';
 const Home: NextPage = () => {
   const { user } = useUser({ redirectIfFound: false, redirectTo: '/' });
   const [pMessages, setPMessages] = useState<TMessage[]>([]);
+  const [loadMoreText, setLoadMoreText] = useState<string>('Load more');
 
   const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
     `/api/msgs${'?after=' + new Date(pMessages[0]?.pub_date)?.getTime().toString() || ''}`,
@@ -26,12 +27,15 @@ const Home: NextPage = () => {
   }, [data]);
 
   async function loadMoreTweets() {
+    setLoadMoreText('Loading...');
     const oldestMsgDate = new Date(pMessages[pMessages.length - 1]?.pub_date)?.getTime() || Date.now();
     const r = await fetcherGet(`/api/msgs?before=${oldestMsgDate}`);
 
     if (r.messages && r.messages.length > 0) {
+      setLoadMoreText('Load more');
       setPMessages([...pMessages, ...r.messages]);
     } else {
+      setLoadMoreText('Load more');
       alert('No more messages to load...');
     }
   }
@@ -53,7 +57,7 @@ const Home: NextPage = () => {
         </div>
       )}
       <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
-        Load more
+        {loadMoreText}
       </button>
     </Layout>
   );

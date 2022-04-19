@@ -74,30 +74,32 @@ const Register: NextPage = () => {
           )}
 
           <form onSubmit={registerUser} method="post">
-            <dt>Username:</dt>
-            <dd>
+            <div className={styles.inputgroup}>
+              <label htmlFor="username">Username:</label>
               <input
                 onChange={(e) => setFormBody({ ...formBody, username: e.target.value })}
                 type="text"
                 name="username"
                 placeholder="Username"
+                id="username"
                 size={30}
                 value={formBody.username}
               />
-            </dd>
-            <dt>E-Mail:</dt>
-            <dd>
+            </div>
+            <div className={styles.inputgroup}>
+              <label htmlFor="email">E-mail:</label>
               <input
                 onChange={(e) => setFormBody({ ...formBody, email: e.target.value })}
                 type="email"
                 name="email"
                 placeholder="Email"
+                id="email"
                 size={30}
                 value={formBody.email}
               />
-            </dd>
-            <dt>Password:</dt>
-            <dd>
+            </div>
+            <div className={styles.inputgroup}>
+              <label htmlFor="password">Password:</label>
               <input
                 onChange={(e) => setFormBody({ ...formBody, pwd: e.target.value })}
                 type="password"
@@ -106,20 +108,21 @@ const Register: NextPage = () => {
                 size={30}
                 value={formBody.pwd}
               />
-            </dd>
-            <dt>
-              Password <small>(repeat)</small>:
-            </dt>
-            <dd>
+            </div>
+            <div className={styles.inputgroup}>
+              <label htmlFor="password2">
+                Password <small>(repeat)</small>:
+              </label>
               <input
                 onChange={(e) => setFormBody({ ...formBody, passwordAgain: e.target.value })}
                 type="password"
                 name="password2"
                 placeholder="Password 2"
+                id="password2"
                 size={30}
                 value={formBody.passwordAgain}
               />
-            </dd>
+            </div>
 
             <div className="actions">
               <button type="submit">Sign up</button>

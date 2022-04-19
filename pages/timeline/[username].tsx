@@ -18,6 +18,7 @@ const UsernameTimeline: NextPage = () => {
   }
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const [pMessages, setPMessages] = useState<TMessage[]>([]);
+  const [loadMoreText, setLoadMoreText] = useState<string>('Load more');
 
   const { data, mutate: mutateMessages } = useSWR<{ messages: TMessage[] }>(
     `/api/msgs/${username}${'?after=' + new Date(pMessages[0]?.pub_date)?.getTime().toString() || ''}`,
@@ -39,12 +40,15 @@ const UsernameTimeline: NextPage = () => {
   }, [username, data, user, accessToken]);
 
   async function loadMoreTweets() {
+    setLoadMoreText('Loading...');
     const oldestMsgDate = new Date(pMessages[pMessages.length - 1]?.pub_date)?.getTime() || Date.now();
     const r = await fetcherGet(`/api/msgs/${username}?before=${oldestMsgDate}`);
 
     if (r.messages && r.messages.length > 0) {
       setPMessages([...pMessages, ...r.messages]);
+      setLoadMoreText('Load more');
     } else {
+      setLoadMoreText('Load more');
       alert('No more messages to load...');
     }
   }
@@ -62,7 +66,7 @@ const UsernameTimeline: NextPage = () => {
             username={username}
           />
           <button onClick={() => loadMoreTweets()} className={styles.loadmoretweets} type="button">
-            Load more
+            {loadMoreText}
           </button>
         </div>
       ) : (
