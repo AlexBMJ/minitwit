@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import Link from 'next/link';
 import { useState } from 'react';
 import { logout } from '../lib/useUser';
@@ -7,11 +8,18 @@ import Footer from './FooterComponent';
 
 const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) => {
   const [errorMessages] = useState<string[]>([]);
+  const [navbarOpen, setNavbarOpen] = useState<boolean>(false);
 
   return (
     <div className={styles.page}>
-      <div className={styles.navigation}>
-        <h1>MiniTwit</h1>
+      <div className={navbarOpen ? classNames(styles.navigation, styles.navigationOpen) : styles.navigation}>
+        <div onClick={() => setNavbarOpen(!navbarOpen)} className={styles.mobileNav}>
+          ☰
+        </div>
+
+        <h1>
+          <Link href="/">MiniTwit</Link>
+        </h1>
         {user ? (
           <div className={styles.navitems}>
             <Link href="/" passHref>
@@ -26,20 +34,14 @@ const Layout: React.FunctionComponent<{ user?: TUser }> = ({ children, user }) =
           </div>
         ) : (
           <div className={styles.navitems}>
-            <Link href="/">
-              <div className={styles.navitem}>
-                Timeline
-              </div>
+            <Link href="/" passHref>
+              <div className={styles.navitem}>Timeline</div>
             </Link>
-            <Link href="/register">
-              <div className={styles.navitem}>
-                Register
-              </div>
+            <Link href="/register" passHref>
+              <div className={styles.navitem}>Register</div>
             </Link>
-            <Link href="/login">
-              <div className={styles.navitem}>
-                Login
-              </div>
+            <Link href="/login" passHref>
+              <div className={styles.navitem}>Login</div>
             </Link>
           </div>
         )}

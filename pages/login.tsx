@@ -60,38 +60,38 @@ const Login: NextPage = () => {
           )}
 
           <form onSubmit={submit} method="post">
-            <dl>
-              <dt>Username:</dt>
-              <dd>
-                <input
-                  onChange={(e) =>
-                    setFormBody({
-                      ...formBody,
-                      username: e.target.value,
-                    })
-                  }
-                  placeholder="Username"
-                  type="text"
-                  name="username"
-                  size={30}
-                />
-              </dd>
-              <dt>Password:</dt>
-              <dd>
-                <input
-                  onChange={(e) =>
-                    setFormBody({
-                      ...formBody,
-                      password: e.target.value,
-                    })
-                  }
-                  placeholder="Password"
-                  type="password"
-                  name="password"
-                  size={30}
-                />
-              </dd>
-            </dl>
+            <div className={styles.inputgroup}>
+              <label htmlFor="username">Username:</label>
+              <input
+                onChange={(e) =>
+                  setFormBody({
+                    ...formBody,
+                    username: e.target.value,
+                  })
+                }
+                placeholder="Username"
+                type="text"
+                name="username"
+                id="username"
+                size={30}
+              />
+            </div>
+            <div className={styles.inputgroup}>
+              <label htmlFor="password">Password:</label>
+              <input
+                onChange={(e) =>
+                  setFormBody({
+                    ...formBody,
+                    password: e.target.value,
+                  })
+                }
+                placeholder="Password"
+                type="password"
+                name="password"
+                id="password"
+                size={30}
+              />
+            </div>
             <div>
               <button type="submit">Sign in</button>
             </div>

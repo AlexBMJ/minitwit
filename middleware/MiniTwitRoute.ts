@@ -12,17 +12,22 @@ export interface AuthRequest extends NextApiRequest {
 const MiniTwitRoute =
   (handler: NextApiHandler, routes: string[], endpoint: string) => async (req: AuthRequest, res: NextApiResponse) => {
     if (routes && routes.length > 0 && !routes.includes(req.method!)) {
-      logger.info(
-        {
-          method: req.method,
-          url: req.url,
-          endpoint,
-          body: req.body,
-          query: req.query,
-        },
-        `Unaccepted method received for: [${req.method}] ${req.url}`
-      );
-      return res.status(405).json({ message: 'Method not accepted!' });
+      try {
+        logger.info(
+          {
+            method: req.method,
+            url: req.url,
+            endpoint,
+            body: req.body,
+            query: req.query,
+          },
+          `Unaccepted method received for: [${req.method}] ${req.url}`
+        );
+        return res.status(405).json({ message: 'Method not accepted!' });
+      } catch (err) {
+        console.error('LOG INFO', err);
+        return res.status(405).json({ message: 'Method not accepted!' });
+      }
     }
 
     setLatest(req);
@@ -47,16 +52,20 @@ const MiniTwitRoute =
         );
       }
     } catch (ex) {
-      logger.error(
-        {
-          method: req.method,
-          url: req.url,
-          endpoint,
-          body: req.body,
-          query: req.query,
-        },
-        `Exception received for handler: ${ex}`
-      );
+      try {
+        logger.error(
+          {
+            method: req.method,
+            url: req.url,
+            endpoint,
+            body: req.body,
+            query: req.query,
+          },
+          `Exception received for handler: ${ex}`
+        );
+      } catch (err) {
+        console.error('ERROR LOGGING', err);
+      }
     }
 
     timer({ route: endpoint, method: req.method, status_code: res.statusCode });
