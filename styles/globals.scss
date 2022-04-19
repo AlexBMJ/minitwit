@@ -11,7 +11,7 @@ body {
   height: 100%;
   background-color: $color4;
 
-  #__next { /* stylelint-disable-line */
+  #__next { /* stylelint-disable selector-id-pattern */
     height: 100%;
   }
 }

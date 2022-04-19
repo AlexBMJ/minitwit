@@ -56,8 +56,8 @@
   padding: 50px;
   box-sizing: border-box;
 
+  /* stylelint-disable */
   .errorMessage {
-    /* stylelint-disable-line */
     background-color: $red;
     padding: 15px;
     box-sizing: border-box;
