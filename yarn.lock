@@ -1569,11 +1569,6 @@ case-insensitive@^1.0.0:
   resolved "https://registry.yarnpkg.com/case-insensitive/-/case-insensitive-1.0.0.tgz#cf8b17ecb8371b2a66d72733a1e61651001f47d4"
   integrity sha1-z4sX7Lg3Gypm1yczoeYWUQAfR9Q=
 
-case-insensitive@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/case-insensitive/-/case-insensitive-1.0.0.tgz#cf8b17ecb8371b2a66d72733a1e61651001f47d4"
-  integrity sha1-z4sX7Lg3Gypm1yczoeYWUQAfR9Q=
-
 chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -2243,10 +2238,10 @@ eslint-plugin-import@2.25.2:
     resolve "^1.20.0"
     tsconfig-paths "^3.11.0"
 
-eslint-plugin-jest@^26.1.1:
-  version "26.1.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-26.1.4.tgz#8e3410093ff4439d0c3a371add5bf9e05623a57a"
-  integrity sha512-wgqxujmqc2qpvZqMFWCh6Cniqc8lWpapvXt9j/19DmBDqeDaYhJrSRezYR1SKyemvjx+9e9kny/dgRahraHImA==
+eslint-plugin-jest@^27.1.1:
+  version "27.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-27.1.1.tgz#60f68dee15d4ffd9cdff65158d7fa46a65dbaaf5"
+  integrity sha512-vuSuXGKHHi/UAffIM46QKm4g0tQP+6n52nRxUpMq6x6x9rhnv5WM7ktSu3h9cTnXE4b0Y0ODQTgRlCm9rdRLvg==
   dependencies:
     "@typescript-eslint/utils" "^5.10.0"
 
