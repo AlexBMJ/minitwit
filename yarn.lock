@@ -1569,11 +1569,6 @@ case-insensitive@^1.0.0:
   resolved "https://registry.yarnpkg.com/case-insensitive/-/case-insensitive-1.0.0.tgz#cf8b17ecb8371b2a66d72733a1e61651001f47d4"
   integrity sha1-z4sX7Lg3Gypm1yczoeYWUQAfR9Q=
 
-case-insensitive@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/case-insensitive/-/case-insensitive-1.0.0.tgz#cf8b17ecb8371b2a66d72733a1e61651001f47d4"
-  integrity sha1-z4sX7Lg3Gypm1yczoeYWUQAfR9Q=
-
 chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
@@ -1900,9 +1895,9 @@ decimal.js@^10.2.1:
   integrity sha512-V0pfhfr8suzyPGOx3nmq4aHqabehUZn6Ch9kyFpV79TGDTWFmHqUqXdabR7QHqxzrYolF4+tVmJhUG4OURg5dQ==
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 decompress-response@^6.0.0:
   version "6.0.0"
